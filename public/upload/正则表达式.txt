@@ -1,0 +1,23 @@
+正则过滤
+
+过滤(:)
+(Also Read: Rana Daggubati turns 31; Bahubali a)
+(Read: Rana Daggubati turns 31; Bahubali a)
+##使用  "/[(][^)]*:[^)]*[)]/g"
+
+
+过滤(摘錄)
+(摘錄 全文請連結民報)
+(Also Read Rana Daggubati turns 31; Bahubali a)
+(Read Rana Daggubati turns 31; Bahubali a)
+##使用  "/[(]摘錄[^)]*[)]/g"
+
+过滤【】
+【蘋論陣線】
+【蘋果電玩粉絲團】
+##使用  "/[【][^】]*[】]/g"
+
+
+过滤"由<a href="#">宋楚瑜找朋友</a>貼上了"
+["/由[^貼上了]*貼上了/g"]
+
