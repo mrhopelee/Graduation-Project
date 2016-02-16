@@ -3,7 +3,7 @@
 过滤(:)
 (Also Read: Rana Daggubati turns 31; Bahubali a)
 (Read: Rana Daggubati turns 31; Bahubali a)
-##使用  "/[(][^)]*:[^)]*[)]/g"
+##使用  "/[(][^)]*:[^)]*[)]/gi"
 
 
 过滤(摘錄)
@@ -21,3 +21,6 @@
 过滤"由<a href="#">宋楚瑜找朋友</a>貼上了"
 ["/由[^貼上了]*貼上了/g"]
 
+<！--- --->
+a:contains(http)
+http:
