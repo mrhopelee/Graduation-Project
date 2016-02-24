@@ -1,8 +1,91 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
-a {
-  color: #00B7FF;
+.all {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.left {
+  width:20%;
+  float: left;
+  padding-bottom: 100%;
+
+  background-color: rgba(43,64,100,1.0);
+}
+.title, .newclass, .classbox {
+  text-align: center;
+}
+.title {
+  background-color: rgba(44,48,73,1.0);
+}
+.title>h1 {
+  color: rgba(255,255,255,1.0);
+  padding: 5px 0;
+  margin: 0;
+}
+.classbtn{
+  width: 120px;
+  height: 30px;
+  margin: 50px 0;
+  background-color: rgba(247,135,85,1.0);
+  color: rgba(255,255,255,1.0);
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,1.0);
+}
+.classlist {
+  padding-left: 0;
+  border-top: 1px solid rgba(0,0,0,.2);
+  border-bottom: 1px solid rgba(0,0,0,.2);
+}
+.classitem {
+  padding: 15px 0;
+  list-style-type: none;
+  border: 1px solid rgba(0,0,0,.2);
+  color: rgba(255,255,255,1.0);
+}
+.right {
+  width: 80%;
+  float: right;
+  padding-bottom: 100%;
+  background-color: rgba(237,237,237,1.0);
+}
+.upload {
+  height: 60px;
+  margin: 20px 0;
+}
+.uploadbtn {
+  float: right;
+  margin-right: 30px;
+  width: 120px;
+  height: 30px;
+  background-color: rgba(44,48,73,1.0);
+  color: rgba(255,255,255,1.0);
+  border-radius: 3px;
+  border: 1px solid rgb(204, 204, 204);
+}
+.showbox{
+  margin-left: 1%;
+}
+.showitem {
+  width: 31%;
+  height: 200px;
+  background-color: rgba(255,255,255,1.0);
+  float: left;
+  margin: 15px 1%;
+
+}
+.showimg {
+  margin: 10px auto;
+  width: 90%;
+  height: 150px;
+  background: rgba(102,102,102,1.0);
+}
+.showname {
+  color: rgb(231,159,109);
+  margin-left:5px;
+}
+.showbtn {
+  float: right;
+  margin-right: 5px;
+  border:0;
+  background-color: transparent;
+  color: rgb(231,159,109);
 }

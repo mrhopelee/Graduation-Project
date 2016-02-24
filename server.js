@@ -7,6 +7,8 @@ var express = require('express');
 var app = express();
 var str =  'mongodb://' + 'localhost' +':' + '27017'+ '/' + 'gp';
 var db = require('mongoskin').db(str);
+app.set('views', './views');
+app.set('view engine', 'jade');
 
 app.use(express.static('public'));
 
@@ -20,9 +22,9 @@ app.get('/picture_get_all', function (req, res) {
     db.collection('picture').find().toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
-        res.end(JSON.stringify(result));
-    });
 
+    });
+    res.render('manager');
 })
 
 
