@@ -22,9 +22,10 @@ app.get('/picture_get_all', function (req, res) {
     db.collection('picture').find().toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
-
+        res.render('manager',{picture:'1.jpg',result:result});
+        //res.send(result);
     });
-    res.render('manager');
+
 })
 
 
