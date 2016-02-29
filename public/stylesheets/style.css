@@ -47,19 +47,22 @@
   padding-bottom: 100%;
   background-color: rgba(237,237,237,1.0);
 }
-.upload {
+.uploaddiv {
   height: 60px;
   margin: 20px 0;
 }
-.uploadbtn {
+.uploadform {
   float: right;
-  margin-right: 30px;
-  width: 120px;
-  height: 30px;
+}
+.filebtn, .uploadbtn {
   background-color: rgba(44,48,73,1.0);
   color: rgba(255,255,255,1.0);
   border-radius: 3px;
   border: 1px solid rgb(204, 204, 204);
+}
+.uploadbtn {
+  margin-right: 30px;
+  height: 27px;
 }
 .showbox{
   margin-left: 1%;

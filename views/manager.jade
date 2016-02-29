@@ -24,8 +24,10 @@ html(lang="en")
                         li.classitem c4 (num4)
                         li.classitem c5 (num5)
             div.right
-                div.upload
-                    button.uploadbtn upload photo
+                div.uploaddiv
+                    form(action="/file_upload" method="post" enctype="multipart/form-data").uploadform
+                        input(type="file" name="image" size="50").filebtn
+                        input(type="submit" value="upload photo").uploadbtn
                 div.showbox
                     - for (var x=0; x < gp.length; x++)
                         div.showitem
