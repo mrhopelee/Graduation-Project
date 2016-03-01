@@ -1,24 +1,20 @@
 //
    Created by Administrator on 2016-2-24.
-
 doctype html
 html(lang="en")
     head
-        - var name = 'Jade'
-        title= name
-        meta(charset="utf-8")
-        link(rel="stylesheet", type="text/css" href="/stylesheets/style.css")
 
+        - var gp = result
     body
-        h1 Jade - node template engine
-        #container.col
-            if name === 'Jade'
-                p #{name} is very cool
-            else
-                p Get on Jade
-        footer
-            p.
-                Jade is a terse and simplae
-                templating language with a
-                strong focus on performance
-                and powerful features.
+                    - for (var x=0; x < gp.length; x++)
+                    div.showitem
+                        div.showimg
+                            img(src="images/"+gp[x].realname, alt=gp[x].name)
+                        div.showother
+                            span.showname=gp[x].name
+                            form(action="/image_del" method="post").delform
+                                input(type="hidden" value=gp[x]._id name='id')
+                                input(type="submit" value="delete")
+
+
+

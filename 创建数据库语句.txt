@@ -1,7 +1,7 @@
 use gp
 db.picture.insert({name: '李灏',realname: '1.jpg', date: ['1994', '01', '26'], height: '300', width: '300', size: '9527', class: '人像', tag: ['男', '自黑', '屌丝', '宅男']})
-db.picture.insert({name: '北理珠',realname: '2.jpg', date: ['2012', '07', '01'], height: '1000', width: '1000', size: '718118', class: '地方', tag: ['大学', '珠海', '理工', '工厂']})
-db.picture.insert({name: '英华',realname: '3.jpg', date: ['2006', '09', '01'], height: '500', width: '500', size: '222222', class: '地方', tag: ['私立', '中学', '附属', '增中']})
+db.picture.insert({name: '北理珠',realname: '2.jpg', date: ['2012', '07', '01'], height: '1000', width: '1000', size: '718118', class: '人物', tag: ['大学', '珠海', '理工', '工厂']})
+db.picture.insert({name: '英华',realname: '3.jpg', date: ['2006', '09', '01'], height: '500', width: '500', size: '222222', class: '漫画', tag: ['私立', '中学', '附属', '增中']})
 db.picture.insert({name: '我',realname: '4.jpg', date: ['2016', '02', '23'], height: '1', width: '1', size: '1', class: '人像', tag: ['呵呵', '哈哈', '嘻嘻', '嗯嗯']})
 
 

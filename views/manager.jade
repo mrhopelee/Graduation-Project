@@ -9,17 +9,37 @@ html(lang="en")
         meta(charset="utf-8")
         link(rel="stylesheet", type="text/css" href="/stylesheets/style.css")
         link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
+        script(src="/javascripts/jquery-2.2.1.js")
+        script.
+            $(document).ready(function () {
+                $('.classitem').click(function (e) {
+                    var thisc = $(this).attr("data-c");
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "http://localhost:27017/classimage",
+                        async: false,
+                        data: {"classname":thisc},
+                        success: function (result) {
+                            alert(result.realname);
+                            $(".showbox").html(result.realname);
+                        }
+                    });
+                });
+            });
+
     body
         div.all
             div.left
                 div.title
-                    h1 myphoto
+                    a(href="http://localhost:27017/manager.html")
+                        h1 myphoto
                 div.newclass
                     button.classbtn new class
                 div.classbox
                     ul.classlist
-                        li.classitem c1 (num1)
-                        li.classitem c2 (num2)
+                        li.classitem(data-c="人物") 人物 (num1)
+                        li.classitem(data-c="漫画") 漫画 (num2)
                         li.classitem c3 (num3)
                         li.classitem c4 (num4)
                         li.classitem c5 (num5)
@@ -35,6 +55,9 @@ html(lang="en")
                                 img(src="images/"+gp[x].realname, alt=gp[x].name)
                             div.showother
                                 span.showname=gp[x].name
-                                button.showbtn ...
+                                form(action="/image_del" method="post").delform
+                                    input(type="hidden" value=gp[x]._id name='id')
+                                    input(type="submit" value="delete")
+
 
 
