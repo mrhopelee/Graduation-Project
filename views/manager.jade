@@ -11,6 +11,10 @@ html(lang="en")
         link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
         script(src="/javascripts/jquery-2.2.1.js")
         script.
+            var createshowitem = function(str){
+                var text="<div class=\"showitem\"><div class=\"showimg\"><img src=\"\" alt=\"\"></div><div class=\"showother\"><span class=\"showname\"></span><form action=\"/image_del\" method=\"post\" class=\"delform\"><input type=\"hidden\" value=\"\" name=\"id\"><input type=\"submit\" value=\"delete\"></form></div></div>";
+                $(str).append(text);
+            };
             $(document).ready(function () {
                 $('.classitem').click(function (e) {
                     var thisc = $(this).attr("data-c");
@@ -21,8 +25,15 @@ html(lang="en")
                         async: false,
                         data: {"classname":thisc},
                         success: function (result) {
-                            alert(result.realname);
-                            $(".showbox").html(result.realname);
+                            $(".showbox").empty();
+                            for(var i=0; i < result.length; i++ ) {
+                                createshowitem(".showbox");
+                                var j = i + 1;
+                                var nowshowitem = $(".showbox>.showitem:nth-child(" + j + ")");
+                                nowshowitem.find(".showimg>img").attr({"src": "images/" + result[i].realname,"alt": result[i].name});
+                                nowshowitem.find(".showname").html(result[i].name);
+                                nowshowitem.find(".delform>input:first-child").attr({"value": result[i]._id});
+                            }
                         }
                     });
                 });
@@ -38,6 +49,7 @@ html(lang="en")
                     button.classbtn new class
                 div.classbox
                     ul.classlist
+                        li.classitem(data-c="") 全部
                         li.classitem(data-c="人物") 人物 (num1)
                         li.classitem(data-c="漫画") 漫画 (num2)
                         li.classitem c3 (num3)
