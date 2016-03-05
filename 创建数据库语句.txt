@@ -11,4 +11,10 @@ db.class.insert({name: '风光'})
 db.class.insert({name: '漫画'})
 db.class.insert({name: '微距'})
 
+{ "_id" : ObjectId("56dab2879a78ca71f18afdb6"), "name" : "默认" }
+{ "_id" : ObjectId("56dab2879a78ca71f18afdb7"), "name" : "人物" }
+{ "_id" : ObjectId("56dab2879a78ca71f18afdb8"), "name" : "风光" }
+{ "_id" : ObjectId("56dab2879a78ca71f18afdb9"), "name" : "漫画" }
+{ "_id" : ObjectId("56dab2889a78ca71f18afdba"), "name" : "微距" }
+
 

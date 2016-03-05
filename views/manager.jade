@@ -5,7 +5,8 @@ html(lang="en")
     head
         - var name = '管理'
         title= name
-        - var gp = result
+        - var allpi = pi
+        - var allci = ci
         meta(charset="utf-8")
         link(rel="stylesheet", type="text/css" href="/stylesheets/style.css")
         link(rel="stylesheet", type="text/css" href="/stylesheets/tanchuceng.css")
@@ -121,13 +122,11 @@ html(lang="en")
                     button.classbtn new class
                 div.classbox
                     ul.classlist
+
                         li.classitem(data-c="") 全部
-                        li.classitem(data-c="默认") 默认
-                            span (num1)
-                        li.classitem(data-c="人物") 人物
-                            span (num1)
-                        li.classitem(data-c="漫画") 漫画
-                            span (num1)
+                        - for (var x=0; x < allci.length; x++)
+                            li.classitem(data-c=allci[x].name)=allci[x].name
+                                span (num1)
             div.right
                 div.uploaddiv
                     form(action="/file_upload" method="post" enctype="multipart/form-data").uploadform
@@ -135,18 +134,18 @@ html(lang="en")
                         input(type="file" name="image" size="50").filebtn
                         input(type="submit" value="upload photo").uploadbtn
                 div.showbox.btcf
-                    - for (var x=0; x < gp.length; x++)
+                    - for (var x=0; x < allpi.length; x++)
                         div.showitem.btcf
                             div.showimg
-                                img(src="images/"+gp[x].realname, alt=gp[x].name)
+                                img(src="images/"+allpi[x].realname, alt=allpi[x].name)
                             div.showother
                                 button.showbtn ···
                                 div.shownamediv
-                                    span.showname=gp[x].name
+                                    span.showname=allpi[x].name
                                 div.btndiv
                                     button.editbtn update
                                     form(action="/image_del" method="post").delform
-                                        input(type="hidden" value=gp[x]._id name='id')
+                                        input(type="hidden" value=allpi[x]._id name='id')
                                         button(type="submit" value="delete") delete
 
 

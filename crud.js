@@ -14,10 +14,42 @@ function creatImg(req,res,data,classname) {
     });
 }
 function showAllImg(req, res) {
+    /*d*/
+
+    //var classinfo = null;
+    //var classnum = null;
+    //classinfo = db.collection('class',{});
+    //console.log(db.collection('class'));
+    // console.log(db.collection('class').find());
+
+    var INFO = {
+        classinfo:null,
+        setclassinfo:function(result) {
+            this.classinfo=result;
+        },
+        getclassinfo:function() {
+            return this.classinfo
+        }
+    }
+        db.collection('class').find().toArray(function(err, result) {
+            if (err) throw err;
+            INFO.setclassinfo(result);
+            //res.send(result);
+        })
+    console.log(INFO.getclassinfo());
+    做到这做到这做到这
+    /*for(var x=0; x < classinfo.length; x++) {
+        db.collection('picture').count({class:classinfo[x].name}, function(err, count) {
+            var temp = {"classinfo[x].name":count};
+            classnum.push(temp);
+            console.log('There are ' + classnum + ' bands in the database');
+        });
+    }*/
+
     db.collection('picture').find().toArray(function(err, result) {
+
         if (err) throw err;
-        //console.log(result);
-        res.render('manager',{result:result});
+        res.render('manager',{pi:result,ci:"123"});
         //res.send(result);
     })
 }
