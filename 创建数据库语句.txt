@@ -5,3 +5,10 @@ db.picture.insert({name: '英华',realname: '3.jpg', date: ['2006', '09', '01'],
 db.picture.insert({name: '我',realname: '4.jpg', date: ['2016', '02', '23'], height: '1', width: '1', size: '1', class: '人像', tag: ['呵呵', '哈哈', '嘻嘻', '嗯嗯']})
 
 
+db.class.insert({name: '默认'})
+db.class.insert({name: '人物'})
+db.class.insert({name: '风光'})
+db.class.insert({name: '漫画'})
+db.class.insert({name: '微距'})
+
+

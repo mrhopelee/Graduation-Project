@@ -5,10 +5,10 @@ var str =  'mongodb://' + 'localhost' +':' + '27017'+ '/' + 'gp';
 var db = require('mongoskin').db(str);
 var imageinfo = require("./imageinfo");
 
-function creatImg(req,res,data) {
+function creatImg(req,res,data,classname) {
     var now= new Date();
     var info = imageinfo(data);
-    db.collection('picture').insert({name: req.files[0].originalname,realname: req.files[0].originalname, date: [now.getYear(), now.getMonth(), now.getDate()], height: info.height, width: info.width, size: data.length, class: '默认', tag: []}, function(err, result) {
+    db.collection('picture').insert({name: req.files[0].originalname,realname: req.files[0].originalname, date: [now.getYear(), now.getMonth(), now.getDate()], height: info.height, width: info.width, size: data.length, class: classname, tag: []}, function(err, result) {
         if (err) throw err;
         if (result) console.log('Added!');
     });

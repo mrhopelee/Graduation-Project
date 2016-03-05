@@ -1,0 +1,19 @@
+.TCDiv{
+    z-index: 101;
+    height: 300px;	width: 300px;
+    display: none;
+    background-color: #000;
+    margin-top:0;	padding:0;
+}
+.bgDiv{
+    z-index: 100;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100%;	width: 100%;
+    display: none;
+    cursor: pointer;
+    background:rgba(55, 55, 55, 0.8)
+}
+.TCimg{
+    width:100%;
+}

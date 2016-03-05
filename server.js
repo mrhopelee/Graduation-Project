@@ -34,7 +34,13 @@ app.post('/file_upload', function (req, res) {
     //console.log(req.files[0]);  // 上传的文件信息
 
     var des_file = __dirname + "/public/images/" + req.files[0].originalname;
-
+    var classname="";
+    if (req.body.classname.toString()==""){
+        classname = "默认";
+    } else {
+        classname = req.body.classname;
+    }
+    console.log(classname);
     fs.readFile( req.files[0].path, function (err, data) {
 
         fs.writeFile(des_file, data, function (err) {
@@ -45,7 +51,7 @@ app.post('/file_upload', function (req, res) {
                     message:'File uploaded successfully',
                     filename:req.files[0].originalname
                 };
-                crud.creatImg(req,res,data);
+                crud.creatImg(req,res,data,classname);
             }
             console.log( response );
             managerpage(req, res);

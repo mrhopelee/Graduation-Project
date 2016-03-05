@@ -8,24 +8,55 @@ html(lang="en")
         - var gp = result
         meta(charset="utf-8")
         link(rel="stylesheet", type="text/css" href="/stylesheets/style.css")
+        link(rel="stylesheet", type="text/css" href="/stylesheets/tanchuceng.css")
         link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
         script(src="/javascripts/jquery-2.2.1.js")
+        script(src="/javascripts/tanchuceng.js")
+
+
+
         script.
+
             var createshowitem = function(str){
-                var text="<div class=\"showitem\"><div class=\"showimg\"><img src=\"\" alt=\"\"></div><div class=\"showother\"><span class=\"showname\"></span><form action=\"/image_del\" method=\"post\" class=\"delform\"><input type=\"hidden\" value=\"\" name=\"id\"><input type=\"submit\" value=\"delete\"></form></div></div>";
+                var text="<div class=\"showitem btcf\"><div class=\"showimg\"><img src=\"\" alt=\"\"></div><div class=\"showother\"><button class=\"showbtn\">···</button><div class=\"shownamediv\"><span class=\"showname\"></span></div><div class=\"btndiv\"><button class=\"editbtn\">update</button><form action=\"/image_del\" method=\"post\" class=\"delform\"><input type=\"hidden\" value=\"\" name=\"id\"><button type=\"submit\" value=\"delete\">delete</button></form></div></div></div>";
                 $(str).append(text);
             };
             $(document).ready(function () {
+
+                $(function () {
+                    $(window).scroll(function () {
+                        if ($(this).scrollTop() != 0) {
+                            $("#toTop").fadeIn();
+                        } else {
+                            $("#toTop").fadeOut();
+                        }
+                    });
+                    $("body").append("<div id=\"toTop\" style=\"z-index: 100;border:1px solid #444;background:#333;color:#fff;text-align:center;padding:10px 13px 7px 13px;position:fixed;bottom:10px;right:10px;cursor:pointer;display:none;font-family:verdana;font-size:22px;\">^</div>");
+                    $("#toTop").click(function () {
+                        $("body,html").animate({scrollTop: 0}, 800);
+                    });
+                });
+
+                $("body").css("height", "2000px");
+                function appendText() {	// 以 jQuery 创建按钮、元素
+                    //var btn=$("<button></button>").text("Click me.").addClass('TCBtn');
+                    var div = $("<div><img class=\"TCimg\" src=\"\" alt=\"\" /></div>").addClass('TCDiv');
+                    var div2 = $("<div></div>").addClass('bgDiv');
+                    $("body").append(div, div2);        // 追加新元素
+                }
+                appendText();
+
                 $('.classitem').click(function (e) {
                     var thisc = $(this).attr("data-c");
                     e.preventDefault();
-
+                    $(".uploaddiv input[type=\"hidden\"]").attr("value",thisc);
                     $.ajax({
                         url: "http://localhost:27017/classimage",
                         async: false,
                         data: {"classname":thisc},
                         success: function (result) {
                             $(".showbox").empty();
+
                             for(var i=0; i < result.length; i++ ) {
                                 createshowitem(".showbox");
                                 var j = i + 1;
@@ -36,7 +67,48 @@ html(lang="en")
                             }
                         }
                     });
+                    init();
+                    tanchu(1,1);
                 });
+                var init = function (){
+                    var allbtndiv = $(".btndiv");
+                    var t;
+                    var temp = function () {
+                        t = setTimeout(function () {
+                            allbtndiv.css({"display": "none"});
+                        }, 500);
+                    }
+                    allbtndiv.mouseout(function (e) {
+                        e.preventDefault();
+                        temp();
+                    });
+                    allbtndiv.find("*").mouseover(function (e) {
+                        e.preventDefault();
+                        clearTimeout(t);
+                        allbtndiv.css({"display": "display"});
+
+                    });
+                    $('.showbtn').click(function (e) {
+                        e.preventDefault();
+
+                        var btndiv = $(this).next().next();
+                        if (btndiv.css("display") == "block") {
+
+                            btndiv.css({"display": "none"});
+                        } else if (btndiv.css("display") == "none") {
+                            allbtndiv.css({"display": "none"});
+                            btndiv.css({"display": "block"});
+                        }
+                    });
+
+                };
+
+                $(document).ready(function () {
+                    init();
+                    tanchu(1, 1);
+                    waterFall.init();
+                });
+
             });
 
     body
@@ -50,26 +122,32 @@ html(lang="en")
                 div.classbox
                     ul.classlist
                         li.classitem(data-c="") 全部
-                        li.classitem(data-c="人物") 人物 (num1)
-                        li.classitem(data-c="漫画") 漫画 (num2)
-                        li.classitem c3 (num3)
-                        li.classitem c4 (num4)
-                        li.classitem c5 (num5)
+                        li.classitem(data-c="默认") 默认
+                            span (num1)
+                        li.classitem(data-c="人物") 人物
+                            span (num1)
+                        li.classitem(data-c="漫画") 漫画
+                            span (num1)
             div.right
                 div.uploaddiv
                     form(action="/file_upload" method="post" enctype="multipart/form-data").uploadform
+                        input(type="hidden" value="" name='classname')
                         input(type="file" name="image" size="50").filebtn
                         input(type="submit" value="upload photo").uploadbtn
-                div.showbox
+                div.showbox.btcf
                     - for (var x=0; x < gp.length; x++)
-                        div.showitem
+                        div.showitem.btcf
                             div.showimg
                                 img(src="images/"+gp[x].realname, alt=gp[x].name)
                             div.showother
-                                span.showname=gp[x].name
-                                form(action="/image_del" method="post").delform
-                                    input(type="hidden" value=gp[x]._id name='id')
-                                    input(type="submit" value="delete")
+                                button.showbtn ···
+                                div.shownamediv
+                                    span.showname=gp[x].name
+                                div.btndiv
+                                    button.editbtn update
+                                    form(action="/image_del" method="post").delform
+                                        input(type="hidden" value=gp[x]._id name='id')
+                                        button(type="submit" value="delete") delete
 
 
 
