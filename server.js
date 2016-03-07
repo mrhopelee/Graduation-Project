@@ -41,6 +41,7 @@ app.post('/file_upload', function (req, res) {
         classname = req.body.classname;
     }
     console.log(classname);
+    console.log(req.files[0].path);
     fs.readFile( req.files[0].path, function (err, data) {
 
         fs.writeFile(des_file, data, function (err) {
