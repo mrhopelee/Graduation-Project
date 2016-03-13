@@ -5,12 +5,12 @@ var str =  'mongodb://' + 'localhost' +':' + '27017'+ '/' + 'gp';
 var db = require('mongoskin').db(str);
 var imageinfo = require("./imageinfo");
 
-function creatImg(req,res,data,classname) {
+function creatImg(req,res,data,nameQuery) {
     var now= new Date();
     var info = imageinfo(data);
-    db.collection('picture').insert({name: req.files[0].originalname,realname: req.files[0].originalname, date: [now.getYear(), now.getMonth(), now.getDate()], height: info.height, width: info.width, size: data.length, class: classname, tag: []}, function(err, result) {
+    db.collection('picture').insert({name: req.files[0].originalname,realname: nameQuery.realname, date: [now.getYear(), now.getMonth(), now.getDate()], height: info.height, width: info.width, size: data.length, class: nameQuery.classname, tag: []}, function(err, result) {
         if (err) throw err;
-        if (result) console.log('Added!');
+        //if (result) console.log('Added!');
     });
 }
 function showAllImg(req, res) {
@@ -29,7 +29,7 @@ function showAllImg(req, res) {
 function classImg(req,res,classname) {
     db.collection('picture').find(classname).toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
+        //console.log(result);
         res.send(result);
     })
 }

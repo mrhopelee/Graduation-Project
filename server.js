@@ -22,14 +22,17 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ dest: '/tmp/'}).array('image'));
+
+
+//app.use(multer({ storage:storage}).array('image'));
+//app.use(multer({ dest: 'public/uploadstmp/'}).array('image'));
 
 app.get('/index.html', function (req, res) {
     console.log("index.html1");
     res.sendFile( __dirname + "/" + "index.html" );
 })
 
-app.post('/file_upload', function (req, res) {
+/*app.post('/file_upload', function (req, res) {
 
     //console.log(req.files[0]);  // 上传的文件信息
 
@@ -58,6 +61,53 @@ app.post('/file_upload', function (req, res) {
             managerpage(req, res);
         });
     });
+})*/
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploadstmp')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+})
+var uploadimg = multer({storage:storage});
+app.post('/file_upload', uploadimg.array('image'),  function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    var read_path = req.files[0].path;
+    var imgname = req.files[0].filename + '-' + req.files[0].originalname;
+    var write_path = "public\\images\\" + imgname;
+    var classname="";
+    if (req.body.classname.toString()==""){
+        classname = "默认";
+    } else {
+        classname = req.body.classname;
+    }
+    var nameQuery = {'classname': classname ,'realname': imgname};
+    fs.readFile( read_path, function (err, data) {
+
+        fs.writeFile(write_path, data, function (err) {
+            if( err ){
+                console.log( err );
+            }else{
+                crud.creatImg(req,res,data,nameQuery);
+            }
+            managerpage(req, res);
+        });
+        console.log(fs.existsSync(write_path));
+    });
+    //console.log(write_path);
+    //console.log(fs.existsSync(write_path));
+    /*fs.unlink(read_path, function(err) {
+        if (err) {
+            return console.error(err);
+        }
+        console.log("文件删除成功！");
+    });*/
+    /*console.log(read_path);
+    console.log(write_path);
+    console.log(classname);
+    console.log(req.files);*/
 })
 
 app.get('/manager.html', function (req, res) {
@@ -70,6 +120,7 @@ app.get('/classimage', function (req, res) {
     } else {
         classname={"class":req.query.classname};
     }
+
     crud.classImg(req,res,classname);
     //res.send(req.query.classname);
     /*db.collection('picture').find({req.query.}).toArray(function(err, result) {
