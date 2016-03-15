@@ -52,15 +52,24 @@ button {
 }
 .classlist {
   padding-left: 0;
-  border-top: 1px solid rgba(0,0,0,.2);
-  border-bottom: 1px solid rgba(0,0,0,.2);
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
 }
-.classlist li{
+.classlist .this {
+  color: rgba(0,0,0,1.0) !important;
+  background-color: rgba(255,255,255,1.0);
+  cursor: default !important;
+}
+.classlist .classitem{
   padding: 15px 0;
   list-style-type: none;
-  border: 1px solid rgba(0,0,0,.2);
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
   color: rgba(255,255,255,1.0);
+  cursor: pointer ;
 }
+
+
 .right {
   width: 80%;
   float: right;

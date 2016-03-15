@@ -48,6 +48,16 @@ html(lang="en")
                 appendText();
 
                 $('.classitem').click(function (e) {
+                    if($('.this').attr("data-c")==$(this).attr("data-c")){
+                        console.log($('.this').attr("data-c"));
+                        console.log($(this).attr("data-c"));
+                    }else {
+                        console.log($('.this').attr("data-c"));
+                        console.log($(this).attr("data-c"));
+                        $('.this').removeClass("this");
+                        $(this).addClass("this");
+                    }
+
                     var thisc = $(this).attr("data-c");
                     e.preventDefault();
                     $(".uploaddiv input[type=\"hidden\"]").attr("value",thisc);
@@ -107,7 +117,7 @@ html(lang="en")
                 $(document).ready(function () {
                     init();
                     tanchu(1, 1);
-                    waterFall.init();
+
                 });
 
             });
@@ -123,7 +133,7 @@ html(lang="en")
                 div.classbox
                     ul.classlist
 
-                        li.classitem(data-c="") 全部
+                        li.classitem.this(data-c="") 全部
                         - for (var x=0; x < allci.length; x++)
                             li.classitem(data-c=allci[x].name)=allci[x].name
             div.right

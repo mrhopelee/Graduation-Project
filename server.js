@@ -92,7 +92,6 @@ app.post('/file_upload', uploadimg.array('image'),  function (req, res, next) {
             }else{
                 crud.creatImg(req,res,data,nameQuery);
             }
-            managerpage(req, res);
         });
         console.log(fs.existsSync(write_path));
     });
@@ -111,7 +110,7 @@ app.post('/file_upload', uploadimg.array('image'),  function (req, res, next) {
 })
 
 app.get('/manager.html', function (req, res) {
-    managerpage(req, res);
+    crud.showAllImg(req,res);
 })
 app.get('/classimage', function (req, res) {
     var classname={};
@@ -133,9 +132,7 @@ app.get('/classimage', function (req, res) {
 
 
 app.post('/image_del', urlencodedParser, function (req, res) {
-
     crud.removeImg(req, res);
-    managerpage(req, res);
 })
 
 //跳转页面
