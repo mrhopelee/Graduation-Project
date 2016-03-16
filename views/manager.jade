@@ -12,115 +12,8 @@ html(lang="en")
         link(rel="stylesheet", type="text/css" href="/stylesheets/tanchuceng.css")
         link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
         script(src="/javascripts/jquery-2.2.1.js")
-        script(src="/javascripts/tanchuceng.js")
-
-
-
         script.
 
-            var createshowitem = function(str){
-                var text="<div class=\"showitem btcf\"><div class=\"showimg\"><img src=\"\" alt=\"\"></div><div class=\"showother\"><button class=\"showbtn\">···</button><div class=\"shownamediv\"><span class=\"showname\"></span></div><div class=\"btndiv\"><button class=\"editbtn\">update</button><form action=\"/image_del\" method=\"post\" class=\"delform\"><input type=\"hidden\" value=\"\" name=\"id\"><button type=\"submit\" value=\"delete\">delete</button></form></div></div></div>";
-                $(str).append(text);
-            };
-            $(document).ready(function () {
-
-                $(function () {
-                    $(window).scroll(function () {
-                        if ($(this).scrollTop() != 0) {
-                            $("#toTop").fadeIn();
-                        } else {
-                            $("#toTop").fadeOut();
-                        }
-                    });
-                    $("body").append("<div id=\"toTop\" style=\"z-index: 100;border:1px solid #444;background:#333;color:#fff;text-align:center;padding:10px 13px 7px 13px;position:fixed;bottom:10px;right:10px;cursor:pointer;display:none;font-family:verdana;font-size:22px;\">^</div>");
-                    $("#toTop").click(function () {
-                        $("body,html").animate({scrollTop: 0}, 800);
-                    });
-                });
-
-                $("body").css("height", "2000px");
-                function appendText() {	// 以 jQuery 创建按钮、元素
-                    //var btn=$("<button></button>").text("Click me.").addClass('TCBtn');
-                    var div = $("<div><img class=\"TCimg\" src=\"\" alt=\"\" /></div>").addClass('TCDiv');
-                    var div2 = $("<div></div>").addClass('bgDiv');
-                    $("body").append(div, div2);        // 追加新元素
-                }
-                appendText();
-
-                $('.classitem').click(function (e) {
-                    if($('.this').attr("data-c")==$(this).attr("data-c")){
-                        console.log($('.this').attr("data-c"));
-                        console.log($(this).attr("data-c"));
-                    }else {
-                        console.log($('.this').attr("data-c"));
-                        console.log($(this).attr("data-c"));
-                        $('.this').removeClass("this");
-                        $(this).addClass("this");
-                    }
-
-                    var thisc = $(this).attr("data-c");
-                    e.preventDefault();
-                    $(".uploaddiv input[type=\"hidden\"]").attr("value",thisc);
-                    $.ajax({
-                        url: "http://localhost:27017/classimage",
-                        async: false,
-                        data: {"classname":thisc},
-                        success: function (result) {
-                            $(".showbox").empty();
-
-                            for(var i=0; i < result.length; i++ ) {
-                                createshowitem(".showbox");
-                                var j = i + 1;
-                                var nowshowitem = $(".showbox>.showitem:nth-child(" + j + ")");
-                                nowshowitem.find(".showimg>img").attr({"src": "images/" + result[i].realname,"alt": result[i].name});
-                                nowshowitem.find(".showname").html(result[i].name);
-                                nowshowitem.find(".delform>input:first-child").attr({"value": result[i]._id});
-                            }
-                        }
-                    });
-                    init();
-                    tanchu(1,1);
-                });
-                var init = function (){
-                    var allbtndiv = $(".btndiv");
-                    var t;
-                    var temp = function () {
-                        t = setTimeout(function () {
-                            allbtndiv.css({"display": "none"});
-                        }, 500);
-                    }
-                    allbtndiv.mouseout(function (e) {
-                        e.preventDefault();
-                        temp();
-                    });
-                    allbtndiv.find("*").mouseover(function (e) {
-                        e.preventDefault();
-                        clearTimeout(t);
-                        allbtndiv.css({"display": "display"});
-
-                    });
-                    $('.showbtn').click(function (e) {
-                        e.preventDefault();
-
-                        var btndiv = $(this).next().next();
-                        if (btndiv.css("display") == "block") {
-
-                            btndiv.css({"display": "none"});
-                        } else if (btndiv.css("display") == "none") {
-                            allbtndiv.css({"display": "none"});
-                            btndiv.css({"display": "block"});
-                        }
-                    });
-
-                };
-
-                $(document).ready(function () {
-                    init();
-                    tanchu(1, 1);
-
-                });
-
-            });
 
     body
         div.all
@@ -132,10 +25,8 @@ html(lang="en")
                     button.classbtn new class
                 div.classbox
                     ul.classlist
-
                         li.classitem.this(data-c="") 全部
-                        - for (var x=0; x < allci.length; x++)
-                            li.classitem(data-c=allci[x].name)=allci[x].name
+
             div.right
                 div.uploaddiv
                     form(action="/file_upload" method="post" enctype="multipart/form-data").uploadform
@@ -157,5 +48,7 @@ html(lang="en")
                                         input(type="hidden" value=allpi[x]._id name='id')
                                         button(type="submit" value="delete") delete
 
-
+script(src="/javascripts/tanchuceng.js")
+script(src="/javascripts/classfun.js")
+script(src="/javascripts/pageinit.js")
 

@@ -4,6 +4,7 @@
 var str =  'mongodb://' + 'localhost' +':' + '27017'+ '/' + 'gp';
 var db = require('mongoskin').db(str);
 var imageinfo = require("./imageinfo");
+var fs = require("fs");
 
 /*插入图片*/
 function creatImg(req,res,data,nameQuery) {
@@ -17,16 +18,11 @@ function creatImg(req,res,data,nameQuery) {
 }
 /*查询所有图片*/
 function showAllImg(req, res) {
-    var classinfo = null;
-    db.collection('class').find().toArray(function(err, result) {
-            if (err) throw err;
-            classinfo = result;
-            console.log("class");
-        })
+
     db.collection('picture').find().toArray(function(err, result) {
         if (err) throw err;
-        console.log("picture");
-        res.render('manager',{pi:result,ci:classinfo});
+        //console.log("picture");
+        res.render('manager',{pi:result});
         //res.send(result);
     })
 }
@@ -40,11 +36,36 @@ function classImg(req,res,classname) {
 }
 /*删除图片*/
 function removeImg(req, res) {
-    db.collection('picture').removeById(req.body.id, function(err, result) {
-        if (!err) console.log(req.body.id+' deleted!');
-        showAllImg(req, res);
+    db.collection('picture').findById(req.body.id, function(err, result) {
+        var del_path = "public\\images\\" + result.realname;
+        //if (!err) console.log(del_path);
+        db.collection('picture').removeById(req.body.id, function(err, result) {
+            if (!err) {
+                //console.log(req.body.id + ' deleted!');
+                if (fs.existsSync(del_path)) {
+                    fs.unlink(del_path, function (err) {
+                        if (err) {
+                            return console.error(err);
+                        }
+                    });
+                }
+            }
+            showAllImg(req, res);
+        });
     });
+}
 
+function findClassName(req, res) {
+    db.collection('class').find().toArray(function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+}
+function newClass(req, res) {
+    db.collection('class').insert({name: req.query.newclass}, function(err, result) {
+        if (err) throw err;
+        if (!err) console.log('Class Added!');
+    });
 }
 
 
@@ -52,3 +73,6 @@ exports.removeImg     = removeImg;
 exports.showAllImg = showAllImg;
 exports.classImg    = classImg;
 exports.creatImg    = creatImg;
+
+exports.newClass = newClass;
+exports.findClassName = findClassName;
