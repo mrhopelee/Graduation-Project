@@ -118,10 +118,12 @@ var managerpage=function (req, res) {
 app.get('/findclassname', function (req, res) {
     crud.findClassName(req, res);
 })
-app.post('/newclass', function (req, res) {
+app.post('/newclass', urlencodedParser, function (req, res) {
     crud.newClass(req, res);
 })
-
+app.get('/delclass', function (req, res) {
+    crud.delClass(req, res);
+})
 
 var server = app.listen(27017, function () {
 

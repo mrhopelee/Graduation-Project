@@ -9,20 +9,42 @@ function createshowitem(str) {
 };
 
 function classClick(){
+    $('.classbtn').click(function (e) {
+        e.preventDefault();
+        $('.hidnc').css({
+            "display":"block"
+        });
+    });
+    $('.hidbtn').click(function (e) {
+        e.preventDefault();
+        $('.hidnc').css({
+            "display":"none"
+        });
+    });
 
     $('.classitem').click(function (e) {
         e.preventDefault();
 
         /*被选中的class改变样式*/
         if ($('.this').attr("data-c") == $(this).attr("data-c")) {
-            console.log($('.this').attr("data-c"));
-            console.log($(this).attr("data-c"));
-        } else {
-            console.log($('.this').attr("data-c"));
-            console.log($(this).attr("data-c"));
+            /*console.log($('.this').attr("data-c"));
+            console.log($(this).attr("data-c"));*/
+        } else if(($(this).attr("data-c")=="56dab2879a78ca71f18afdb6")||($(this).attr("data-c")=="")) {
+            $(".delclass").remove();
+            $(".updclass").remove();
             $('.this').removeClass("this");
             $(this).addClass("this");
+        } else {
+            /*console.log($('.this').attr("data-c"));
+            console.log($(this).attr("data-c"));*/
+            $(".delclass").remove();
+            $(".updclass").remove();
+            $('.this').removeClass("this");
+            $(this).addClass("this").append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>");
+            classDel();
         }
+
+
 
         /*点击class后触发分类查询*/
         var thisc = $(this).attr("data-c");
@@ -63,7 +85,7 @@ function getClassName(){
             var classText = "";
             for (var i = 0; i < result.length; i++) {
                 lasttclass = $(".classlist>li:last-child");
-                classText = "<li data-c=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
+                classText = "<li data-c=\""+result[i]._id+"\" class=\"classitem\">"+result[i].name+"</li>";
                 lasttclass.after(classText);
             }
         }
@@ -79,8 +101,38 @@ function classNew(){
             async: false,
             data: {"newclass": newclassname},
             success: function (result) {
-
+                $(".classlist>li:not(:first-child)").remove();
+                var lasttclass = null;
+                var classText = "";
+                for (var i = 0; i < result.length; i++) {
+                    lasttclass = $(".classlist>li:last-child");
+                    classText = "<li data-c=\""+result[i]._id+"\" class=\"classitem\">"+result[i].name+"</li>";
+                    lasttclass.after(classText);
+                }
+                classClick();
             }
         });
     })
+}
+function classDel(){
+    $('.delclass').click(function (e) {
+        e.preventDefault();
+        var thisclass = $(this).parent();
+        $.ajax({
+            url: "http://localhost:27017/delclass",
+            async: false,
+            data: {"classid": thisclass.attr("data-c")},
+            success: function (result) {
+                $(".classlist>li:not(:first-child)").remove();
+                var lasttclass = null;
+                var classText = "";
+                for (var i = 0; i < result.length; i++) {
+                    lasttclass = $(".classlist>li:last-child");
+                    classText = "<li data-c=\""+result[i]._id+"\" class=\"classitem\">"+result[i].name+"</li>";
+                    lasttclass.after(classText);
+                }
+                classClick();
+            }
+        });
+    });
 }

@@ -30,8 +30,40 @@ button {
 
   background-color: rgba(0,0,0,1.0);
 }
-.title, .newclass, .classbox {
+.title, .classform, .classbox {
   text-align: center;
+}
+.classform {
+  position: relative;
+}
+.hidnc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width:100%;
+  height:100%;
+  background-color: rgba(0,0,0,1.0);
+  z-index: 3;
+  display: none;
+}
+.newclass {
+
+}
+.classname {
+  display: block;
+  margin: 50px auto;
+  width: 75%;
+  height: 20px;
+  margin-bottom: 15px;
+  border: none;
+}
+.newclass button {
+  margin: 0 10px;
+  padding: 3px 10px;
+  background-color: rgba(44,48,73,1.0);
+  color: rgba(255,255,255,1.0);
+  border-radius: 0;
+  border: none;
 }
 .title {
   background-color: rgba(0,0,0,1.0);
@@ -44,13 +76,14 @@ button {
   text-decoration: none;
 }
 .classbtn{
-  width: 120px;
+  width: 75%;
   height: 30px;
   margin: 50px 0;
   background-color: rgba(255,255,255,1.0);
   color: rgba(0,0,0,1.0);
   /*border-radius: 3px;*/
   border: 1px solid rgba(255,255,255,1.0);
+  z-index: 2;
 }
 .classlist {
   padding-left: 0;
@@ -69,6 +102,23 @@ button {
   border-bottom: 1px solid rgba(255,255,255,.2);
   color: rgba(255,255,255,1.0);
   cursor: pointer ;
+  position: relative;
+}
+
+.updclass, .delclass {
+  position: absolute;
+}
+.updclass {
+  left: 100%;
+  top: 50%;
+  margin-left: -51px;
+  margin-top: -12px;
+}
+.delclass {
+  left: 100%;
+  top: 50%;
+  margin-left: -24px;
+  margin-top: -12px;
 }
 
 

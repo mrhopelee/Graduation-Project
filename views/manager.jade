@@ -8,9 +8,10 @@ html(lang="en")
         - var allpi = pi
         - var allci = ci
         meta(charset="utf-8")
+        link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
         link(rel="stylesheet", type="text/css" href="/stylesheets/style.css")
         link(rel="stylesheet", type="text/css" href="/stylesheets/tanchuceng.css")
-        link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
+
         script(src="/javascripts/jquery-2.2.1.js")
         script.
 
@@ -21,8 +22,13 @@ html(lang="en")
                 div.title
                     a(href="http://localhost:27017/manager.html")
                         h1 myphoto
-                div.newclass
+                div.classform
                     button.classbtn new class
+                    div.hidnc
+                        form(action="/newclass" method="post").newclass
+                            input(type="text" name="classname").classname
+                            button(type="submit" value="yes") 增加
+                            button.hidbtn 取消
                 div.classbox
                     ul.classlist
                         li.classitem.this(data-c="") 全部

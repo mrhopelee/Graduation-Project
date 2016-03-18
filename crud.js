@@ -62,9 +62,19 @@ function findClassName(req, res) {
     })
 }
 function newClass(req, res) {
-    db.collection('class').insert({name: req.query.newclass}, function(err, result) {
+    db.collection('class').insert({name: req.body.classname}, function(err, result) {
         if (err) throw err;
         if (!err) console.log('Class Added!');
+        findClassName(req,res);
+    });
+}
+function delClass(req, res) {
+
+    console.log(req.query.classid);
+    db.collection('class').removeById(req.query.classid, function(err, result) {
+        if (err) throw err;
+        if (!err) console.log('Class del!');
+        findClassName(req,res);
     });
 }
 
@@ -75,4 +85,5 @@ exports.classImg    = classImg;
 exports.creatImg    = creatImg;
 
 exports.newClass = newClass;
+exports.delClass = delClass;
 exports.findClassName = findClassName;
