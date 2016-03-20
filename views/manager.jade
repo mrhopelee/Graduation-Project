@@ -25,10 +25,10 @@ html(lang="en")
                 div.classform
                     button.classbtn new class
                     div.hidnc
-                        form(action="/newclass" method="post").newclass
-                            input(type="text" name="classname").classname
-                            button(type="submit" value="yes") 增加
-                            button.hidbtn 取消
+                        div.newclass
+                            input(type="text").newclassname
+                            button.newclassbtn 增加
+                            button.hidnewclassbtn 取消
                 div.classbox
                     ul.classlist
                         li.classitem.this(data-c="") 全部

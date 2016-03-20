@@ -27,12 +27,31 @@ function showAllImg(req, res) {
     })
 }
 /*按分类查询图片*/
-function classImg(req,res,classname) {
-    db.collection('picture').find(classname).toArray(function(err, result) {
+function classImg(req,res) {
+    /*console.log(req.query.thisclassid);*/
+    if(req.query.thisclassid==""){
+        db.collection('picture').find().toArray(function(err, result) {
+            if (err) throw err;
+            //console.log(result);
+            res.send(result);
+        });
+    }else {
+            db.collection('picture').find({class:req.query.thisclassid}).toArray(function(err, result) {
+                if (err) throw err;
+                //console.log(result);
+                res.send(result);
+            });
+        /*db.collection('picture').findById(req.query.thisclassid, function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });*/
+    }
+    /*db.collection('picture').findById(req.body.id, function(err, result) {
         if (err) throw err;
         //console.log(result);
         res.send(result);
-    })
+    });*/
 }
 /*删除图片*/
 function removeImg(req, res) {
@@ -62,7 +81,7 @@ function findClassName(req, res) {
     })
 }
 function newClass(req, res) {
-    db.collection('class').insert({name: req.body.classname}, function(err, result) {
+    db.collection('class').insert({name: req.query.newclassname}, function(err, result) {
         if (err) throw err;
         if (!err) console.log('Class Added!');
         findClassName(req,res);

@@ -46,7 +46,7 @@ app.post('/file_upload', uploadimg.array('image'),  function (req, res, next) {
     var write_path = "public\\images\\" + imgname;
     var classname="";
     if (req.body.classname.toString()==""){
-        classname = "默认";
+        classname = "56dab2879a78ca71f18afdb6";//默认分类的id
     } else {
         classname = req.body.classname;
     }
@@ -87,21 +87,7 @@ app.get('/manager.html', function (req, res) {
     crud.showAllImg(req,res);
 })
 app.get('/classimage', function (req, res) {
-    var classname={};
-    if (req.query.classname.toString()==""){
-        classname={};
-    } else {
-        classname={"class":req.query.classname};
-    }
-
-    crud.classImg(req,res,classname);
-    //res.send(req.query.classname);
-    /*db.collection('picture').find({req.query.}).toArray(function(err, result) {
-        if (err) throw err;
-        //console.log(result);
-        res.render('manager',{result:result});
-        //res.send(result);
-    })*/
+    crud.classImg(req,res);
 })
 
 
@@ -118,7 +104,7 @@ var managerpage=function (req, res) {
 app.get('/findclassname', function (req, res) {
     crud.findClassName(req, res);
 })
-app.post('/newclass', urlencodedParser, function (req, res) {
+app.get('/newclass', function (req, res) {
     crud.newClass(req, res);
 })
 app.get('/delclass', function (req, res) {

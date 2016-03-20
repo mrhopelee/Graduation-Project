@@ -15,7 +15,7 @@ function classClick(){
             "display":"block"
         });
     });
-    $('.hidbtn').click(function (e) {
+    $('.newclass>button').click(function (e) {
         e.preventDefault();
         $('.hidnc').css({
             "display":"none"
@@ -40,8 +40,19 @@ function classClick(){
             $(".delclass").remove();
             $(".updclass").remove();
             $('.this').removeClass("this");
-            $(this).addClass("this").append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>");
+            $(this)
+                .addClass("this")
+                .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
+                .append("<div class=\"hiduc\"><input class=\"udpclassname\" type=\"text\"></input><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
+            $('.hiduc>button').click(function (e) {
+                e.preventDefault();
+                console.log("123");
+                $('.hidnc').css({
+                    "display":"none"
+                });
+            });
             classDel();
+            classUpd();
         }
 
 
@@ -49,10 +60,11 @@ function classClick(){
         /*点击class后触发分类查询*/
         var thisc = $(this).attr("data-c");
         $(".uploaddiv input[type=\"hidden\"]").attr("value", thisc);
+        /*console.log(thisc);*/
         $.ajax({
             url: "http://localhost:27017/classimage",
             async: false,
-            data: {"classname": thisc},
+            data: {"thisclassid": thisc},
             success: function (result) {
                 $(".showbox").empty();
 
@@ -85,7 +97,7 @@ function getClassName(){
             var classText = "";
             for (var i = 0; i < result.length; i++) {
                 lasttclass = $(".classlist>li:last-child");
-                classText = "<li data-c=\""+result[i]._id+"\" class=\"classitem\">"+result[i].name+"</li>";
+                classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
                 lasttclass.after(classText);
             }
         }
@@ -93,20 +105,21 @@ function getClassName(){
 }
 
 function classNew(){
-    $(".classbtn").click(function(e){
+    $(".newclassbtn").click(function(e){
         e.preventDefault();
-        var newclassname = $("");
+        var newclassname = $(".newclassname").val();
+        console.log(newclassname);
         $.ajax({
             url: "http://localhost:27017/newclass",
             async: false,
-            data: {"newclass": newclassname},
+            data: {"newclassname": newclassname},
             success: function (result) {
                 $(".classlist>li:not(:first-child)").remove();
                 var lasttclass = null;
                 var classText = "";
                 for (var i = 0; i < result.length; i++) {
                     lasttclass = $(".classlist>li:last-child");
-                    classText = "<li data-c=\""+result[i]._id+"\" class=\"classitem\">"+result[i].name+"</li>";
+                    classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
                     lasttclass.after(classText);
                 }
                 classClick();
@@ -128,11 +141,36 @@ function classDel(){
                 var classText = "";
                 for (var i = 0; i < result.length; i++) {
                     lasttclass = $(".classlist>li:last-child");
-                    classText = "<li data-c=\""+result[i]._id+"\" class=\"classitem\">"+result[i].name+"</li>";
+                    classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
                     lasttclass.after(classText);
                 }
                 classClick();
             }
         });
+    });
+}
+function classUpd(){
+    $('.updclass').click(function (e) {
+        e.preventDefault();
+        var thisclass = $(this).parent();
+        $('.hiduc').css({
+            "display":"block"
+        });
+        /*$.ajax({
+            url: "http://localhost:27017/delclass",
+            async: false,
+            data: {"classid": thisclass.attr("data-c")},
+            success: function (result) {
+                $(".classlist>li:not(:first-child)").remove();
+                var lasttclass = null;
+                var classText = "";
+                for (var i = 0; i < result.length; i++) {
+                    lasttclass = $(".classlist>li:last-child");
+                    classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
+                    lasttclass.after(classText);
+                }
+                classClick();
+            }
+        });*/
     });
 }
