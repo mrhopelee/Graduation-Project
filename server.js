@@ -104,8 +104,8 @@ var managerpage=function (req, res) {
 app.get('/findclassname', function (req, res) {
     crud.findClassName(req, res);
 })
-app.get('/newclass', function (req, res) {
-    crud.newClass(req, res);
+app.get('/creclass', function (req, res) {
+    crud.creClass(req, res);
 })
 app.get('/delclass', function (req, res) {
     crud.delClass(req, res);

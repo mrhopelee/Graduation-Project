@@ -23,19 +23,39 @@ button {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+/*左侧：网站标题、图片列表*/
 .left {
-  width:20%;
   float: left;
+  width:20%;
   padding-bottom: 100%;
 
   background-color: rgba(0,0,0,1.0);
 }
-.title, .classform, .classbox {
+/*headet 网站标题*/
+.sitetitle {
+  text-align: center;
+  background-color: rgba(255,255,255,1.0);
+}
+.sitetitle>a {
+  display: block;
+  width: 20%;
+  padding: 5px 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  font-size: 2em;
+  color: rgba(245,222,179,1.0);
+  background-color: rgba(0,0,0,1.0);
+  text-decoration: none;
+}
+
+.creclass {
+  position: relative;
   text-align: center;
 }
-.classform {
-  position: relative;
-}
+
+
+/*--------------做到这---------------*/
 .hidnc {
   position: absolute;
   left: 0;
@@ -46,7 +66,8 @@ button {
   z-index: 3;
   display: none;
 }
-.newclass {
+/*绝对居中*/
+.abscenter {
   position: absolute;
   top: 50%; left: 50%;
   -webkit-transform: translate(-50%,-50%);
@@ -59,7 +80,7 @@ button {
   margin: 15px 0;
   border: none;
 }
-.newclass button {
+.newclassname~button {
   margin: 0 10px;
   padding: 3px 10px;
   background-color: rgba(44,48,73,1.0);
@@ -89,16 +110,7 @@ height:100%;
 }
 
 
-.title {
-  background-color: rgba(0,0,0,1.0);
-}
 
-.title>a {
-  color: rgba(245,222,179,1.0);
-  padding: 5px 0;
-  margin: 0;
-  text-decoration: none;
-}
 .classbtn{
   width: 75%;
   height: 30px;
@@ -108,6 +120,10 @@ height:100%;
   /*border-radius: 3px;*/
   border: 1px solid rgba(255,255,255,1.0);
   z-index: 2;
+}
+
+.classbox {
+  text-align: center;
 }
 .classlist {
   padding-left: 0;

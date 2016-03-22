@@ -15,7 +15,7 @@ function classClick(){
             "display":"block"
         });
     });
-    $('.newclass>button').click(function (e) {
+    $('.newclassname~button').click(function (e) {
         e.preventDefault();
         $('.hidnc').css({
             "display":"none"
@@ -47,7 +47,7 @@ function classClick(){
             $('.hiduc>button').click(function (e) {
                 e.preventDefault();
                 console.log("123");
-                $('.hidnc').css({
+                $('.hiduc').css({
                     "display":"none"
                 });
             });
@@ -104,13 +104,13 @@ function getClassName(){
     });
 }
 
-function classNew(){
+function classCre(){
     $(".newclassbtn").click(function(e){
         e.preventDefault();
         var newclassname = $(".newclassname").val();
         console.log(newclassname);
         $.ajax({
-            url: "http://localhost:27017/newclass",
+            url: "http://localhost:27017/creclass",
             async: false,
             data: {"newclassname": newclassname},
             success: function (result) {
@@ -154,7 +154,7 @@ function classUpd(){
         e.preventDefault();
         var thisclass = $(this).parent();
         $('.hiduc').css({
-            "display":"block"
+            "display":"inline-block"
         });
         /*$.ajax({
             url: "http://localhost:27017/delclass",

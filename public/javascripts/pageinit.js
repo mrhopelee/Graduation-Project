@@ -62,7 +62,7 @@ $(document).ready(function () {
     btninit();
     appendTC();
     tanchu(1, 1);
-    classNew();
+    classCre();
     getClassName();
     classClick();
 });

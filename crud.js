@@ -80,7 +80,7 @@ function findClassName(req, res) {
         res.send(result);
     })
 }
-function newClass(req, res) {
+function creClass(req, res) {
     db.collection('class').insert({name: req.query.newclassname}, function(err, result) {
         if (err) throw err;
         if (!err) console.log('Class Added!');
@@ -103,6 +103,6 @@ exports.showAllImg = showAllImg;
 exports.classImg    = classImg;
 exports.creatImg    = creatImg;
 
-exports.newClass = newClass;
+exports.creClass = creClass;
 exports.delClass = delClass;
 exports.findClassName = findClassName;
