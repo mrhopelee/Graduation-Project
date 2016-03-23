@@ -110,6 +110,9 @@ app.get('/creclass', function (req, res) {
 app.get('/delclass', function (req, res) {
     crud.delClass(req, res);
 })
+app.get('/updclass', function (req, res) {
+    crud.updClass(req, res);
+})
 
 var server = app.listen(27017, function () {
 

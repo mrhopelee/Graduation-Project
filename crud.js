@@ -96,6 +96,16 @@ function delClass(req, res) {
         findClassName(req,res);
     });
 }
+function updClass(req, res) {
+
+    console.log(req.query.upd_classid);
+    console.log(req.query.upd_classname);
+    db.collection('class').updateById(req.query.upd_classid,  {$set:{name:req.query.upd_classname}}, function(err, result){
+        if (err) throw err;
+        if (!err) console.log('Class upd!');
+        findClassName(req,res);
+    });
+}
 
 
 exports.removeImg     = removeImg;
@@ -105,4 +115,5 @@ exports.creatImg    = creatImg;
 
 exports.creClass = creClass;
 exports.delClass = delClass;
+exports.updClass = updClass;
 exports.findClassName = findClassName;

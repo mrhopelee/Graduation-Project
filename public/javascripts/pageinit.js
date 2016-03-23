@@ -59,10 +59,9 @@ function btninit(){
 $(document).ready(function () {
     $("body").css("height", "2000px");
     backtop();
-    btninit();
+    btninit();/*图片按钮事件*/
     appendTC();
     tanchu(1, 1);
-    classCre();
-    getClassName();
-    classClick();
+
+    ClassInitFun();
 });

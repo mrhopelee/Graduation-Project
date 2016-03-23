@@ -48,20 +48,25 @@ button {
   background-color: rgba(0,0,0,1.0);
   text-decoration: none;
 }
-
+/*增加分类*/
 .creclass {
   position: relative;
   text-align: center;
+  display: block;
+  height: 120px;
 }
-
-
-/*--------------做到这---------------*/
-.hidnc {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width:100%;
-  height:100%;
+/*newclass按钮 点击显示怎加分类的input*/
+.newclassbtn{
+  width: 75%;
+  height: 30px;
+  background-color: rgba(255,255,255,1.0);
+  color: rgba(0,0,0,1.0);
+  /*border-radius: 3px;*/
+  border: 1px solid rgba(255,255,255,1.0);
+  z-index: 2;
+}
+/*增加分类的input*/
+.hidnewclass {
   background-color: rgba(0,0,0,1.0);
   z-index: 3;
   display: none;
@@ -74,13 +79,15 @@ button {
   -ms-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
 }
-.newclassname {
+/*新增分类输入框*/
+.creclassname {
   display: block;
   height: 26px;
   margin: 15px 0;
   border: none;
 }
-.newclassname~button {
+/*新增分类确定&取消按钮*/
+.creclassbtn, .hidcreclassbtn{
   margin: 0 10px;
   padding: 3px 10px;
   background-color: rgba(44,48,73,1.0);
@@ -88,6 +95,34 @@ button {
   border-radius: 0;
   border: none;
 }
+/*分类列表区域*/
+.showclass {
+  text-align: center;
+}
+/*分类列表*/
+.classlist {
+  padding-left: 0;
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+/*被选中的分类*/
+.classlist .this {
+  color: rgba(0,0,0,1.0) !important;
+  background-color: rgba(255,255,255,1.0);
+  cursor: default !important;
+}
+/*所有分类*/
+.classlist .classitem{
+  padding: 15px 0;
+  list-style-type: none;
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,1.0);
+  cursor: pointer ;
+  position: relative;
+}
+
+
 .hiduc {
 display:none;
 position: absolute;
@@ -111,39 +146,10 @@ height:100%;
 
 
 
-.classbtn{
-  width: 75%;
-  height: 30px;
-  margin: 50px 0;
-  background-color: rgba(255,255,255,1.0);
-  color: rgba(0,0,0,1.0);
-  /*border-radius: 3px;*/
-  border: 1px solid rgba(255,255,255,1.0);
-  z-index: 2;
-}
 
-.classbox {
-  text-align: center;
-}
-.classlist {
-  padding-left: 0;
-  border-top: 1px solid rgba(255,255,255,.2);
-  border-bottom: 1px solid rgba(255,255,255,.2);
-}
-.classlist .this {
-  color: rgba(0,0,0,1.0) !important;
-  background-color: rgba(255,255,255,1.0);
-  cursor: default !important;
-}
-.classlist .classitem{
-  padding: 15px 0;
-  list-style-type: none;
-  border-top: 1px solid rgba(255,255,255,.2);
-  border-bottom: 1px solid rgba(255,255,255,.2);
-  color: rgba(255,255,255,1.0);
-  cursor: pointer ;
-  position: relative;
-}
+
+
+
 
 .updclass, .delclass {
   position: absolute;
@@ -236,6 +242,6 @@ height:100%;
 .btndiv button {
   color: rgba(255,255,255,1.0);
   background-color: rgba(0,0,0,1.0);
-  border: 0px solid rgba(255,255,255,1.0);
+  border: 0 solid rgba(255,255,255,1.0);
   padding: 5px;
 }
