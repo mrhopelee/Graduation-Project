@@ -60,7 +60,7 @@ function classClick(){
             $(this)
                 .addClass("this")
                 .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
-                .append("<div class=\"hiduc\"><input class=\"udpclassname\" type=\"text\" /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
+                .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
             $('.udpclassname').val(classnamestr);
 
             classDel();/*删除分类事件*/
@@ -121,30 +121,58 @@ function classDel(){
 function classUpd(){
     $('.udpclassbtn').click(function (e) {
         e.preventDefault();
-        var thisclass = $('.classitem.this');
         var upd_classname = $('.udpclassname').val();
-        var upd_classid = thisclass.attr("data-c");
-        console.log(upd_classname);
-        console.log(upd_classid);
-        $.ajax({
-            url: "http://localhost:27017/updclass",
-            async: false,
-            data: {
-                "upd_classid": upd_classid,
-                "upd_classname": upd_classname
-            },
-            success: function (result) {
-                $(".classlist>li:not(:first-child)").remove();
-                var lasttclass = null;
-                var classText = "";
-                for (var i = 0; i < result.length; i++) {
-                    lasttclass = $(".classlist>li:last-child");
-                    classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
-                    lasttclass.after(classText);
+        if(upd_classname){/**/
+            if(upd_classname === $('.this').attr("data-n")){
+                $('.hiduc').css({
+                    "display":"none"
+                });
+            }else{
+                var oldcs = $('.classitem:not(.this)');
+                var temp = 1;
+                for(var i = 0; i < oldcs.length; i++){
+                    if(upd_classname === oldcs[i].innerHTML) {
+                        temp = 0;
+                    }
                 }
-                classClick();
+                if(temp) {
+                    startUpdClass(upd_classname);
+                    $(".udpclassname").val("");
+                    $('.hiduc').css({
+                        "display":"none"
+                    });
+                }else {
+                    alert("已存在此分类");
+                }
             }
-        });
+        }else{
+            alert("不能为空");
+        }
+
+        function startUpdClass(upd_classname){
+            var thisclass = $('.classitem.this');
+            var upd_classid = thisclass.attr("data-c");
+            $.ajax({
+                url: "http://localhost:27017/updclass",
+                async: false,
+                data: {
+                    "upd_classid": upd_classid,
+                    "upd_classname": upd_classname
+                },
+                success: function (result) {
+                    $(".classlist>li:not(:first-child)").remove();
+                    var lasttclass = null;
+                    var classText = "";
+                    for (var i = 0; i < result.length; i++) {
+                        lasttclass = $(".classlist>li:last-child");
+                        classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
+                        lasttclass.after(classText);
+                    }
+                    classClick();
+                }
+            });
+        }
+
     });
 }
 /*修改分类的页面交互*/
@@ -155,7 +183,7 @@ function updateClassClick(){
             "display":"inline-block"
         });
     });
-    $('.hiduc>button').click(function (e) {
+    $('.hidudpclassbtn').click(function (e) {
         e.preventDefault();
         $('.hiduc').css({
             "display":"none"
@@ -169,26 +197,47 @@ function updateClassClick(){
 function classCre(){
     $(".creclassbtn").click(function(e){
         e.preventDefault();
-
-
         var newclassname = $(".creclassname").val();
-        /*console.log(newclassname);*/
-        $.ajax({
-            url: "http://localhost:27017/creclass",
-            async: false,
-            data: {"newclassname": newclassname},
-            success: function (result) {
-                $(".classlist>li:not(:first-child)").remove();
-                var lasttclass = null;
-                var classText = "";
-                for (var i = 0; i < result.length; i++) {
-                    lasttclass = $(".classlist>li:last-child");
-                    classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
-                    lasttclass.after(classText);
+        if(newclassname){/**/
+            var oldcs = $('.classitem');
+            var temp = 1;
+            for(var i = 0; i < oldcs.length; i++){
+                if(newclassname === oldcs[i].innerHTML) {
+                    temp = 0;
                 }
-                classClick();
             }
-        });
+            if(temp) {
+                startCreClass(newclassname);
+                $(".creclassname").val("");
+                $('.hidnewclass').css({
+                    "display":"none"
+                });
+            }else {
+                alert("已存在此分类");
+            }
+        }else{
+            alert("不能为空");
+        }
+
+        function startCreClass(newclassname){
+            $.ajax({
+                url: "http://localhost:27017/creclass",
+                async: false,
+                data: {"newclassname": newclassname},
+                success: function (result) {
+                    $(".classlist>li:not(:first-child)").remove();
+                    var lasttclass = null;
+                    var classText = "";
+                    for (var i = 0; i < result.length; i++) {
+                        lasttclass = $(".classlist>li:last-child");
+                        classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
+                        lasttclass.after(classText);
+                    }
+                    classClick();
+                }
+            });
+        }
+
     })
 }
 /*新增分类的页面交互*/
@@ -199,7 +248,7 @@ function newClassClick(){
             "display":"block"
         });
     });
-    $('.creclassname~button').click(function (e) {
+    $('.hidcreclassbtn').click(function (e) {
         e.preventDefault();
         $('.hidnewclass').css({
             "display":"none"

@@ -54,6 +54,7 @@ button {
   text-align: center;
   display: block;
   height: 120px;
+  overflow: hidden;
 }
 /*newclass按钮 点击显示怎加分类的input*/
 .newclassbtn{
@@ -70,6 +71,7 @@ button {
   background-color: rgba(0,0,0,1.0);
   z-index: 3;
   display: none;
+  padding: 100%;
 }
 /*绝对居中*/
 .abscenter {
@@ -113,30 +115,30 @@ button {
 }
 /*所有分类*/
 .classlist .classitem{
-  padding: 15px 0;
+  padding: 25px 0;
   list-style-type: none;
   border-top: 1px solid rgba(255,255,255,.2);
   border-bottom: 1px solid rgba(255,255,255,.2);
   color: rgba(255,255,255,1.0);
   cursor: pointer ;
   position: relative;
+  overflow: hidden;
 }
 
 
 .hiduc {
-display:none;
-position: absolute;
-top: 50%;
-left: 50%;
--webkit-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-transform: translate(-50%,-50%);
-background-color: rgba(0,0,0,1.0);
-width:100%;
-height:100%;
+  display:none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  background-color: rgba(0,0,0,1.0);
+  padding: 100%;
 }
 .hiduc button{
-  margin: 0 10px;
+  margin: 5px 10px;
   padding: 3px 10px;
   background-color: rgba(44,48,73,1.0);
   color: rgba(255,255,255,1.0);

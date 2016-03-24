@@ -83,26 +83,26 @@ function findClassName(req, res) {
 function creClass(req, res) {
     db.collection('class').insert({name: req.query.newclassname}, function(err, result) {
         if (err) throw err;
-        if (!err) console.log('Class Added!');
+        if (!err) console.log('id:'+req.query.newclassname+' '+' creClass!');
         findClassName(req,res);
     });
 }
 function delClass(req, res) {
 
-    console.log(req.query.classid);
+    /*console.log(req.query.classid);*/
     db.collection('class').removeById(req.query.classid, function(err, result) {
         if (err) throw err;
-        if (!err) console.log('Class del!');
+        if (!err) console.log('id:'+req.query.classid+' '+' delClass!');
         findClassName(req,res);
     });
 }
 function updClass(req, res) {
 
-    console.log(req.query.upd_classid);
-    console.log(req.query.upd_classname);
+    /*console.log(req.query.upd_classid);
+    console.log(req.query.upd_classname);*/
     db.collection('class').updateById(req.query.upd_classid,  {$set:{name:req.query.upd_classname}}, function(err, result){
         if (err) throw err;
-        if (!err) console.log('Class upd!');
+        if (!err) console.log('id:'+req.query.upd_classid+' name:'+req.query.upd_classname+' updClass!');
         findClassName(req,res);
     });
 }
