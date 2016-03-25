@@ -17,12 +17,27 @@ function creatImg(req,res,data,nameQuery) {
     });
 }
 /*查询所有图片*/
+function showAllpicture(req, res) {
+
+    db.collection('picture').find().toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+        //res.render('manager',{pi:result});
+        //res.redirect('./hello.html');
+
+        res.json({
+            result: result
+        });
+    })
+}
+/*查询所有图片*/
 function showAllImg(req, res) {
 
     db.collection('picture').find().toArray(function(err, result) {
         if (err) throw err;
         //console.log("picture");
-        res.render('manager',{pi:result});
+        //res.render('manager',{pi:result});
+        res.redirect('./hello.html');
         //res.send(result);
     })
 }
@@ -112,6 +127,7 @@ exports.removeImg     = removeImg;
 exports.showAllImg = showAllImg;
 exports.classImg    = classImg;
 exports.creatImg    = creatImg;
+exports.showAllpicture    = showAllpicture;
 
 exports.creClass = creClass;
 exports.delClass = delClass;

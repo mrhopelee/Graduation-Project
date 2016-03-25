@@ -60,7 +60,7 @@ function classClick(){
             $(this)
                 .addClass("this")
                 .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
-                .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
+                .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" autofocus /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
             $('.udpclassname').val(classnamestr);
 
             classDel();/*删除分类事件*/
@@ -75,12 +75,12 @@ function classClick(){
             async: false,
             data: {"thisclassid": thisc},
             success: function (result) {
-                $(".showbox").empty();/*清空图片节点*/
+                $(".showpicture").empty();/*清空图片节点*/
 
                 for (var i = 0; i < result.length; i++) {
-                    createshowitem(".showbox");/*生成图片节点*/
+                    createshowitem(".showpicture");/*生成图片节点*/
                     var j = i + 1;
-                    var nowshowitem = $(".showbox>.showitem:nth-child(" + j + ")");
+                    var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
                     nowshowitem.find(".showimg>img").attr({
                         "src": "images/" + result[i].realname,
                         "alt": result[i].name

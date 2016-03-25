@@ -58,7 +58,7 @@ function btninit(){
 
 $(document).ready(function () {
     $("body").css("height", "2000px");
-    backtop();
+    backtop();/*返回顶部初始化*/
     btninit();/*图片按钮事件*/
     appendTC();
     tanchu(1, 1);

@@ -14,19 +14,29 @@ app.set('view engine', 'jade');
 
 
 var bodyParser = require('body-parser');
-var multer  = require('multer');
+var multer = require('multer');
 
 // 创建 application/x-www-form-urlencoded 编码解析
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({extended: false})
 
 app.use(express.static('public'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.get('/index.html', function (req, res) {
-    console.log("index.html1");
-    res.sendFile( __dirname + "/" + "index.html" );
+    console.log("index.html");
+    res.sendFile(__dirname + "/" + "index.html");
+})
+app.get('/hello.html', function (req, res) {
+    console.log("hello.html");
+    res.sendFile(__dirname + "/" + "hello.html");
+})
+app.get('/showAllpicture', function (req, res) {
+    crud.showAllpicture(req, res);
+})
+app.get('/manager.html', function (req, res) {
+    crud.showAllImg(req, res);
 })
 
 var storage = multer.diskStorage({
@@ -37,31 +47,31 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now())
     }
 })
-var uploadimg = multer({storage:storage});
-app.post('/file_upload', uploadimg.array('image'),  function (req, res, next) {
+var uploadimg = multer({storage: storage});
+app.post('/file_upload', uploadimg.array('image'), function (req, res, next) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
     var read_path = req.files[0].path;
     var imgname = req.files[0].filename + '-' + req.files[0].originalname;
     var write_path = "public\\images\\" + imgname;
-    var classname="";
-    if (req.body.classname.toString()==""){
+    var classname = "";
+    if (req.body.classname.toString() == "") {
         classname = "56dab2879a78ca71f18afdb6";//默认分类的id
     } else {
         classname = req.body.classname;
     }
-    var nameQuery = {'classname': classname ,'realname': imgname};
-    fs.readFile( read_path, function (err, data) {
+    var nameQuery = {'classname': classname, 'realname': imgname};
+    fs.readFile(read_path, function (err, data) {
 
         fs.writeFile(write_path, data, function (err) {
-            if( err ){
-                console.log( err );
-            }else{
-                crud.creatImg(req,res,data,nameQuery);
+            if (err) {
+                console.log(err);
+            } else {
+                crud.creatImg(req, res, data, nameQuery);
             }
         });
-        if(fs.existsSync(read_path)){
-            fs.unlink(read_path, function(err) {
+        if (fs.existsSync(read_path)) {
+            fs.unlink(read_path, function (err) {
                 if (err) {
                     return console.error(err);
                 }
@@ -72,22 +82,20 @@ app.post('/file_upload', uploadimg.array('image'),  function (req, res, next) {
     //console.log(write_path);
     //console.log(fs.existsSync(write_path));
     /*fs.unlink(read_path, function(err) {
-        if (err) {
-            return console.error(err);
-        }
-        console.log("文件删除成功！");
-    });*/
+     if (err) {
+     return console.error(err);
+     }
+     console.log("文件删除成功！");
+     });*/
     /*console.log(read_path);
-    console.log(write_path);
-    console.log(classname);
-    console.log(req.files);*/
+     console.log(write_path);
+     console.log(classname);
+     console.log(req.files);*/
 })
 
-app.get('/manager.html', function (req, res) {
-    crud.showAllImg(req,res);
-})
+
 app.get('/classimage', function (req, res) {
-    crud.classImg(req,res);
+    crud.classImg(req, res);
 })
 
 
@@ -96,8 +104,8 @@ app.post('/image_del', urlencodedParser, function (req, res) {
 })
 
 //跳转页面
-var managerpage=function (req, res) {
-    crud.showAllImg(req,res);
+var managerpage = function (req, res) {
+    crud.showAllImg(req, res);
 }
 
 /*class*/
@@ -110,7 +118,7 @@ app.get('/creclass', function (req, res) {
 app.get('/delclass', function (req, res) {
     crud.delClass(req, res);
 })
-app.get('/updclass', function (req, res) {
+app.get('/uploaddiv', function (req, res) {
     crud.updClass(req, res);
 })
 
@@ -118,7 +126,6 @@ var server = app.listen(27017, function () {
 
     var host = server.address().address
     var port = server.address().port
-
     console.log("应用实例，访问地址为 http://%s:%s", host, port)
 
 })

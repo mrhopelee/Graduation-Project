@@ -1,5 +1,5 @@
 var waterFall = {
-    wFmoudle: $(".showbox"), /*容器*/
+    wFmoudle: $(".showpicture"), /*容器*/
     itemWidth: 250, /*容器内单个元素单位宽度*/
     max: 160, /*图片总数*/
     arr: null,

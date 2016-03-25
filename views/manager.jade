@@ -6,13 +6,12 @@ html(lang="en")
         - var name = '管理'
         title= name
         - var allpi = pi
-        - var allci = ci
         meta(charset="utf-8")
         link(rel="stylesheet", type="text/css" href="/stylesheets/normalize.v3.0.3.css ")
         link(rel="stylesheet", type="text/css" href="/stylesheets/style.css")
         link(rel="stylesheet", type="text/css" href="/stylesheets/tanchuceng.css")
-
         script(src="/javascripts/jquery-2.2.1.js")
+        script(src="/javascripts/angular-1.5.2.js")
         script.
 
 
@@ -33,12 +32,12 @@ html(lang="en")
                         li.classitem.this(data-c="") 全部
 
             div.right
-                div.uploaddiv
+                div.crepicture
                     form(action="/file_upload" method="post" enctype="multipart/form-data").uploadform
                         input(type="hidden" value="" name='classname')
                         input(type="file" name="image" size="50").filebtn
                         input(type="submit" value="upload photo").uploadbtn
-                div.showbox.btcf
+                div.showpicture.btcf
                     - for (var x=0; x < allpi.length; x++)
                         div.showitem.btcf
                             div.showimg
@@ -52,7 +51,6 @@ html(lang="en")
                                     form(action="/image_del" method="post").delform
                                         input(type="hidden" value=allpi[x]._id name='id')
                                         button(type="submit" value="delete") delete
-
 script(src="/javascripts/tanchuceng.js")
 script(src="/javascripts/classfun.js")
 script(src="/javascripts/pageinit.js")
