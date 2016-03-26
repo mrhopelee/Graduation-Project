@@ -35,6 +35,9 @@ app.get('/hello.html', function (req, res) {
 app.get('/showAllpicture', function (req, res) {
     crud.showAllpicture(req, res);
 })
+app.get('/findclassname', function (req, res) {
+    crud.findClassName(req, res);
+})
 app.get('/manager.html', function (req, res) {
     crud.showAllImg(req, res);
 })
@@ -109,9 +112,8 @@ var managerpage = function (req, res) {
 }
 
 /*class*/
-app.get('/findclassname', function (req, res) {
-    crud.findClassName(req, res);
-})
+
+
 app.get('/creclass', function (req, res) {
     crud.creClass(req, res);
 })

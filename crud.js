@@ -21,13 +21,11 @@ function showAllpicture(req, res) {
 
     db.collection('picture').find().toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
+        //console.log(result);
         //res.render('manager',{pi:result});
         //res.redirect('./hello.html');
 
-        res.json({
-            result: result
-        });
+        res.send(result);
     })
 }
 /*查询所有图片*/

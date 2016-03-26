@@ -5,7 +5,7 @@
 function ClassInitFun(){
     getClassName();/*获取分类*/
     classClick();/*点击分类列表*/
-    newClassClick();/*新增分类的页面交互时间*/
+    newClassClick();/*新增分类的页面交互事件*/
     classCre();/*新增分类事件*/
 }
 
@@ -20,7 +20,7 @@ function getClassName(){
             var classText = "";
             for (var i = 0; i < result.length; i++) {
                 lasttclass = $(".classlist>li:last-child");
-                classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\">"+result[i].name+"</li>";
+                classText = "<li data-c=\""+result[i]._id+"\" data-n=\""+result[i].name+"\" class=\"classitem\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">"+result[i].name+"</li>";
                 lasttclass.after(classText);
             }
         }

@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/tanchuceng.css">
     <script src="/javascripts/jquery-2.2.1.js"></script>
-    <script src="/javascripts/angular-1.5.2.js"></script>
+    <!--<script src="/javascripts/angular-1.5.2.js"></script>-->
+    <script src="/javascripts/angular-1.5.3.js"></script>
     <script></script>
 </head>
 <body>
@@ -37,7 +38,7 @@
             </form>
         </div>
         <div class="showpicture btcf">
-            <div class="showitem btcf">
+            <div class="showitem btcf" draggable="true" ondragstart="drag(event)">
                 <div class="showimg">
                     <img src="images/image-1458618685880-16. 迈克尔 卡里克（卡域克）.jpg" alt="16. 迈克尔 卡里克（卡域克）.jpg">
                 </div>
@@ -75,40 +76,29 @@
             </div>
         </div>
     </div>
-    <button class="myappbtn">click</button>
-    <div ng-app="myApp" ng-controller="customersCtrl">
 
-        <ul>
-            <li ng-repeat="p in picture">
-                {{  p.message+ ', ' + p.name }}
-            </li>
-        </ul>
-
-    </div>
-
-    <script>
-        /*angular.module('myApp', []).controller('customersCtrl', function($scope) {
-            $.ajax({
-                url: "http://localhost:27017/showAllpicture",
-                async: false,
-                data: {},
-                success: function (result) {
-                    $scope.picture = result;
-                }
-            });
-        });*/
-        angular.module('myApp', []).controller('customersCtrl', function($scope, $http) {
-            $http.get("http://localhost:27017/showAllpicture")
-                    .success(function(response) {
-                        $scope.picture = response.result;
-                    });
-        });
-
-
-    </script>
 </div>
 </body>
 </html>
+<script>
+    function allowDrop(ev)
+    {
+        ev.preventDefault();
+    }
+
+    function drag(ev)
+    {
+        ev.dataTransfer.setData("Text",ev.target);
+    }
+
+    function drop(ev)
+    {
+        ev.preventDefault();
+        var data=ev.dataTransfer.getData("Text");
+        console.log(data);
+        //ev.target.appendChild(document.getElementById(data));
+    }
+</script>
 <script src="/javascripts/tanchuceng.js"></script>
 <script src="/javascripts/classfun.js"></script>
 <script src="/javascripts/pageinit.js"></script>
