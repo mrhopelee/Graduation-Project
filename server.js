@@ -28,19 +28,27 @@ app.get('/index.html', function (req, res) {
     console.log("index.html");
     res.sendFile(__dirname + "/" + "index.html");
 })
-app.get('/hello.html', function (req, res) {
+app.get('/manager.html', function (req, res) {
+    console.log("manager.html");
+    res.sendFile(__dirname + "/" + "manager.html");
+})
+
+
+/*app.get('/hello.html', function (req, res) {
     console.log("hello.html");
     res.sendFile(__dirname + "/" + "hello.html");
 })
+*/
+
 app.get('/showAllpicture', function (req, res) {
     crud.showAllpicture(req, res);
 })
-app.get('/findclassname', function (req, res) {
-    crud.findClassName(req, res);
+
+app.get('/updpicture', function (req, res) {
+    crud.updPicture(req, res);
 })
-app.get('/manager.html', function (req, res) {
-    crud.showAllImg(req, res);
-})
+
+
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -112,15 +120,16 @@ var managerpage = function (req, res) {
 }
 
 /*class*/
-
-
+app.get('/findclassname', function (req, res) {
+    crud.findClassName(req, res);
+})
 app.get('/creclass', function (req, res) {
     crud.creClass(req, res);
 })
 app.get('/delclass', function (req, res) {
     crud.delClass(req, res);
 })
-app.get('/uploaddiv', function (req, res) {
+app.get('/updclass', function (req, res) {
     crud.updClass(req, res);
 })
 

@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/tanchuceng.css">
     <script src="/javascripts/jquery-2.2.1.js"></script>
     <!--<script src="/javascripts/angular-1.5.2.js"></script>-->
-    <script src="/javascripts/angular-1.5.3.js"></script>
+    <!--<script src="/javascripts/angular-1.5.3.js"></script>-->
     <script></script>
 </head>
 <body>
@@ -37,40 +37,32 @@
                 <input type="submit" value="upload photo" class="uploadbtn">
             </form>
         </div>
-        <div class="showpicture btcf">
-            <div class="showitem btcf" draggable="true" ondragstart="drag(event)">
+        <div class="showpicture">
+            <div class="showitem" draggable="true" ondragstart="drag(event)">
                 <div class="showimg">
-                    <img src="images/image-1458618685880-16. 迈克尔 卡里克（卡域克）.jpg" alt="16. 迈克尔 卡里克（卡域克）.jpg">
+                    <img draggable="false" src="images/image-1458618685880-16. 迈克尔 卡里克（卡域克）.jpg" alt="16. 迈克尔 卡里克（卡域克）.jpg ">
                 </div>
                 <div class="showother">
-                    <button class="showbtn">···</button>
                     <div class="shownamediv">
                         <span class="showname">16. 迈克尔 卡里克（卡域克）.jpg</span>
                     </div>
-                    <div class="btndiv">
-                        <button class="editbtn">update</button>
-                        <form action="/image_del" method="post" class="delform">
-                            <input type="hidden" value="56f0c13dbd87fab803c27cde" name="id">
-                            <button type="submit" value="delete">delete</button>
-                        </form>
+                    <div class="showbtns">
+                        <button class="updpicture">upd</button>
+                        <button class="delpicture">del</button>
                     </div>
                 </div>
             </div>
-            <div class="showitem btcf">
+            <div class="showitem">
                 <div class="showimg">
                     <img src="images/image-1458618705326-路飞.jpg" alt="路飞.jpg">
                 </div>
                 <div class="showother">
-                    <button class="showbtn">···</button>
                     <div class="shownamediv">
                         <span class="showname">路飞.jpg</span>
                     </div>
-                    <div class="btndiv">
-                        <button class="editbtn">update</button>
-                        <form action="/image_del" method="post" class="delform">
-                            <input type="hidden" value="56f0c151bd87fab803c27cdf" name="id">
-                            <button type="submit" value="delete">delete</button>
-                        </form>
+                    <div class="showbtns">
+                        <button class="updpicture">upd</button>
+                        <button class="delpicture">del</button>
                     </div>
                 </div>
             </div>
@@ -88,17 +80,21 @@
 
     function drag(ev)
     {
-        ev.dataTransfer.setData("Text",ev.target);
+        var thispic = $('.showitem:hover')
+        console.log(thispic.find('img').attr("src"));
+        ev.dataTransfer.setData("text/html",thispic);
     }
 
     function drop(ev)
     {
         ev.preventDefault();
-        var data=ev.dataTransfer.getData("Text");
+        var data=ev.dataTransfer.getData("text/html");
         console.log(data);
+
         //ev.target.appendChild(document.getElementById(data));
     }
 </script>
 <script src="/javascripts/tanchuceng.js"></script>
+<script src="/javascripts/picturefun.js"></script>
 <script src="/javascripts/classfun.js"></script>
 <script src="/javascripts/pageinit.js"></script>

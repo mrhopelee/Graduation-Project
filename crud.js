@@ -13,7 +13,7 @@ function creatImg(req,res,data,nameQuery) {
     db.collection('picture').insert({name: req.files[0].originalname,realname: nameQuery.realname, date: [now.getYear(), now.getMonth(), now.getDate()], height: info.height, width: info.width, size: data.length, class: nameQuery.classname, tag: []}, function(err, result) {
         if (err) throw err;
         if (!err) console.log('Added!');
-        showAllImg(req, res);
+        showAllpicture(req, res);
     });
 }
 /*查询所有图片*/
@@ -28,7 +28,7 @@ function showAllpicture(req, res) {
         res.send(result);
     })
 }
-/*查询所有图片*/
+/*/!*查询所有图片*!/
 function showAllImg(req, res) {
 
     db.collection('picture').find().toArray(function(err, result) {
@@ -38,7 +38,7 @@ function showAllImg(req, res) {
         res.redirect('./hello.html');
         //res.send(result);
     })
-}
+}*/
 /*按分类查询图片*/
 function classImg(req,res) {
     /*console.log(req.query.thisclassid);*/
@@ -87,6 +87,20 @@ function removeImg(req, res) {
     });
 }
 
+function updPicture(req, res) {
+
+    /*console.log(req.query.upd_classid);
+     console.log(req.query.upd_classname);*/
+    db.collection('picture').updateById(req.query.upd_pictureid,  {$set:{class:req.query.upd_classid}}, function(err, result){
+        if (err) throw err;
+        if (!err) console.log('id:'+req.query.upd_pictureid+' class:'+req.query.upd_classid+' pictureUpdateClass!');
+        findClassName(req,res);
+    });
+}
+
+
+
+
 function findClassName(req, res) {
     db.collection('class').find().toArray(function(err, result) {
         if (err) throw err;
@@ -122,10 +136,12 @@ function updClass(req, res) {
 
 
 exports.removeImg     = removeImg;
-exports.showAllImg = showAllImg;
+/*exports.showAllImg = showAllImg;*/
 exports.classImg    = classImg;
 exports.creatImg    = creatImg;
 exports.showAllpicture    = showAllpicture;
+exports.updPicture    = updPicture;
+
 
 exports.creClass = creClass;
 exports.delClass = delClass;

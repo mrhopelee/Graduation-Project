@@ -62,6 +62,7 @@ $(document).ready(function () {
     btninit();/*图片按钮事件*/
     appendTC();
     tanchu(1, 1);
+    getPicture();
 
     ClassInitFun();
 });

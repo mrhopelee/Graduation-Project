@@ -197,22 +197,35 @@ button {
   width: 236px;
   background-color: rgba(255,255,255,1.0);
   display: inline-block;
+  position: relative;
 }
 .showitem img {
   width: 100%;
 }
+.showitem:hover .showother{
+  display: block;
+}
+
+.showother {
+  background-color: rgba(255,255,255,0.8);
+  bottom: 50%;
+  position: absolute;
+  width: 100%;
+  display: none;
+}
 
 .shownamediv {
-  color: rgb(0,0,0);
-  margin-left:10px;
+  text-align: center;
   white-space:nowrap;
   text-overflow:ellipsis;
   overflow: hidden;
+  padding: 4% 0;
+  border-bottom: 2px solid rgba(255,255,255,1.0);
 }
 .showname {
-   color: rgb(0,0,0);
+   color: rgba(0,0,0,1.0);
  }
-.showbtn {
+/*.showbtn {
   float: right;
   margin-right: 5px;
   border:0;
@@ -221,13 +234,31 @@ button {
 }
 .showbtn:focus {
   border: 0;
+}*/
+.showbtns {
+  text-align: center;
 }
-.showother {
-  position: relative;
-  margin-bottom: 10px;
+
+
+.showbtns button{
+  width: 50%;
+  display: inline-block;
+  border: 0;
+  float: left;
+  padding: 3% 0;
+  background-color: transparent;
+}.showbtns button:hover{
+   background-color: rgba(0,0,0,0.8);
+ }
+.updpicture {
+
 }
+.delpicture {
+
+}
+/*
 .btndiv {
-  display: none;
+  !*display: none;*!
   position: absolute;
   left: -60px;
   top: -30px;
@@ -242,4 +273,4 @@ button {
   background-color: rgba(0,0,0,1.0);
   border: 0 solid rgba(255,255,255,1.0);
   padding: 5px;
-}
+}*/
