@@ -23,7 +23,7 @@ app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-
+/*page*/
 app.get('/index.html', function (req, res) {
     console.log("index.html");
     res.sendFile(__dirname + "/" + "index.html");
@@ -33,19 +33,15 @@ app.get('/manager.html', function (req, res) {
     res.sendFile(__dirname + "/" + "manager.html");
 })
 
-
-/*app.get('/hello.html', function (req, res) {
-    console.log("hello.html");
-    res.sendFile(__dirname + "/" + "hello.html");
-})
-*/
-
+/*picture*/
 app.get('/showAllpicture', function (req, res) {
     crud.showAllpicture(req, res);
 })
-
 app.get('/updpicture', function (req, res) {
     crud.updPicture(req, res);
+})
+app.post('/delpicture', function (req, res) {
+    crud.delPicture(req, res);
 })
 
 
@@ -110,14 +106,12 @@ app.get('/classimage', function (req, res) {
 })
 
 
-app.post('/image_del', urlencodedParser, function (req, res) {
-    crud.removeImg(req, res);
-})
+
 
 //跳转页面
-var managerpage = function (req, res) {
+/*var managerpage = function (req, res) {
     crud.showAllImg(req, res);
-}
+}*/
 
 /*class*/
 app.get('/findclassname', function (req, res) {

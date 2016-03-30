@@ -60,13 +60,30 @@
     function drop(ev)
     {
         ev.preventDefault();
-        var classid = $(event.target).attr("data-c");
-        var pictureid=ev.dataTransfer.getData("pictureid");
+        if($(event.target).attr("class")===$('.this').attr("class")){
 
-        /*console.log(classid);
-        console.log(pictureid);*/
-        pictureUpd(pictureid,classid)
-        //ev.target.appendChild(document.getElementById(data));
+        }else{
+            var thisItem = $(event.target);
+            var classid = thisItem.attr("data-c");
+            var pictureid=ev.dataTransfer.getData("pictureid");
+            /*console.log(classid);
+            console.log(pictureid);*/
+            pictureUpd(pictureid,classid);
+            cleanClassUD();
+            thisItem.addClass("this");
+            if(classid != "56dab2879a78ca71f18afdb6"){
+                var classnamestr = thisItem.text();
+                thisItem
+                        .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
+                        .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" autofocus /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
+                $('.udpclassname').val(classnamestr);
+                classDel();
+                /*删除分类事件*/
+                updateClassClick();
+                /*修改分类的页面交互*/
+            }
+            //ev.target.appendChild(document.getElementById(data));
+        }
     }
 </script>
 <script src="/javascripts/tanchuceng.js"></script>

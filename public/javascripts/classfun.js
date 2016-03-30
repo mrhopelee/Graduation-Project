@@ -56,6 +56,7 @@ function classClick() {
              console.log($(this).attr("data-c"));*/
             cleanClassUD();
             var classnamestr = $(this).text();
+
             $(this)
                 .addClass("this")
                 .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
@@ -91,6 +92,11 @@ function classClick() {
                         "alt": result[i].name
                     });
                     nowshowitem.find(".showname").html(result[i].name);
+                    if(i==result.length-1){
+                        //console.log("load clickfun");
+                        delpicturefun();
+                        updpicturefun();
+                    }
                 }
             }
         });
