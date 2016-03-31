@@ -2,25 +2,74 @@
  * Created by Administrator on 2016-3-16.
  */
 /*检查完成*/
+/*新增分类事件*/
+function classCre() {
+    $(".creclassbtn").click(function (e) {
+        e.preventDefault();
+        var newclassname = $(".creclassname").val();//获取创建输入框中的分类名
+        if (newclassname) {//如果输入框中的分类名为空
+            var oldcs = $('.classitem');
+            var temp = 1;//1代表不重复，0代表重复
+            for (var i = 0; i < oldcs.length; i++) {
+                if (newclassname === oldcs[i].innerHTML) {
+                    temp = 0;
+                }
+            }
+            if (temp) {//如果不重复
+                startCreClass(newclassname);//新增分类名，newclassname为新增分类的名字
+                $(".creclassname").val("");//重置新增分类输入框
+                $('.hidnewclass').css({
+                    "display": "none"
+                });
+            } else {
+                alert("已存在此分类");
+            }
+        } else {
+            alert("不能为空");
+        }
+        //新增分类名，newclassname为新增分类的名字
+        function startCreClass(newclassname) {
+            $.ajax({
+                url: "http://localhost:27017/creclass",
+                async: false,
+                data: {"newclassname": newclassname},
+                success: function (result) {
+                    classPage(result);//取得result之后，在页面重新生成分类
+                }
+            });
+        }
+
+    })
+}
+/*新增分类的页面交互*/
+function newClassClick() {
+    $('.newclassbtn').click(function (e) {
+        e.preventDefault();
+        $('.hidnewclass').css({
+            "display": "block"
+        });
+    });
+    $('.hidcreclassbtn').click(function (e) {
+        e.preventDefault();
+        $('.hidnewclass').css({
+            "display": "none"
+        });
+    });
+}
 /*删除分类事件*/
 function classDel() {
     $('.delclass').click(function (e) {
         e.preventDefault();
-        var thisclass = $(this).parent();//获取当前
+        var thisclass = $(this).parent();//获取当前准备删除的分类li
         $.ajax({
             url: "http://localhost:27017/delclass",
             async: false,
-            data: {"classid": thisclass.attr("data-c")},
+            data: {
+                "classid": thisclass.attr("data-c"),
+                "query": {}
+            },
             success: function (result) {
-                $(".classlist>li:not(:first-child)").remove();
-                var lasttclass = null;
-                var classText = "";
-                for (var i = 0; i < result.length; i++) {
-                    lasttclass = $(".classlist>li:last-child");
-                    classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\">" + result[i].name + "</li>";
-                    lasttclass.after(classText);
-                }
-                classClick();
+                classPage(result);//取得result之后，在页面重新生成分类
             }
         });
     });
@@ -84,18 +133,11 @@ function classUpd() {
                 data: {
                     "this_classid": this_classid,
                     "this_classname": this_classname,
-                    "upd_classname": upd_classname
+                    "upd_classname": upd_classname,
+                    "query": {}
                 },
                 success: function (result) {
-                    $(".classlist>li:not(:first-child)").remove();//清空分类li
-                    var lasttclass = null;
-                    var classText = "";
-                    for (var i = 0; i < result.length; i++) {
-                        lasttclass = $(".classlist>li:last-child");
-                        classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\">" + result[i].name + "</li>";
-                        lasttclass.after(classText);
-                    }
-                    classClick();
+                    classPage(result);//取得result之后，在页面重新生成分类
                 }
             });
         }
@@ -103,36 +145,35 @@ function classUpd() {
     });
 }
 /*获取所有分类*/
-function getClassName(query) {
+function getClassName() {
     $.ajax({
         url: "http://localhost:27017/findclassname",
         async: false,
-        data: {"query": query},
+        data: {"query": {}},
         success: function (result) {
-            var lasttclass = null;
-            var classText = "";
-            for (var i = 0; i < result.length; i++) {
-                lasttclass = $(".classlist>li:last-child");
-                classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" + result[i].name + "</li>";
-                lasttclass.after(classText);
-            }
+            classPage(result);//取得result之后，在页面重新生成分类
         }
     });
+}
+
+function classPage(result){//取得result之后，在页面重新生成分类
+    $(".classlist>li:not(:first-child)").remove();//清空分类li
+    var lasttclass = null;
+    var classText = "";
+    for (var i = 0; i < result.length; i++) {
+        lasttclass = $(".classlist>li:last-child");
+        classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" + result[i].name + "</li>";
+        lasttclass.after(classText);
+    }
+    classClick();//点击分类列表事件
 }
 
 
 /*分类时间初始化*/
 function ClassInitFun() {
-    getClassName({});//获取所有分类
-
-
-    classClick();//点击分类列表
-
-
+    getClassName();//获取所有分类
     newClassClick();//新增分类的页面交互事件
-
     classCre();//新增分类事件
-
 }
 
 
@@ -153,13 +194,13 @@ function classClick() {
             /*console.log($('.this').attr("data-c"));
              console.log($(this).attr("data-c"));*/
         } else if (($(this).attr("data-c") == "56dab2879a78ca71f18afdb6") || ($(this).attr("data-c") == "")) {
-            cleanClassUD();
+            cleanClassUD();//取得result之后，在页面重新生成分类
 
             $(this).addClass("this");
         } else {
             /*console.log($('.this').attr("data-c"));
              console.log($(this).attr("data-c"));*/
-            cleanClassUD();
+            cleanClassUD();////取得result之后，在页面重新生成分类
             var classnamestr = $(this).text();
 
             $(this)
@@ -167,13 +208,8 @@ function classClick() {
                 .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
                 .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" autofocus /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
             $('.udpclassname').val(classnamestr);
-
-            classDel();
-            /*删除分类事件*/
-
-            updateClassClick();
-            /*修改分类的页面交互*/
-
+            classDel();//删除分类事件
+            updateClassClick();//修改分类的页面交互
         }
         /*点击class后触发分类查询*/
         var thisc = $(this).attr("data-c");
@@ -184,12 +220,9 @@ function classClick() {
             async: false,
             data: {"thisclassid": thisc},
             success: function (result) {
-                $(".showpicture").empty();
-                /*清空图片节点*/
-
+                $(".showpicture").empty();//清空图片节点
                 for (var i = 0; i < result.length; i++) {
-                    createshowitem(".showpicture");
-                    /*生成图片节点*/
+                    createshowitem(".showpicture"); //生成图片节点
                     var j = i + 1;
                     var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
                     /*console.log(nowshowitem);*/
@@ -207,74 +240,10 @@ function classClick() {
                 }
             }
         });
-        btninit();
-        /*图片按钮事件，不能去掉*/
-        tanchu(1, 1);
-        /*弹出层事件，不能去掉*/
+        btninit();//图片按钮事件，不能去掉
+        tanchu(1, 1);//弹出层事件，不能去掉
     });
 }
 
 
 
-/*新增分类事件*/
-function classCre() {
-    $(".creclassbtn").click(function (e) {
-        e.preventDefault();
-        var newclassname = $(".creclassname").val();
-        if (newclassname) {/**/
-            var oldcs = $('.classitem');
-            var temp = 1;
-            for (var i = 0; i < oldcs.length; i++) {
-                if (newclassname === oldcs[i].innerHTML) {
-                    temp = 0;
-                }
-            }
-            if (temp) {
-                startCreClass(newclassname);
-                $(".creclassname").val("");
-                $('.hidnewclass').css({
-                    "display": "none"
-                });
-            } else {
-                alert("已存在此分类");
-            }
-        } else {
-            alert("不能为空");
-        }
-
-        function startCreClass(newclassname) {
-            $.ajax({
-                url: "http://localhost:27017/creclass",
-                async: false,
-                data: {"newclassname": newclassname},
-                success: function (result) {
-                    $(".classlist>li:not(:first-child)").remove();
-                    var lasttclass = null;
-                    var classText = "";
-                    for (var i = 0; i < result.length; i++) {
-                        lasttclass = $(".classlist>li:last-child");
-                        classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\">" + result[i].name + "</li>";
-                        lasttclass.after(classText);
-                    }
-                    classClick();
-                }
-            });
-        }
-
-    })
-}
-/*新增分类的页面交互*/
-function newClassClick() {
-    $('.newclassbtn').click(function (e) {
-        e.preventDefault();
-        $('.hidnewclass').css({
-            "display": "block"
-        });
-    });
-    $('.hidcreclassbtn').click(function (e) {
-        e.preventDefault();
-        $('.hidnewclass').css({
-            "display": "none"
-        });
-    });
-}

@@ -44,7 +44,7 @@ function getPicture(query) {
                 nowshowitem.find(".showname").html(result[i].name);
                 if(i==result.length-1){
                     //console.log("load clickfun");
-                    delpicturefun();
+                    delpicturefun();//删除图片click事/
                     updpicturefun();
                 }
             }
@@ -95,7 +95,7 @@ function delpicturefun(){
     });
 }
 
-/*删除图片click事件*/
+/*修改图片click事件*/
 function updpicturefun(){}
 
 /*修改图片分类*/

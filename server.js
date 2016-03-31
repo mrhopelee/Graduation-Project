@@ -115,10 +115,14 @@ app.get('/classimage', function (req, res) {
     crud.showAllImg(req, res);
 }*/
 
+
+
+
+
+
+
+
 /*class*/
-app.get('/findclassname', function (req, res) {
-    crud.findClassName(req, res);
-})
 app.get('/creclass', function (req, res) {
     crud.creClass(req, res);
 })
@@ -128,12 +132,13 @@ app.get('/delclass', function (req, res) {
 app.get('/updclass', function (req, res) {
     crud.updClass(req, res);
 })
+app.get('/findclassname', function (req, res) {
+    crud.findClassName(req, res);
+})
 
 var server = app.listen(27017, function () {
-
     var host = server.address().address
     var port = server.address().port
     console.log("应用实例，访问地址为 http://%s:%s", host, port)
-
 })
 

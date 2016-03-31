@@ -113,13 +113,7 @@ function updPicture(req, res) {
 
 
 
-function creClass(req, res) {
-    db.collection('class').insert({name: req.query.newclassname}, function (err, result) {
-        if (err) throw err;
-        if (!err) console.log('id:' + req.query.newclassname + ' ' + ' creClass!');
-        findClassName(req, res);
-    });
-}
+
 
 
 
@@ -134,7 +128,7 @@ exports.showAllpicture = showAllpicture;
 exports.updPicture = updPicture;
 exports.delPicture = delPicture;
 /*class*/
-exports.creClass = creClass;
+
 
 
 
@@ -142,6 +136,15 @@ exports.creClass = creClass;
 /*finish*/
 
 /*class*/
+/*新增分类*/
+function creClass(req, res) {
+    db.collection('class').insert({name: req.query.newclassname}, function (err, result) {
+        if (err) throw err;
+        if (!err) console.log('id:' + req.query.newclassname + ' ' + ' creClass!');
+        findClassName(req, res);
+    });
+}
+exports.creClass = creClass;
 /*删除分类*/
 function delClass(req, res) {
     /*console.log(req.query.classid);*/
