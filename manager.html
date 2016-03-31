@@ -31,10 +31,24 @@
     </div>
     <div class="right">
         <div class="crepicture">
-            <form action="/file_upload" method="post" enctype="multipart/form-data" class="uploadform">
+            <!--<form action="/file_upload" method="post" enctype="multipart/form-data" class="uploadform">
                 <input type="hidden" value="" name="classname">
                 <input type="file" name="image" size="50" class="filebtn">
                 <input type="submit" value="upload photo" class="uploadbtn">
+            </form>-->
+            <form class="" enctype='multipart/form-data' method='post' action='javascript:;' role="form"
+                  id="frmUploadFile">
+                <input type="hidden" value="" name="class_id">
+                <div class="">
+                    <div class="">
+                        <label class="control-label ">上传选择</label>
+                        <input type="file" name="image" class="form-control"/>
+                    </div>
+                    <div class="">
+                        <button class="" onClick="uploadFile()">上传</button>
+                        <span class="help-inline" id="spanMessage">选择文件，并上传</span>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="showpicture">
@@ -46,32 +60,30 @@
 </body>
 </html>
 <script>
-    function allowDrop(ev)
-    {
+    function allowDrop(ev) {
         ev.preventDefault();
     }
 
-    function drag(ev)
-    {
+    function drag(ev) {
         var thispic = $('.showitem:hover');
-        ev.dataTransfer.setData("pictureid",thispic.attr("data-id"));
+        ev.dataTransfer.setData("pictureid", thispic.attr("data-id"));
     }
 
-    function drop(ev)
-    {
+    function drop(ev) {
         ev.preventDefault();
-        if($(event.target).attr("class")===$('.this').attr("class")){
+        if ($(event.target).attr("class") === $('.this').attr("class")) {
 
-        }else{
+        } else {
             var thisItem = $(event.target);
             var classid = thisItem.attr("data-c");
-            var pictureid=ev.dataTransfer.getData("pictureid");
+            var pictureid = ev.dataTransfer.getData("pictureid");
             /*console.log(classid);
-            console.log(pictureid);*/
-            pictureUpd(pictureid,classid);
+             console.log(pictureid);*/
+            pictureUpd(pictureid, classid);
             cleanClassUD();
             thisItem.addClass("this");
-            if(classid != "56dab2879a78ca71f18afdb6"){
+            $(".crepicture input[type=\"hidden\"]").attr("value", classid);
+            if (classid != "56dab2879a78ca71f18afdb6") {
                 var classnamestr = thisItem.text();
                 thisItem
                         .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
@@ -84,6 +96,53 @@
             }
             //ev.target.appendChild(document.getElementById(data));
         }
+    }
+    function uploadFile(){
+        var formData = new FormData($("#frmUploadFile")[0]);
+        /*console.log(formData);*/
+        $.ajax({
+            url: 'http://localhost:27017/file_upload',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(result){
+                $(".showpicture").empty();
+                /*清空图片节点*/
+
+                for (var i = 0; i < result.length; i++) {
+                    createshowitem(".showpicture");
+                    /*生成图片节点*/
+                    var j = i + 1;
+                    var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
+                    /*console.log(nowshowitem);*/
+                    nowshowitem.attr({"data-id":result[i]._id});
+                    nowshowitem.find(".showimg>img").attr({
+                        "src": "images/" + result[i].realname,
+                        "alt": result[i].name
+                    });
+                    nowshowitem.find(".showname").html(result[i].name);
+                    if(i==result.length-1){
+                        //console.log("load clickfun");
+                        delpicturefun();
+                        updpicturefun();
+                    }
+                }
+            }/*
+                if(200 === data.code) {
+                    $("#imgShow").attr('src', data.msg.url);
+                    $("#spanMessage").html("上传成功");
+                } else {
+                    $("#spanMessage").html("上传失败");
+                }
+                console.log('imgUploader upload success, data:', data);
+            },
+            error: function(){
+                $("#spanMessage").html("与服务器通信发生错误");
+            }*/
+        });
     }
 </script>
 <script src="/javascripts/tanchuceng.js"></script>

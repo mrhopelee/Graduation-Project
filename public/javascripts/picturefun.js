@@ -7,7 +7,7 @@ function createshowitem(str) {
         "<div class=\"showimg\">" +
         "<img draggable=\"false\">" +
         "</div>" +
-        "<div class=\"showother\">" +
+        "<div class=\"showother abscenter\">" +
         "<div class=\"shownamediv\">" +
         "<span class=\"showname\"></span>" +
         "</div>" +

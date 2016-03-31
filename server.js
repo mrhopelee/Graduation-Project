@@ -17,7 +17,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 
 // 创建 application/x-www-form-urlencoded 编码解析
-var urlencodedParser = bodyParser.urlencoded({extended: false})
+var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.use(express.static('public'));
 
@@ -55,26 +55,28 @@ var storage = multer.diskStorage({
     }
 })
 var uploadimg = multer({storage: storage});
-app.post('/file_upload', uploadimg.array('image'), function (req, res, next) {
+app.post('/file_upload', uploadimg.array('image'), function (req, res) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
     var read_path = req.files[0].path;
     var imgname = req.files[0].filename + '-' + req.files[0].originalname;
     var write_path = "public\\images\\" + imgname;
-    var classname = "";
-    if (req.body.classname.toString() == "") {
-        classname = "56dab2879a78ca71f18afdb6";//默认分类的id
+    var creclassid = "";
+    if (req.body.class_id.toString() == "") {
+        creclassid = "56dab2879a78ca71f18afdb6";//默认分类的id
     } else {
-        classname = req.body.classname;
+        creclassid = req.body.class_id;
     }
-    var nameQuery = {'classname': classname, 'realname': imgname};
+    var nameQuery = {"creclassid": creclassid, "realname": imgname};
+    /*console.log(req.files);
+    console.log(req.body);*/
     fs.readFile(read_path, function (err, data) {
 
         fs.writeFile(write_path, data, function (err) {
             if (err) {
                 console.log(err);
             } else {
-                crud.creatImg(req, res, data, nameQuery);
+                crud.creatPicture(req, res, data, nameQuery);
             }
         });
         if (fs.existsSync(read_path)) {
