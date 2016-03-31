@@ -234,8 +234,8 @@ function classClick() {
                     nowshowitem.find(".showname").html(result[i].name);
                     if (i == result.length - 1) {
                         //console.log("load clickfun");
-                        delpicturefun();
-                        updpicturefun();
+                        delpicturefun();//删除图片click事件
+                        updpicturefun();//修改图片click事件
                     }
                 }
             }
