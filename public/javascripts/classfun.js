@@ -156,7 +156,7 @@ function getClassName() {
     });
 }
 
-function classPage(result){//取得result之后，在页面重新生成分类
+function classPage(result) {//取得result之后，在页面重新生成分类
     $(".classlist>li:not(:first-child)").remove();//清空分类li
     var lasttclass = null;
     var classText = "";
@@ -194,15 +194,13 @@ function classClick() {
             /*console.log($('.this').attr("data-c"));
              console.log($(this).attr("data-c"));*/
         } else if (($(this).attr("data-c") == "56dab2879a78ca71f18afdb6") || ($(this).attr("data-c") == "")) {
-            cleanClassUD();//取得result之后，在页面重新生成分类
-
+            cleanClassUD();//清空列表项中的无关元素
             $(this).addClass("this");
         } else {
             /*console.log($('.this').attr("data-c"));
              console.log($(this).attr("data-c"));*/
-            cleanClassUD();////取得result之后，在页面重新生成分类
+            cleanClassUD();//清空列表项中的无关元素
             var classnamestr = $(this).text();
-
             $(this)
                 .addClass("this")
                 .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
