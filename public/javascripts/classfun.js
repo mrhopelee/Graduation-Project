@@ -2,6 +2,18 @@
  * Created by Administrator on 2016-3-16.
  */
 /*检查完成*/
+/*取得数据操作返回的result，在页面重新生成分类*/
+function classPage(result) {
+    $(".classlist>li:not(:first-child)").remove();//清空分类li
+    var lasttclass = null;
+    var classText = "";
+    for (var i = 0; i < result.length; i++) {
+        lasttclass = $(".classlist>li:last-child");
+        classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" + result[i].name + "</li>";
+        lasttclass.after(classText);
+    }
+    classClick();//点击分类列表事件
+}
 /*新增分类事件*/
 function classCre() {
     $(".creclassbtn").click(function (e) {
@@ -156,17 +168,6 @@ function getClassName() {
     });
 }
 
-function classPage(result) {//取得result之后，在页面重新生成分类
-    $(".classlist>li:not(:first-child)").remove();//清空分类li
-    var lasttclass = null;
-    var classText = "";
-    for (var i = 0; i < result.length; i++) {
-        lasttclass = $(".classlist>li:last-child");
-        classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" + result[i].name + "</li>";
-        lasttclass.after(classText);
-    }
-    classClick();//点击分类列表事件
-}
 
 
 /*分类时间初始化*/
@@ -177,7 +178,7 @@ function ClassInitFun() {
 }
 
 
-/*清空列表项中的无关元素*/
+/*清空列表项中的前一个.this的样式与点击控件*/
 function cleanClassUD() {
     $(".hiduc").remove();
     $(".delclass").remove();
@@ -194,12 +195,12 @@ function classClick() {
             /*console.log($('.this').attr("data-c"));
              console.log($(this).attr("data-c"));*/
         } else if (($(this).attr("data-c") == "56dab2879a78ca71f18afdb6") || ($(this).attr("data-c") == "")) {
-            cleanClassUD();//清空列表项中的无关元素
+            cleanClassUD();//清空列表项中的前一个.this的样式与点击控件
             $(this).addClass("this");
         } else {
             /*console.log($('.this').attr("data-c"));
              console.log($(this).attr("data-c"));*/
-            cleanClassUD();//清空列表项中的无关元素
+            cleanClassUD();//清空列表项中的前一个.this的样式与点击控件
             var classnamestr = $(this).text();
             $(this)
                 .addClass("this")
@@ -213,7 +214,8 @@ function classClick() {
         var thisc = $(this).attr("data-c");
         $(".crepicture input[type=\"hidden\"]").attr("value", thisc);
         /*console.log(thisc);*/
-        $.ajax({
+        getPicture({class:thisc});
+        /*$.ajax({
             url: "http://localhost:27017/classimage",
             async: false,
             data: {"thisclassid": thisc},
@@ -223,7 +225,7 @@ function classClick() {
                     createshowitem(".showpicture"); //生成图片节点
                     var j = i + 1;
                     var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
-                    /*console.log(nowshowitem);*/
+                    /!*console.log(nowshowitem);*!/
                     nowshowitem.attr({"data-id": result[i]._id});
                     nowshowitem.find(".showimg>img").attr({
                         "src": "images/" + result[i].realname,
@@ -237,7 +239,7 @@ function classClick() {
                     }
                 }
             }
-        });
+        });*/
         btninit();//图片按钮事件，不能去掉
         tanchu(1, 1);//弹出层事件，不能去掉
     });

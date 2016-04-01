@@ -6,36 +6,6 @@ var db = require('mongoskin').db(str);
 var imageinfo = require("./imageinfo");
 var fs = require("fs");
 
-/*插入图片*/
-function creatPicture(req, res, data, nameQuery) {
-    var now = new Date();
-    var info = imageinfo(data);
-    db.collection('picture').insert({
-        name: req.files[0].originalname,
-        realname: nameQuery.realname,
-        date: [now.getYear(), now.getMonth(), now.getDate()],
-        height: info.height,
-        width: info.width,
-        size: data.length,
-        class: nameQuery.creclassid,
-        tag: []
-    }, function (err, result) {
-        if (err) throw err;
-        if (!err) console.log('Added!');
-        var query = {class:nameQuery.creclassid};
-        if(nameQuery.creclassid==''){
-            query = {};
-        }
-        //console.log(query);
-        db.collection('picture').find(query).toArray(function (err, result) {
-            if (err) throw err;
-            //console.log(result);
-            //res.render('manager',{pi:result});
-            //res.redirect('./hello.html');
-            res.send(result);
-        })
-    });
-}
 
 
 /*按分类查询图片*/
@@ -55,80 +25,7 @@ function classImg(req, res) {
         });
     }
 }
-
-/*查询图片*/
-function showAllpicture(req, res) {
-    var query = req.query.query;
-    //console.log(query);
-    db.collection('picture').find(query).toArray(function (err, result) {
-        if (err) throw err;
-        //console.log(result);
-        //res.render('manager',{pi:result});
-        //res.redirect('./hello.html');
-        res.send(result);
-
-    })
-}
-/*删除图片*/
-function delPicture(req, res) {
-    console.log(req.body);
-    db.collection('picture').findById(req.body.del_pictureid, function (err, result) {
-        var del_path = "public\\images\\" + result.realname;
-        //if (!err) console.log(del_path);
-        db.collection('picture').removeById(req.body.del_pictureid, function (err, result) {
-            if (!err) {
-                //console.log(req.body.id + ' deleted!');
-                if (fs.existsSync(del_path)) {
-                    fs.unlink(del_path, function (err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                        var query = {class:req.body.thisclass};
-                        if(req.body.thisclass==''){
-                            query = {};
-                        }
-                        db.collection('picture').find(query).toArray(function (err, result) {
-                            if (err) throw err;
-                            //console.log(result);
-                            //res.render('manager',{pi:result});
-                            //res.redirect('./hello.html');
-                            res.send(result);
-                        })
-                    });
-                }
-            }
-        });
-    });
-}
-/*修改图片分类*/
-function updPicture(req, res) {
-    /*console.log(req.query.upd_classid);
-     console.log(req.query.upd_classname);*/
-    db.collection('picture').updateById(req.query.upd_pictureid, {$set: {class: req.query.upd_classid}}, function (err, result) {
-        if (err) throw err;
-        if (!err) console.log('id:' + req.query.upd_pictureid + ' class:' + req.query.upd_classid + ' pictureUpdateClass!');
-        res.send(req.query.upd_classid)
-    });
-}
-
-
-
-
-
-
-
-
-
-
-
-/*picture*/
-exports.creatPicture = creatPicture;
 exports.classImg = classImg;
-exports.showAllpicture = showAllpicture;
-exports.updPicture = updPicture;
-exports.delPicture = delPicture;
-/*class*/
-
 
 
 
@@ -151,6 +48,16 @@ function delClass(req, res) {
     db.collection('class').removeById(req.query.classid, function (err, result) {
         if (err) throw err;
         if (!err) console.log('id:' + req.query.classid + ' ' + ' delClass!');
+
+        /*------------------------------------做到这*/
+        db.collection('picture').find(query).toArray(function (err, result) {
+            if (err) throw err;
+            //console.log(result);
+            //res.render('manager',{pi:result});
+            //res.redirect('./hello.html');
+            res.send(result);
+        })
+
         findClassName(req, res);
     });
 }
@@ -174,10 +81,95 @@ function findClassName(req, res) {
 }
 exports.findClassName = findClassName;
 
-
-
-
-
-
-
+/*picture*/
+/*插入图片*/
+function creatPicture(req, res, data, nameQuery) {
+    var now = new Date();//创建时间
+    var info = imageinfo(data);//获取图片基本数据
+    //console.log(info);
+    /*插入图片*/
+    db.collection('picture').insert({//插入数据库
+        name: req.files[0].originalname,
+        realname: nameQuery.realname,
+        date: [now.getYear(), now.getMonth(), now.getDate()],
+        height: info.height,
+        width: info.width,
+        size: data.length,
+        class: nameQuery.creclassid,
+        tag: []
+    }, function (err, result) {
+        if (err) throw err;
+        if (!err) console.log('Added!');
+        var query = {class:nameQuery.creclassid};//获取当前分类
+        if(nameQuery.creclassid==''){
+            query = {};
+        }
+        //console.log(query);
+        db.collection('picture').find(query).toArray(function (err, result) {//查询当前分类的图片
+            if (err) throw err;
+            //console.log(result);
+            //res.render('manager',{pi:result});
+            //res.redirect('./hello.html');
+            res.send(result);
+        })
+    });
+}
+exports.creatPicture = creatPicture;
+/*删除图片*/
+function delPicture(req, res) {
+    console.log(req.body + ' delPicture!');
+    db.collection('picture').findById(req.body.del_pictureid, function (err, result) {//根据id在数据库中查找图片
+        var del_path = "public\\images\\" + result.realname;//图片真实路径
+        //if (!err) console.log(del_path);
+        db.collection('picture').removeById(req.body.del_pictureid, function (err, result) {//根据id在数据库中删除图片
+            if (!err) {
+                //console.log(req.body.id + ' deleted!');
+                if (fs.existsSync(del_path)) {//通过真实路径删除真实文件
+                    fs.unlink(del_path, function (err) {
+                        if (err) {
+                            return console.error(err);
+                        }
+                        var query = {class:req.body.thisclass};
+                        if(req.body.thisclass==''){
+                            query = {};
+                        }
+                        db.collection('picture').find(query).toArray(function (err, result) {//查询当前分类的图片
+                            if (err) throw err;
+                            //console.log(result);
+                            //res.render('manager',{pi:result});
+                            //res.redirect('./hello.html');
+                            res.send(result);
+                        })
+                    });
+                }
+            }
+        });
+    });
+}
+exports.delPicture = delPicture;
+/*修改图片分类*/
+function updPicture(req, res) {
+    //console.log(req.query.upd_classid);
+    // console.log(req.query.upd_classname);
+    /*通过图片id修改图片分类class*/
+    db.collection('picture').updateById(req.query.upd_pictureid, {$set: {class: req.query.upd_classid}}, function (err, result) {
+        if (err) throw err;
+        if (!err) console.log('id:' + req.query.upd_pictureid + ' class:' + req.query.upd_classid + ' pictureUpdateClass!');
+        res.send(req.query.upd_classid)
+    });
+}
+exports.updPicture = updPicture;
+/*查询图片*/
+function showAllpicture(req, res) {
+    var query = req.query.query;
+    //console.log(query);
+    db.collection('picture').find(query).toArray(function (err, result) {
+        if (err) throw err;
+        //console.log(result);
+        //res.render('manager',{pi:result});
+        //res.redirect('./hello.html');
+        res.send(result);
+    })
+}
+exports.showAllpicture = showAllpicture;
 

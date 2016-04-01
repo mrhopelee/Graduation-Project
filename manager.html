@@ -79,71 +79,23 @@
             var pictureid = ev.dataTransfer.getData("pictureid");
             /*console.log(classid);
              console.log(pictureid);*/
-            pictureUpd(pictureid, classid);
-            cleanClassUD();
+            pictureUpd(pictureid, classid);//修改图片
+            cleanClassUD();//清空列表项中的前一个.this的样式与点击控件
             thisItem.addClass("this");
             $(".crepicture input[type=\"hidden\"]").attr("value", classid);
-            if (classid != "56dab2879a78ca71f18afdb6") {
+            if (classid !== "56dab2879a78ca71f18afdb6") {
                 var classnamestr = thisItem.text();
                 thisItem
                         .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
                         .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" autofocus /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
                 $('.udpclassname').val(classnamestr);
-                classDel();
-                /*删除分类事件*/
-                updateClassClick();
-                /*修改分类的页面交互*/
+                classDel();//删除分类事件
+                updateClassClick();//修改分类的页面交互
             }
             //ev.target.appendChild(document.getElementById(data));
         }
     }
-    function uploadFile(){
-        var formData = new FormData($("#frmUploadFile")[0]);
-        /*console.log(formData);*/
-        $.ajax({
-            url: 'http://localhost:27017/file_upload',
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(result){
-                $(".showpicture").empty();
-                /*清空图片节点*/
 
-                for (var i = 0; i < result.length; i++) {
-                    createshowitem(".showpicture");
-                    /*生成图片节点*/
-                    var j = i + 1;
-                    var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
-                    /*console.log(nowshowitem);*/
-                    nowshowitem.attr({"data-id":result[i]._id});
-                    nowshowitem.find(".showimg>img").attr({
-                        "src": "images/" + result[i].realname,
-                        "alt": result[i].name
-                    });
-                    nowshowitem.find(".showname").html(result[i].name);
-                    if(i==result.length-1){
-                        //console.log("load clickfun");
-                        delpicturefun();
-                        updpicturefun();
-                    }
-                }
-            }/*
-                if(200 === data.code) {
-                    $("#imgShow").attr('src', data.msg.url);
-                    $("#spanMessage").html("上传成功");
-                } else {
-                    $("#spanMessage").html("上传失败");
-                }
-                console.log('imgUploader upload success, data:', data);
-            },
-            error: function(){
-                $("#spanMessage").html("与服务器通信发生错误");
-            }*/
-        });
-    }
 </script>
 <script src="/javascripts/tanchuceng.js"></script>
 <script src="/javascripts/picturefun.js"></script>
