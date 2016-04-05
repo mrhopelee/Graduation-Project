@@ -142,6 +142,11 @@ app.get('/showAllpicture', function (req, res) {
     crud.showAllpicture(req, res);
 })
 
+/*图片滤镜*/
+app.post('/picturefilter', function (req, res) {
+    crud.pictureFilter(req, res);
+})
+
 
 var server = app.listen(27017, function () {
     var host = server.address().address

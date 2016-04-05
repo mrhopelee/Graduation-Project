@@ -11,7 +11,7 @@
     <!--<script src="/javascripts/angular-1.5.3.js"></script>-->
     <script></script>
 </head>
-<body>
+<body class="unselectable">
 <div class="all">
     <header class="sitetitle"><a href="http://localhost:27017/manager.html"><span>myphoto</span></a></header>
     <div class="left">
@@ -75,12 +75,24 @@
 
         } else {
             var thisItem = $(event.target);
-            var classid = thisItem.attr("data-c");
+
+            var newclassid = thisItem.attr("data-c");
             var pictureid = ev.dataTransfer.getData("pictureid");
+
             /*console.log(classid);
              console.log(pictureid);*/
-            pictureUpd(pictureid, classid);//修改图片
-            cleanClassUD();//清空列表项中的前一个.this的样式与点击控件
+            //pictureUpd({'oldclassid':oldclassid,'newclassid':newclassid,'pictureid':pictureid});//修改图片
+            pictureUpd({'newclassid':newclassid,'pictureid':pictureid});//修改图片
+            var oldclassid = $('.this').attr("data-c");
+            var ggquery;
+            if(oldclassid == ""){
+                ggquery = {};
+            }else{
+                ggquery ={class:oldclassid};
+            }
+            console.log(ggquery);
+            getPicture(ggquery);
+            /*cleanClassUD();//清空列表项中的前一个.this的样式与点击控件
             thisItem.addClass("this");
             $(".crepicture input[type=\"hidden\"]").attr("value", classid);
             if (classid !== "56dab2879a78ca71f18afdb6") {
@@ -91,7 +103,7 @@
                 $('.udpclassname').val(classnamestr);
                 classDel();//删除分类事件
                 updateClassClick();//修改分类的页面交互
-            }
+            }*/
             //ev.target.appendChild(document.getElementById(data));
         }
     }

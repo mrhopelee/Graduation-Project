@@ -1,7 +1,7 @@
 /**
  * Created by mrhop on 2016/3/26 0026.
  */
-/*取得数据操作返回的result，在页面重新生成分类*/
+/*取得数据操作返回的result，在页面重新生成图片*/
 function picturePage(result) {
     $(".showpicture").empty();//清空图片节点
     for (var i = 0; i < result.length; i++) {
@@ -18,7 +18,7 @@ function picturePage(result) {
         if(i==result.length-1){
             //console.log("load clickfun");
             delpicturefun();//删除图片click事
-            //updpicturefun();
+            picturefilter();//图片滤镜
         }
     }
 }
@@ -33,7 +33,7 @@ function createshowitem(str) {
         "<span class=\"showname\"></span>" +
         "</div>" +
         "<div class=\"showbtns\">" +
-        "<button class=\"updpicture\">upd</button>" +
+        "<button class=\"picturefilter\">upd</button>" +
         "<button class=\"delpicture\">del</button>" +
         "</div>" +
         "</div>" +
@@ -53,7 +53,7 @@ function uploadFile(){
         contentType: false,
         processData: false,
         success: function(result){
-            picturePage(result);
+            picturePage(result);//取得数据操作返回的result，在页面重新生成图片
         }/*
          if(200 === data.code) {
          $("#imgShow").attr('src', data.msg.url);
@@ -85,24 +85,47 @@ function delpicturefun(){
                 "del_pictureid": thispicture.attr('data-id')
             },
             success: function (result) {
-                picturePage(result);
+                picturePage(result);//取得数据操作返回的result，在页面重新生成图片
+            }
+        });
+    });
+}
+/*图片滤镜click事件*/
+function picturefilter(){
+    $('.picturefilter').click(function(e){
+        e.preventDefault();
+        var thisbtn = $(this);
+        var thispicture = thisbtn.parents('.showitem');//被点击的图片item
+        var thisclass = $('.this');//当前分类
+        //console.log(thispicture.attr('data-id'));
+        $.ajax({
+            url: "http://localhost:27017/picturefilter",
+            type: "POST",
+            async: false,
+            data: {
+                "thisclass":  thisclass.attr('data-c'),
+                "thispicture": thispicture.attr('data-id')
+            },
+            success: function (result) {
+                /*------------------------------------做到这*/
+                /*picturePage(result);*///取得数据操作返回的result，在页面重新生成图片
             }
         });
     });
 }
 /*修改图片分类*/
-function pictureUpd(upd_pictureid,upd_classid) {
-    startUpdClass(upd_pictureid,upd_classid);//图片id：upd_pictureid  分类id：upd_classid
-    function startUpdClass(upd_pictureid,upd_classid) {
+function pictureUpd(query) {
+    startUpdClass(query);//图片id：upd_pictureid  分类id：upd_classid
+    function startUpdClass(query) {
         $.ajax({
             url: "http://localhost:27017/updpicture",
             async: false,
             data: {
-                "upd_pictureid": upd_pictureid,
-                "upd_classid": upd_classid
+                "upd_pictureid": query.pictureid,
+                "upd_classid": query.newclassid
             },
             success: function (result) {
-                getPicture({class:result});
+
             }
         });
     }
@@ -114,7 +137,7 @@ function getPicture(query) {
         async: false,
         data: {"query":query},
         success: function (result) {
-            picturePage(result);
+            picturePage(result);//取得数据操作返回的result，在页面重新生成图片
         }
     });
 }

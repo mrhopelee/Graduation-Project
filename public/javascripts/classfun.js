@@ -81,7 +81,10 @@ function classDel() {
                 "query": {}
             },
             success: function (result) {
-                classPage(result);//取得result之后，在页面重新生成分类
+                classPage(result);//取得result之后，在页面重新生成分类\
+                getPicture({class:"56dab2879a78ca71f18afdb6"});
+                $('li[data-c="56dab2879a78ca71f18afdb6"]').addClass("this");
+
             }
         });
     });
@@ -213,8 +216,14 @@ function classClick() {
         /*点击class后触发分类查询*/
         var thisc = $(this).attr("data-c");
         $(".crepicture input[type=\"hidden\"]").attr("value", thisc);
-        /*console.log(thisc);*/
-        getPicture({class:thisc});
+        var query;
+        if(thisc == ""){
+            query = {};
+        }else{
+            query ={class:thisc};
+        }
+        //console.log(query);
+        getPicture(query);
         /*$.ajax({
             url: "http://localhost:27017/classimage",
             async: false,

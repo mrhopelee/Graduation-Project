@@ -18,7 +18,17 @@ button {
 .btcf {
   *zoom: 1;
 }
-
+.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  /*
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
 .all {
   max-width: 1200px;
   margin: 0 auto;
