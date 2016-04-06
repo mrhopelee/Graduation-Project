@@ -13,7 +13,7 @@ function backtop(){
                 $("#toTop").fadeOut();
             }
         });
-        $("body").append("<div id=\"toTop\" style=\"z-index: 100;border:1px solid #444;background:#333;color:#fff;text-align:center;padding:10px 13px 7px 13px;position:fixed;bottom:10px;right:10px;cursor:pointer;display:none;font-family:verdana;font-size:22px;\">^</div>");
+        $("body").append("<div id=\"toTop\" style=\"z-index: 999;border:1px solid #444;background:#333;color:#fff;text-align:center;padding:10px 13px 7px 13px;position:fixed;bottom:10px;right:10px;cursor:pointer;display:none;font-family:verdana;font-size:22px;\">^</div>");
         $("#toTop").click(function () {
             $("body,html").animate({scrollTop: 0}, 800);
         });
@@ -61,7 +61,7 @@ $(document).ready(function () {
     backtop();/*返回顶部初始化*/
     //btninit();/*图片按钮事件*/
     appendTC();
-    tanchu(1, 1);
+    tanchu(2, 0);
     getPicture({});
 
     ClassInitFun();

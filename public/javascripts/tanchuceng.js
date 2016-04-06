@@ -20,9 +20,30 @@
      */
 function appendTC() {	// 以 jQuery 创建按钮、元素
     //var btn=$("<button></button>").text("Click me.").addClass('TCBtn');
-    var div = $("<div><img class=\"TCimg\" src=\"\" alt=\"\" /></div>").addClass('TCDiv');
-    var div2 = $("<div></div>").addClass('bgDiv');
+    var div = $("<div><span class=\"pfend\"></span><canvas id=\"canvas\" class=\"TCimg abscenter\" src=\"\" alt=\"\"></canvas></div>").addClass('TCDiv TChid');
+    var div2 = $("<div>" +
+        "<p class='filters'>" +
+        "<button class='filter'id='invert'>反相(负片)</button>" +
+        "<button class='filter'id='grayscale'>灰化</button>" +
+        "<button class='filter'id='sepia'>复古(怀旧)</button>" +
+        "<button class='filter'id='brightness'>变亮</button>" +
+        "<button class='filter'id='threshold'>阈值</button>" +
+        "<button class='filter'id='blur'>模糊</button>" +
+        "<button class='filter'id='relief'>浮雕</button>" +
+        "</p>" +
+        "</div>").addClass('bgDiv TChid');
     $("body").append(div, div2);        // 追加新元素
+}
+function removeTC() {	// 以 jQuery 创建按钮、元素
+    $('.TCDiv').remove();
+    $('.bgDiv').remove();
+}
+
+function showTC() {
+    console.log('show TC');
+    $('.TCDiv').addClass("TCshow");
+    $('.bgDiv').addClass("TCshow");
+
 }
 function tanchu(l,t){
 
@@ -31,24 +52,24 @@ function tanchu(l,t){
     var TCDiv=$('div.TCDiv');
     var TCimg=$('img.TCimg');
     var tcdw=TCDiv.width(),tcdh=TCDiv.height();
-
+    var PFend = $('.pfend');
 
     //alert(employees[1].first);
     var bgDiv=$('div.bgDiv');
     var TCbgDiv=$(".TCDiv,.bgDiv");
-    TCBtn.click(function(){
-        TCbgDiv.fadeIn("slow");
-        var thisbtn = $(this);
-        var thisshowitem = thisbtn.parents(".showitem");
-        var thisid = thisshowitem.find("input[type=\"hidden\"]").attr("value");
-        var thisimg = thisshowitem.find(".showimg>img");
-        TCimg.attr({
-            "src":thisimg.attr("src"),
-            "alt":thisimg.attr("alt")
-        });
-    });
-    bgDiv.click(function(){
-        TCbgDiv.fadeOut("slow");
+    /*bgDiv.click(function(){
+        TCbgDiv.removeClass("TCshow");
+    });*/
+    PFend.click(function(e){
+        e.preventDefault();
+        var r=confirm("退出后所有操作将丢失！\n确定退出？");
+        if (r==true)
+        {
+            TCbgDiv.removeClass("TCshow");
+        }else{
+
+        }
+        /*加入清空图片处理文件夹的操作*/
     });
 
     function move(){
@@ -56,6 +77,7 @@ function tanchu(l,t){
 
         var winw=$(window).width();//alert("浏览器可视区域的宽"+w);
         var winh=$(window).height();//alert("浏览器可视区域的高"+h);
+
         var employees = [
             { "first":0 , "last":0 },
             { "first":(winw - tcdw)/2 , "last":(winh - tcdh)/2},
@@ -67,10 +89,16 @@ function tanchu(l,t){
          "top": 10
          });*/
         TCDiv.css({
-
-            "position":"fixed",
+            "margin-left":winw*-0.7,
+            "width":winw*0.7,
+            "height":winh
+            /*"position":"fixed",
             "left": employees[l].first,	//left: 0,//"left": "(winw - tcdw)/2",//left: winw - tcdw,
-            "top": employees[t].last	//top: 0//"top": "(winh - tcdh)/2"//top: winh - tcdh
+            "top": employees[t].last	//top: 0//"top": "(winh - tcdh)/2"//top: winh - tcdh*/
+        });
+        bgDiv.css({
+            "width":winw*0.3,
+            "height":winh
         });
         //alert(parseInt(employees[1].first));
     }

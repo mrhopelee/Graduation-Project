@@ -202,7 +202,8 @@ function pictureFilter(req, res) {
                     if (err) {
                         console.log(err);
                     } else {
-                        res.send(filter_path);
+                        console.log(result.name + "进入滤镜模式");
+                        res.send(result);
                     }
                 });
 
