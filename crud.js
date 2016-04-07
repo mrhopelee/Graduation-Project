@@ -203,7 +203,14 @@ function pictureFilter(req, res) {
                         console.log(err);
                     } else {
                         console.log(result.name + "进入滤镜模式");
-                        res.send(result);
+                        var info = imageinfo(data);
+                        var resquery = {
+                            "resresult":result,
+                            "width":info.width,
+                            "height":info.height
+                        };
+                        console.log(info);
+                        res.send(resquery);
                     }
                 });
 

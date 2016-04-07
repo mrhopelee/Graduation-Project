@@ -44,7 +44,7 @@
 
 <script src="/javascripts/StackBlur111.js"></script>
 <script>
-    function draw(){  
+    function draw(){
         var canvas = document.getElementById("canvas");
             ctx = canvas.getContext("2d"),
             img = new Image(),
@@ -57,7 +57,7 @@
             brightness = document.getElementById("brightness"),
             threshold = document.getElementById("threshold"),
             blur = document.getElementById("blur"),
-            relief = document.getElementById("relief");  
+            relief = document.getElementById("relief");
 
         function getInitImageData(){
             ctx.drawImage(img , 0 , 0 , canvas.width , canvas.height);
@@ -127,7 +127,7 @@
 
         // 反相：取每个像素点与255的差值
         invert.addEventListener( "click" , function(){
-            getInitImageData(); 
+            getInitImageData();
             if(this.checked){
                 for(var i = 0 , len = imgData.length ; i < len ; i+=4){
                         canvasFilter.invert(imgData , i);
@@ -196,7 +196,7 @@
             }
         } , false);
 
-        // 模糊 
+        // 模糊
         // stackblur
         blur.addEventListener( "click" , function(){
             getInitImageData();
@@ -213,7 +213,7 @@
             getInitImageData();
             if(this.checked){
                 for(var i = 0 , len = imgData.length ; i < len ; i++){
-                    canvasFilter.relief(imgData , i , canvas);   
+                    canvasFilter.relief(imgData , i , canvas);
                 }
                 ctx.putImageData( tempImageData , 0 , 0);
             }
@@ -229,8 +229,8 @@
 
         img.src = "/images/beach.png";
         img.crossOrigin = "Anonymous";
-        
-    }  
+
+    }
     draw();
     
 </script>
