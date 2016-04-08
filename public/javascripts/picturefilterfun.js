@@ -17,7 +17,7 @@ function draw(resquery){
     if(resquery.height>=resquery.width){
         if(resquery.height<=tcdivh){
             setimgsize(resquery.height,resquery.width);
-            console.log("1");
+            //console.log("1");
         }else{
             setimgsize(tcdivh,resquery.width*tcdivh/resquery.height);
             console.log("2");
@@ -115,8 +115,14 @@ function draw(resquery){
         threshold = $("#threshold"),
         blur = $("#blur"),
         relief = $("#relief"),
-        save = $("#save");
+        save = $("#save"),
+        saveserver = $('#saveserver');
 
+
+    function allunbind(){
+        $('.bgDiv button').unbind("click");
+    }
+    allunbind();
 
     reset.click(function(e){
         e.preventDefault();
@@ -126,13 +132,28 @@ function draw(resquery){
     save.click(function(e){
         e.preventDefault();
         console.log("save");
-
         Canvas2Image.saveAsPNG(canvas);  // 这将会提示用户保存PNG图片
+    });
+    saveserver.click(function(e){
+        e.preventDefault();
+        //console.log(canvas.toDataURL("image/png"));
+        $.ajax({
+            url: "http://localhost:27017/savetemp",
+            type: "POST",
+            async: false,
+            data: {
+                "imgData": canvas.toDataURL("image/png")
+            },
+            success: function (result) {
+                console.log(result);
+                //picturePage(result);//取得数据操作返回的result，在页面重新生成图片
+            }
+        });
     });
     // 反相：取每个像素点与255的差值
     invert.click(function(e){
         e.preventDefault();
-        getInitImageData();
+       getInitImageData();
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.invert(imgData , i);
         }

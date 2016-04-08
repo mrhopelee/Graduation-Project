@@ -33,6 +33,7 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<button class='filter'id='relief'>浮雕</button>" +
         "</p>" +
         "<button class='filter'id='save'>save</button>" +
+        "<button class='filter'id='saveserver'>save server</button>" +
         "</div>").addClass('bgDiv TChid');
     $("body").append(div, div2);        // 追加新元素
 }
@@ -42,7 +43,7 @@ function removeTC() {	// 以 jQuery 创建按钮、元素
 }
 
 function showTC() {
-    console.log('show TC');
+    //console.log('show TC');
     $('.TCDiv').addClass("TCshow");
     $('.bgDiv').addClass("TCshow");
     var PFend = $('.pfend');

@@ -14,6 +14,8 @@ app.set('view engine', 'jade');
 
 
 var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 var multer = require('multer');
 
 // 创建 application/x-www-form-urlencoded 编码解析
@@ -146,6 +148,11 @@ app.get('/showAllpicture', function (req, res) {
 app.post('/picturefilter', function (req, res) {
     crud.pictureFilter(req, res);
 })
+/*临时保存图片*/
+app.post('/savetemp', function (req, res) {
+    crud.savetemp(req, res);
+})
+
 
 
 var server = app.listen(27017, function () {

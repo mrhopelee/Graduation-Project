@@ -102,7 +102,7 @@ function picturefilter(){
 function getfilterpicture(){
     var thisbtn = $('.showbtns button:hover');
     var thispicture = thisbtn.parents('.showitem');//被点击的图片item
-    console.log(thispicture);
+    //console.log(thispicture);
     if(thispicture.length== 0){ thispicture=$('#canvas');console.log(thispicture.attr('data-id'));}
         var thisclass = $('.this');//当前分类
 
@@ -117,7 +117,7 @@ function getfilterpicture(){
             },
             success: function (result) {
                 //$('.TCimg').attr({"src":"filterimages\\" + result.realname});
-                console.log(result)
+                //console.log(result)
                 draw(result);
                 /*------------------------------------做到这*/
                 /*picturePage(result);*///取得数据操作返回的result，在页面重新生成图片
