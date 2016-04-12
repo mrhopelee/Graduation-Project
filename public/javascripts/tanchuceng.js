@@ -20,7 +20,7 @@
      */
 function appendTC() {	// 以 jQuery 创建按钮、元素
     //var btn=$("<button></button>").text("Click me.").addClass('TCBtn');
-    var div = $("<div><span class=\"pfend\"></span><canvas id=\"canvas\" class=\"TCimg abscenter\" data-id='\"\"'></canvas></div>").addClass('TCDiv TChid');
+    var div = $("<div><span class='pfend\'></span><canvas id='canvas' class='TCimg abscenter' data-id data-rn data-f></canvas></div>").addClass('TCDiv TChid');
     var div2 = $("<div>" +
         "<button class='filter'id='reset'>原图</button>" +
         "<p class='filters'>" +
@@ -32,8 +32,13 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<button class='filter'id='blur'>模糊</button>" +
         "<button class='filter'id='relief'>浮雕</button>" +
         "</p>" +
-        "<button class='filter'id='save'>save</button>" +
-        "<button class='filter'id='saveserver'>save server</button>" +
+        "<button class='filter'id='save'>save 本地</button>" +
+        "<button class='filter'id='savetemp'>save 临时</button>" +
+        "<button class='filter'id='saveserver'>save 保存</button>" +
+        "<div class='temppic'id='temppic'>" +
+        "<span>临时图片</span>" +
+        "<ul class='temppiclist'id='temppiclist'></ul>" +
+        "</div>" +
         "</div>").addClass('bgDiv TChid');
     $("body").append(div, div2);        // 追加新元素
 }
@@ -110,5 +115,5 @@ function tanchu(l,t){
     }
     move();
     $(window).scroll(function() {move();});
-    $(window).resize(function(){move();  getfilterpicture();      /*获取被点击的picture进入滤镜模式*/});	//初始化$(window).resize();
+    $(window).resize(function(){move();  /*getfilterpicture();      获取被点击的picture进入滤镜模式*/});	//初始化$(window).resize();
 }

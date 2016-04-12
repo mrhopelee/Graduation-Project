@@ -44,7 +44,7 @@ function draw(resquery){
         ctx.drawImage(img , 0 , 0 , canvas.width , canvas.height);
         tempImageData = ctx.getImageData(0 , 0 , canvas.width , canvas.height); // 重新获取原始图像数据点信息
         imgData = tempImageData.data;
-        console.log("GIID");
+        console.log("getInitImageData");
     }
 
     function resetImageData(){
@@ -116,7 +116,7 @@ function draw(resquery){
         blur = $("#blur"),
         relief = $("#relief"),
         save = $("#save"),
-        saveserver = $('#saveserver');
+        savetemp = $('#savetemp');
 
 
     function allunbind(){
@@ -134,7 +134,7 @@ function draw(resquery){
         console.log("save");
         Canvas2Image.saveAsPNG(canvas);  // 这将会提示用户保存PNG图片
     });
-    saveserver.click(function(e){
+    savetemp.click(function(e){
         e.preventDefault();
         //console.log(canvas.toDataURL("image/png"));
         $.ajax({
@@ -142,9 +142,25 @@ function draw(resquery){
             type: "POST",
             async: false,
             data: {
-                "imgData": canvas.toDataURL("image/png")
+                "imgData": canvas.toDataURL("image/png"),
+                "imageName_body":  $('#canvas').attr('data-rn'),
+                "imageName_head":  $('#canvas').attr('data-f')
             },
             success: function (result) {
+
+                var li = "<li><img src='" + result.url + "'></li>";
+                $('#temppiclist').append(li);
+                if(result.imageinfo.height >= result.imageinfo.width){
+                    $('.temppiclist img').css({
+                        "width":"80px",
+                        "height":"auto"
+                    });
+                }else{
+                    $('.temppiclist img').css({
+                        "width":"auto",
+                        "height":"80px"
+                    });
+                }
                 console.log(result);
                 //picturePage(result);//取得数据操作返回的result，在页面重新生成图片
             }
@@ -158,6 +174,7 @@ function draw(resquery){
             canvasFilter.invert(imgData , i);
         }
         ctx.putImageData( tempImageData , 0 , 0);
+        $('#canvas').attr({'data-f':'invert'});
     });
     // 灰化：取某个点的rgb的平均值
     grayscale.click(function(e) {
@@ -167,6 +184,7 @@ function draw(resquery){
             canvasFilter.grayscale(imgData , i);
         }
         ctx.putImageData( tempImageData , 0 , 0);
+        $('#canvas').attr({'data-f':'grayscale'});
     });
     // 怀旧：特定公式
     sepia.click(function(e) {
@@ -176,6 +194,7 @@ function draw(resquery){
             canvasFilter.sepia(imgData , i);
         }
         ctx.putImageData( tempImageData , 0 , 0);
+        $('#canvas').attr({'data-f':'sepia'});
     });
     // 变亮：rgb点加上某个数值
     brightness.click(function(e) {
@@ -185,6 +204,7 @@ function draw(resquery){
             canvasFilter.brightness(imgData , i , 30);
         }
         ctx.putImageData( tempImageData , 0 , 0);
+        $('#canvas').attr({'data-f':'brightness'});
     });
     // 阈值：将灰度值与设定的阈值比较，如果大于等于阈值，则将该点设置为255，否则设置为0
     //“阈值”命令将灰度或彩色图像转换为高对比度的黑白图像。您可以指定某个色阶作为阈值。所有比阈值亮的像素转换为白色；而所有比阈值暗的像素转换为黑色。“阈值”命令对确定图像的最亮和最暗区域很有用。
@@ -195,6 +215,7 @@ function draw(resquery){
             canvasFilter.threshold(imgData , i , 150);
         }
         ctx.putImageData( tempImageData , 0 , 0);
+        $('#canvas').attr({'data-f':'threshold'});
     });
     // 模糊
     // stackblur
@@ -202,6 +223,7 @@ function draw(resquery){
         e.preventDefault();
         getInitImageData();
         stackBlurCanvasRGBA( "canvas", 0, 0, canvas.width, canvas.height, 10 );
+        $('#canvas').attr({'data-f':'blur'});
     });
     // 浮雕：取下一个点和下一行对应的点值
     relief.click(function(e) {
@@ -211,6 +233,7 @@ function draw(resquery){
             canvasFilter.relief(imgData , i , canvas);
         }
         ctx.putImageData( tempImageData , 0 , 0);
+        $('#canvas').attr({'data-f':'relief'});
     });
     /*
      sepia.click(function(e) {

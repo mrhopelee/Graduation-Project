@@ -99,30 +99,34 @@ function picturefilter(){
     });
 }
 /*获取被点击的picture进入滤镜模式*/
-function getfilterpicture(){
+function getfilterpicture() {
     var thisbtn = $('.showbtns button:hover');
     var thispicture = thisbtn.parents('.showitem');//被点击的图片item
     //console.log(thispicture);
-    if(thispicture.length== 0){ thispicture=$('#canvas');console.log(thispicture.attr('data-id'));}
-        var thisclass = $('.this');//当前分类
+    if (thispicture.length == 0) {
+        thispicture = $('#canvas');
+        console.log(thispicture.attr('data-id'));
+    }
+    var thisclass = $('.this');//当前分类
 
-        $('#canvas').attr({'data-id':thispicture.attr('data-id')});
-        $.ajax({
-            url: "http://localhost:27017/picturefilter",
-            type: "POST",
-            async: false,
-            data: {
-                "thisclass":  thisclass.attr('data-c'),
-                "thispicture": thispicture.attr('data-id')
-            },
-            success: function (result) {
-                //$('.TCimg').attr({"src":"filterimages\\" + result.realname});
-                //console.log(result)
-                draw(result);
-                /*------------------------------------做到这*/
-                /*picturePage(result);*///取得数据操作返回的result，在页面重新生成图片
-            }
-        });
+    $('#canvas').attr({'data-id': thispicture.attr('data-id')});
+    $.ajax({
+        url: "http://localhost:27017/picturefilter",
+        type: "POST",
+        async: false,
+        data: {
+            "thisclass": thisclass.attr('data-c'),
+            "thispicture": thispicture.attr('data-id')
+        },
+        success: function (result) {
+            //$('.TCimg').attr({"src":"filterimages\\" + result.realname});
+            console.log(result.resresult.realname);
+            $('#canvas').attr({'data-rn': result.resresult.realname});
+            draw(result);
+            /*------------------------------------做到这*/
+            /*picturePage(result);*///取得数据操作返回的result，在页面重新生成图片
+        }
+    });
 
 }
 /*修改图片分类*/

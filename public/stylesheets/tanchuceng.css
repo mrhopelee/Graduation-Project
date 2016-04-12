@@ -58,3 +58,14 @@
     border-width: 30px 10px;
  }*/
 
+.temppic span{
+    color: rgba(255,255,255,1);
+}
+.temppiclist li{
+    text-decoration: none;
+    float: left;
+}
+.temppiclist img {
+    height:auto;
+    width: auto;
+}

@@ -209,7 +209,7 @@ function pictureFilter(req, res) {
                             "width":info.width,
                             "height":info.height
                         };
-                        console.log(info);
+                       //console.log(info);
                         res.send(resquery);
                     }
                 });
@@ -256,17 +256,36 @@ exports.pictureFilter = pictureFilter;
 /*图片*/
 function savetemp(req, res) {
     //接收前台POST过来的base64
-    var imgData = req.body.imgData;
+    var imgData = req.body.imgData,
+        imageName = req.body.imageName_head + '-' + req.body.imageName_body.replace(/.jpg/, "");
+
     //过滤data:URL
     var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = new Buffer(base64Data, 'base64');
-    var temp_path = "public\\filterimages\\" + Date.now();
-    fs.writeFile(temp_path+".png", dataBuffer, function(err) {
-        if(err){
-            res.send(err);
-        }else{
-            res.send("保存成功！");
+    var temp_path = "public\\filterimages\\" + imageName;
+    var info = imageinfo(dataBuffer);
+
+    if (fs.existsSync(temp_path+".png")) {
+        console.log("图片已存在");
+        var query = {
+            "imageinfo":info,
+            "url":"filterimages\\" + imageName + ".png"
         }
-    });
+        res.send(query);
+    }else{
+        fs.writeFile(temp_path+".png", dataBuffer, function(err) {
+            if(err){
+                res.send(err);
+            }else{
+                //console.log(info);
+                var query = {
+                    "imageinfo":info,
+                    "url":"filterimages\\" + imageName + ".png"
+                }
+                res.send(query);
+            }
+        });
+    }
+
 }
 exports.savetemp = savetemp;
