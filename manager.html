@@ -60,16 +60,16 @@
 </body>
 </html>
 <script>
-    function allowDrop(ev) {
+        function pictureallowDrop(ev) {
         ev.preventDefault();
     }
 
-    function drag(ev) {
+    function picturedrag(ev) {
         var thispic = $('.showitem:hover');
         ev.dataTransfer.setData("pictureid", thispic.attr("data-id"));
     }
 
-    function drop(ev) {
+    function picturedrop(ev) {
         ev.preventDefault();
         if ($(event.target).attr("class") === $('.this').attr("class")) {
 

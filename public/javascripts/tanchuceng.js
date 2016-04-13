@@ -27,17 +27,24 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<button class='filter'id='invert'>反相(负片)</button>" +
         "<button class='filter'id='grayscale'>灰化</button>" +
         "<button class='filter'id='sepia'>复古(怀旧)</button>" +
+        "<button class='filter'id='relief'>浮雕</button>" +
+        "</p>" +
+        "<p class='filters'>" +
         "<button class='filter'id='brightness'>变亮</button>" +
         "<button class='filter'id='threshold'>阈值</button>" +
         "<button class='filter'id='blur'>模糊</button>" +
-        "<button class='filter'id='relief'>浮雕</button>" +
+        "</p>" +
+        "<p>" +
+        "<div class='bigvalue'>" +
+        "<div class='smallvalue'></div>" +
+        "</div>" +
         "</p>" +
         "<button class='filter'id='save'>save 本地</button>" +
-        "<button class='filter'id='savetemp'>save 临时</button>" +
-        "<button class='filter'id='saveserver'>save 保存</button>" +
-        "<div class='temppic'id='temppic'>" +
-        "<span>临时图片</span>" +
-        "<ul class='temppiclist'id='temppiclist'></ul>" +
+        "<button class='filter savegallery'id='savegallery'>保存到默认相册</button>" +
+        //"<button class='filter'id='savetemp'>save 临时</button>" +
+        //"<div class='temppic'id='temppic'>" +
+        //"<span>临时图片</span>" +
+        //"<ul class='temppiclist'id='temppiclist'></ul>" +
         "</div>" +
         "</div>").addClass('bgDiv TChid');
     $("body").append(div, div2);        // 追加新元素
@@ -59,8 +66,21 @@ function showTC() {
         if (r==true)
         {
             $(".TCDiv,.bgDiv").removeClass("TCshow");
+            $.ajax({
+                url: "http://localhost:27017/deltempfilterpicture",
+                type: "get",
+                async: false,
+                data: {},
+                success: function (result) {
+                    if(result){
+                        $("#temppiclist").empty();
+                    }else {
+                        console.log("失败");
+                    }
+                }
+            });
+            getPicture({});
         }else{
-
         }
         /*加入清空图片处理文件夹的操作*/
     });

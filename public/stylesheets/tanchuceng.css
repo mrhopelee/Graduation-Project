@@ -61,11 +61,30 @@
 .temppic span{
     color: rgba(255,255,255,1);
 }
+.temppiclist {
+    list-style: none;
+}
 .temppiclist li{
     text-decoration: none;
     float: left;
+    margin: 5px;
 }
 .temppiclist img {
     height:auto;
     width: auto;
+}
+.bigvalue,.smallvalue{
+    height: 30px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+.bigvalue{
+    width: 220px;
+    background-color: rgba(255,255,255,1.0);
+    position: relative;
+}
+.smallvalue{
+    width: 20px;
+    background-color: rgba(0,0,0,1.0);
 }

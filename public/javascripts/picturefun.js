@@ -24,7 +24,7 @@ function picturePage(result) {
 }
 /*生成图片节点*/
 function createshowitem(str) {
-    var text = "<div class=\"showitem\" draggable=\"true\" ondragstart=\"drag(event)\">" +
+    var text = "<div class=\"showitem\" draggable=\"true\" ondragstart=\"picturedrag(event)\">" +
         "<div class=\"showimg\">" +
         "<img draggable=\"false\">" +
         "</div>" +
@@ -33,7 +33,7 @@ function createshowitem(str) {
         "<span class=\"showname\"></span>" +
         "</div>" +
         "<div class=\"showbtns\">" +
-        "<button class=\"picturefilter\">upd</button>" +
+        "<button class=\"picturefilter\">filter</button>" +
         "<button class=\"delpicture\">del</button>" +
         "</div>" +
         "</div>" +
@@ -94,7 +94,7 @@ function delpicturefun(){
 function picturefilter(){
     $('.picturefilter').click(function(e){
         e.preventDefault();
-        showTC();
+        //showTC();
         getfilterpicture();/*获取被点击的picture进入滤镜模式*/
     });
 }
@@ -119,12 +119,17 @@ function getfilterpicture() {
             "thispicture": thispicture.attr('data-id')
         },
         success: function (result) {
-            //$('.TCimg').attr({"src":"filterimages\\" + result.realname});
-            console.log(result.resresult.realname);
-            $('#canvas').attr({'data-rn': result.resresult.realname});
-            draw(result);
-            /*------------------------------------做到这*/
-            /*picturePage(result);*///取得数据操作返回的result，在页面重新生成图片
+            if(result===false){
+                alert("进入滤镜模式失败，请重试");
+            }else {
+                showTC();
+                //$('.TCimg').attr({"src":"filterimages\\" + result.realname});
+                console.log(result.resresult.realname);
+                $('#canvas').attr({'data-rn': result.resresult.realname});
+                draw(result);
+                /*------------------------------------做到这*/
+                /*picturePage(result);*///取得数据操作返回的result，在页面重新生成图片
+            }
         }
     });
 

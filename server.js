@@ -7,6 +7,7 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 var crud = require("./crud");
+var filefun = require("./filefun");
 
 
 app.set('views', './views');
@@ -118,18 +119,6 @@ app.post('/file_upload', uploadimg.array('image'), function (req, res) {
             });
         }
     });
-    //console.log(write_path);
-    //console.log(fs.existsSync(write_path));
-    /*fs.unlink(read_path, function(err) {
-     if (err) {
-     return console.error(err);
-     }
-     console.log("文件删除成功！");
-     });*/
-    /*console.log(read_path);
-     console.log(write_path);
-     console.log(classname);
-     console.log(req.files);*/
 })
 /*删除图片*/
 app.post('/delpicture', function (req, res) {
@@ -146,11 +135,56 @@ app.get('/showAllpicture', function (req, res) {
 
 /*图片滤镜*/
 app.post('/picturefilter', function (req, res) {
-    crud.pictureFilter(req, res);
+    /*filefun.rmdirSync("public/filterimages/",function(e){
+        console.log("!!!"+e);
+        console.log("删除filterimages目录以及子目录成功");
+        filefun.mkdirSync("public/filterimages/",0,function(e){
+            if(e){
+                console.log('出错了');
+                res.send(false);
+            }else{
+                crud.pictureFilter(req, res);
+            }
+        });
+    })*/
+    var state = filefun.deldirchild("public/filterimages/");
+    if(state===true){
+        crud.pictureFilter(req, res);
+    }else {
+        res.send(false);
+    }
+
+
 })
-/*临时保存图片*/
+/*删除临时目录的所有文件*/
+app.get('/deltempfilterpicture', function (req, res) {
+    /*filefun.rmdirSync("public/filterimages/",function(e){
+        console.log("!!!"+e);
+        console.log("删除filterimages目录以及子目录成功");
+        filefun.mkdirSync("public/filterimages/",0,function(e){
+            if(e){
+                console.log('出错了');
+                res.send(false);
+            }else{
+                console.log("重新创建filterimages目录成功，退出滤镜模式")
+                res.send(true);
+            }
+        });
+    })*/
+    var state = filefun.deldirchild("public/filterimages/");
+    if(state){
+
+    }
+    console.log("清除filterimages目录下的临时文件成功，退出滤镜模式")
+    res.send(state);
+})
+/*/!*临时保存图片*!/
 app.post('/savetemp', function (req, res) {
     crud.savetemp(req, res);
+})*/
+/*保存图片到相册*/
+app.post('/savegallery', function (req, res) {
+    crud.savegallery(req, res);
 })
 
 

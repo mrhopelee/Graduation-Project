@@ -5,6 +5,7 @@ var str = 'mongodb://' + 'localhost' + ':' + '27017' + '/' + 'gp';
 var db = require('mongoskin').db(str);
 var imageinfo = require("./imageinfo");
 var fs = require("fs");
+var filefun = require("./filefun");
 
 
 
@@ -194,6 +195,13 @@ function copyPicture(ole_path,new_path){
 function pictureFilter(req, res) {
     db.collection('picture').findById(req.body.thispicture, function (err, result) {//根据id在数据库中查找图片
         var this_path = "public\\images\\" + result.realname;//图片真实路径
+            filefun.mkdirSync("public/filterimages/",0,function(e){
+                if(e){
+                    console.log('出错了');
+                }else{
+                    console.log("创建成功");
+                }
+            });
         var filter_path = "public\\filterimages\\" + result.realname;//图片滤镜处理临时路径
         //if (!err) console.log(del_path);
         if (fs.existsSync(this_path)) {
@@ -216,44 +224,11 @@ function pictureFilter(req, res) {
 
             });
         }
-        /*var query = {class:req.body.thisclass};
-        if(req.body.thisclass==''){
-            query = {};
-        }
-        db.collection('picture').find(query).toArray(function (err, result) {
-            if (err) throw err;
-            //console.log(result);
-            //res.render('manager',{pi:result});
-            //res.redirect('./hello.html');
-            res.send(result);
-        })*/
-        /*db.collection('picture').removeById(req.body.del_pictureid, function (err, result) {//根据id在数据库中删除图片
-            if (!err) {
-                //console.log(req.body.id + ' deleted!');
-                if (fs.existsSync(del_path)) {//通过真实路径删除真实文件
-                    fs.unlink(del_path, function (err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                        var query = {class:req.body.thisclass};
-                        if(req.body.thisclass==''){
-                            query = {};
-                        }
-                        db.collection('picture').find(query).toArray(function (err, result) {//查询当前分类的图片
-                            if (err) throw err;
-                            //console.log(result);
-                            //res.render('manager',{pi:result});
-                            //res.redirect('./hello.html');
-                            res.send(result);
-                        })
-                    });
-                }
-            }
-        });*/
+
     });
 }
 exports.pictureFilter = pictureFilter;
-/*图片*/
+/*/!*图片*!/
 function savetemp(req, res) {
     //接收前台POST过来的base64
     var imgData = req.body.imgData,
@@ -268,6 +243,7 @@ function savetemp(req, res) {
     if (fs.existsSync(temp_path+".png")) {
         console.log("图片已存在");
         var query = {
+            "exists":1,
             "imageinfo":info,
             "url":"filterimages\\" + imageName + ".png"
         }
@@ -279,6 +255,7 @@ function savetemp(req, res) {
             }else{
                 //console.log(info);
                 var query = {
+                    "exists":0,
                     "imageinfo":info,
                     "url":"filterimages\\" + imageName + ".png"
                 }
@@ -286,6 +263,52 @@ function savetemp(req, res) {
             }
         });
     }
-
 }
-exports.savetemp = savetemp;
+exports.savetemp = savetemp;*/
+/*保存图片到相册*/
+function savegallery(req, res) {
+    //接收前台POST过来的base64
+
+    var imgData = req.body.imgData,
+        imageName = req.body.imageName_head + "-" +req.body.imageName_body.replace(/.jpg/, ".png").replace(/[^-]*-/g, ""),
+        imagRrealName = 'image-' + Date.now() + '-' +imageName;
+    var now = new Date();
+    //过滤data:URL
+    var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+    var dataBuffer = new Buffer(base64Data, 'base64');
+    var info = imageinfo(dataBuffer);
+    console.log(imageName);
+    /*
+    console.log(imagRrealName);
+    console.log(info);
+    console.log(dataBuffer.length);*/
+    db.collection('picture').find({'name':imageName}).toArray(function (err, result) {
+        if (err) throw err;
+        if(result){
+            console.log("图片已存在");
+            res.send("图片已存在");
+        }else{
+            fs.writeFile("public\\images\\" +imagRrealName, dataBuffer, function(err) {
+                if(err){
+                    res.send(err);
+                }else{
+                    /*插入图片*/
+                    db.collection('picture').insert({//插入数据库
+                        name: imageName,
+                        realname: imagRrealName,
+                        date: [now.getYear(), now.getMonth(), now.getDate()],
+                        height: info.height,
+                        width: info.width,
+                        size: dataBuffer.length,
+                        class: "56dab2879a78ca71f18afdb6",
+                        tag: []
+                    }, function (err, result) {
+                        console.log("保存新滤镜图片成功");
+                        res.send("保存新滤镜图片成功");
+                    });
+                }
+            });
+        }
+    })
+}
+exports.savegallery = savegallery;
