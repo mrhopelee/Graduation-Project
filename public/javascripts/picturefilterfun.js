@@ -273,14 +273,28 @@ function draw(resquery){
         stackBlurCanvasRGBA( "canvas", 0, 0, canvas.width, canvas.height, 10 );
         $('#canvas').attr({'data-f':'blur'});
     });
-    /*
-     sepia.click(function(e) {
-         e.preventDefault();
-         getInitImageData();
 
-         ctx.putImageData( tempImageData , 0 , 0);
-     }
-     */
+    $('.smallvalue').mousedown(function(){
+        //console.log($('.bigvalue').offset().left);
+        $('.smallvalue').text("拖");
+
+        $('body').on('mousemove',function(event){
+            var smallLeft = event.pageX-$('.bigvalue').offset().left;
+            if(smallLeft > 200) smallLeft = 200;
+            if(smallLeft < 0) smallLeft = 0;
+            $('.smallvalue')
+                .text(smallLeft + ", " + event.pageY)
+                .css({
+                    "left" : smallLeft
+                });
+        });
+        $('body').on('mouseup',function(){
+            $('.smallvalue').text("放");
+            console.log($('.smallvalue').css('left').replace(/px/,'')/200.0000);
+            $('body').off('mousemove');
+            $('body').off('mouseup');
+        });
+    });
 
     // init
     img.onload = function(){

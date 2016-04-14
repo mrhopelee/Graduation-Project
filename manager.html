@@ -60,7 +60,10 @@
 </body>
 </html>
 <script>
-        function pictureallowDrop(ev) {
+
+
+
+    function pictureallowDrop(ev) {
         ev.preventDefault();
     }
 
@@ -82,28 +85,28 @@
             /*console.log(classid);
              console.log(pictureid);*/
             //pictureUpd({'oldclassid':oldclassid,'newclassid':newclassid,'pictureid':pictureid});//修改图片
-            pictureUpd({'newclassid':newclassid,'pictureid':pictureid});//修改图片
+            pictureUpd({'newclassid': newclassid, 'pictureid': pictureid});//修改图片
             var oldclassid = $('.this').attr("data-c");
             var ggquery;
-            if(oldclassid == ""){
+            if (oldclassid == "") {
                 ggquery = {};
-            }else{
-                ggquery ={class:oldclassid};
+            } else {
+                ggquery = {class: oldclassid};
             }
             console.log(ggquery);
             getPicture(ggquery);
             /*cleanClassUD();//清空列表项中的前一个.this的样式与点击控件
-            thisItem.addClass("this");
-            $(".crepicture input[type=\"hidden\"]").attr("value", classid);
-            if (classid !== "56dab2879a78ca71f18afdb6") {
-                var classnamestr = thisItem.text();
-                thisItem
-                        .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
-                        .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" autofocus /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
-                $('.udpclassname').val(classnamestr);
-                classDel();//删除分类事件
-                updateClassClick();//修改分类的页面交互
-            }*/
+             thisItem.addClass("this");
+             $(".crepicture input[type=\"hidden\"]").attr("value", classid);
+             if (classid !== "56dab2879a78ca71f18afdb6") {
+             var classnamestr = thisItem.text();
+             thisItem
+             .append("<button class=\"updclass\">u</button><button class=\"delclass\">d</button>")
+             .append("<div class=\"hiduc abscenter\"><input class=\"udpclassname\" type=\"text\" autofocus /><button class=\"udpclassbtn\">修改</button><button class=\"hidudpclassbtn\">取消</button></div>");
+             $('.udpclassname').val(classnamestr);
+             classDel();//删除分类事件
+             updateClassClick();//修改分类的页面交互
+             }*/
             //ev.target.appendChild(document.getElementById(data));
         }
     }
