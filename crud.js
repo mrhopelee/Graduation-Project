@@ -278,13 +278,34 @@ function savegallery(req, res) {
     var dataBuffer = new Buffer(base64Data, 'base64');
     var info = imageinfo(dataBuffer);
     console.log(imageName);
+    fs.writeFile("public\\images\\" +imagRrealName, dataBuffer, function(err) {
+        if(err){
+            res.send(err);
+        }else{
+            /*插入图片*/
+            db.collection('picture').insert({//插入数据库
+                name: imageName,
+                realname: imagRrealName,
+                date: [now.getYear(), now.getMonth(), now.getDate()],
+                height: info.height,
+                width: info.width,
+                size: dataBuffer.length,
+                class: "56dab2879a78ca71f18afdb6",
+                tag: []
+            }, function (err, result) {
+                console.log("保存新滤镜图片成功");
+                res.send("保存新滤镜图片成功");
+            });
+        }
+    });
     /*
     console.log(imagRrealName);
     console.log(info);
     console.log(dataBuffer.length);*/
-    db.collection('picture').find({'name':imageName}).toArray(function (err, result) {
+    /*db.collection('picture').find({'name':imageName}).toArray(function (err, result) {
         if (err) throw err;
-        if(result){
+        //console.log(result.length);
+        if(result.length>0){
             console.log("图片已存在");
             res.send("图片已存在");
         }else{
@@ -292,7 +313,7 @@ function savegallery(req, res) {
                 if(err){
                     res.send(err);
                 }else{
-                    /*插入图片*/
+                    /!*插入图片*!/
                     db.collection('picture').insert({//插入数据库
                         name: imageName,
                         realname: imagRrealName,
@@ -309,6 +330,6 @@ function savegallery(req, res) {
                 }
             });
         }
-    })
+    })*/
 }
 exports.savegallery = savegallery;

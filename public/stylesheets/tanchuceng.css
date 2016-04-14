@@ -80,10 +80,13 @@
     margin: 0;
 }
 .bigvalue{
-    width: 220px;
+    max-width: 90%;
     background-color: rgba(0,255,255,1.0);
     position: relative;
     margin: 0 auto;
+}
+.bigvalue+span{
+    color: rgba(255,255,255,1.0);
 }
 .smallvalue{
     width: 20px;
@@ -92,4 +95,5 @@
     position: absolute;
     top: 0;
     left: 0;
+    cursor:e-resize;
 }

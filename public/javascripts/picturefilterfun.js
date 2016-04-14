@@ -135,6 +135,7 @@ function draw(resquery){
     reset.click(function(e){
         e.preventDefault();
         console.log("reset");
+        getInitImageData();
         resetImageData();
         $('#canvas').attr({'data-f':''});
     });
@@ -207,7 +208,7 @@ function draw(resquery){
     // 反相：取每个像素点与255的差值
     invert.click(function(e){
         e.preventDefault();
-       getInitImageData();
+       getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.invert(imgData , i);
         }
@@ -217,7 +218,7 @@ function draw(resquery){
     // 灰化：取某个点的rgb的平均值
     grayscale.click(function(e) {
         e.preventDefault();
-        getInitImageData();
+        getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.grayscale(imgData , i);
         }
@@ -227,7 +228,7 @@ function draw(resquery){
     // 怀旧：特定公式
     sepia.click(function(e) {
         e.preventDefault();
-        getInitImageData();
+        getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.sepia(imgData , i);
         }
@@ -237,7 +238,7 @@ function draw(resquery){
     // 浮雕：取下一个点和下一行对应的点值
     relief.click(function(e) {
         e.preventDefault();
-        getInitImageData();
+        getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i++){
             canvasFilter.relief(imgData , i , canvas);
         }
@@ -247,54 +248,106 @@ function draw(resquery){
     // 变亮：rgb点加上某个数值
     brightness.click(function(e) {
         e.preventDefault();
-        getInitImageData();
+        getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
-            canvasFilter.brightness(imgData , i , 30);
+            canvasFilter.brightness(imgData , i , 80);
         }
         ctx.putImageData( tempImageData , 0 , 0);
         $('#canvas').attr({'data-f':'brightness'});
+        $('.smallvalue').css({"left" : ($('.bigvalue').width() - $('.smallvalue').width())*0.70});
+        $('.bigvalue+span').text('70%');
+        $('.smallvalue').attr({"data-f":"brightness"});
+
     });
     // 阈值：将灰度值与设定的阈值比较，如果大于等于阈值，则将该点设置为255，否则设置为0
     //“阈值”命令将灰度或彩色图像转换为高对比度的黑白图像。您可以指定某个色阶作为阈值。所有比阈值亮的像素转换为白色；而所有比阈值暗的像素转换为黑色。“阈值”命令对确定图像的最亮和最暗区域很有用。
     threshold.click(function(e) {
         e.preventDefault();
-        getInitImageData();
+        getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
-            canvasFilter.threshold(imgData , i , 150);
+            canvasFilter.threshold(imgData , i , 153);
         }
         ctx.putImageData( tempImageData , 0 , 0);
         $('#canvas').attr({'data-f':'threshold'});
+        $('.smallvalue').css({"left" : ($('.bigvalue').width() - $('.smallvalue').width())*0.6});
+        $('.bigvalue+span').text('60%');
+        $('.smallvalue').attr({"data-f":"threshold"});
     });
     // 模糊
     // stackblur
     blur.click(function(e) {
         e.preventDefault();
-        getInitImageData();
+        getInitImageData();//
         stackBlurCanvasRGBA( "canvas", 0, 0, canvas.width, canvas.height, 10 );
         $('#canvas').attr({'data-f':'blur'});
+        $('.smallvalue').css({"left" : ($('.bigvalue').width() - $('.smallvalue').width())*0.1});
+        $('.bigvalue+span').text('10%');
+        $('.smallvalue').attr({"data-f":"blur"});
     });
+
+
 
     $('.smallvalue').mousedown(function(){
         //console.log($('.bigvalue').offset().left);
-        $('.smallvalue').text("拖");
+        if($('.smallvalue').attr('data-f')===""){
+            $('.bigvalue+span').text("未选择滤镜");
+        }else{
+            $('.smallvalue').text("拖");
 
-        $('body').on('mousemove',function(event){
-            var smallLeft = event.pageX-$('.bigvalue').offset().left;
-            if(smallLeft > 200) smallLeft = 200;
-            if(smallLeft < 0) smallLeft = 0;
-            $('.smallvalue')
-                .text(smallLeft + ", " + event.pageY)
-                .css({
-                    "left" : smallLeft
+            $('body').on('mousemove',function(event){
+                smallmove();
+                $('body').on('mouseup',function(){
+                    $('.smallvalue').text("放");
+                    $('body').off('mousemove');
+                    $('body').off('mouseup');
                 });
-        });
-        $('body').on('mouseup',function(){
-            $('.smallvalue').text("放");
-            console.log($('.smallvalue').css('left').replace(/px/,'')/200.0000);
-            $('body').off('mousemove');
-            $('body').off('mouseup');
-        });
+            });
+        }
+
     });
+
+    $('.bigvalue').mousedown(function(event){
+        if($('.smallvalue').attr('data-f')===""){
+            $('.bigvalue+span').text("未选择滤镜");
+        }else{
+            $('.smallvalue').text("");
+            smallmove();
+        }
+    });
+
+    function smallmove(){
+        var smallv = $('.smallvalue'),
+            bigv = $('.bigvalue');
+        var smallLeft = event.pageX - bigv.offset().left - smallv.width()/2,
+            bigwidth = bigv.width() - smallv.width();
+        if(smallLeft > bigwidth) {smallLeft = bigwidth;}
+        if(smallLeft < 0) {smallLeft = 0;}
+        var sb = (smallLeft*100/bigwidth).toFixed(0);
+        smallv.css({
+                "left" : smallLeft
+            });
+        $('.bigvalue+span').text(sb + '%');
+        console.log("b",sb);
+        if(smallv.attr('data-f')==="brightness"){
+            console.log("b",sb);
+            getInitImageData();//
+            for(var i = 0 , len = imgData.length ; i < len ; i+=4){
+                canvasFilter.brightness(imgData , i , (sb-50)*4);
+            }
+            ctx.putImageData( tempImageData , 0 , 0);
+        }
+        if(smallv.attr('data-f')==="threshold"){
+            getInitImageData();//
+            for(var i = 0 , len = imgData.length ; i < len ; i+=4){
+                canvasFilter.threshold(imgData , i , 153+(sb-60)*2.55);
+            }
+            ctx.putImageData( tempImageData , 0 , 0);
+        }
+        if(smallv.attr('data-f')==="blur"){
+            getInitImageData();//
+            stackBlurCanvasRGBA( "canvas", 0, 0, canvas.width, canvas.height, sb );
+        }
+    }
 
     // init
     img.onload = function(){

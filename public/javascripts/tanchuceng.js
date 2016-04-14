@@ -34,10 +34,11 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<button class='filter'id='threshold'>阈值</button>" +
         "<button class='filter'id='blur'>模糊</button>" +
         "</p>" +
-        "<p>" +
+        "<p class='scrollbar'>" +
         "<div class='bigvalue'>" +
-        "<div class='smallvalue'></div>" +
+        "<div class='smallvalue' data-f></div>" +
         "</div>" +
+        "<span>--%</span>" +
         "</p>" +
         "<button class='filter'id='save'>save 本地</button>" +
         "<button class='filter savegallery'id='savegallery'>保存到默认相册</button>" +
@@ -66,6 +67,8 @@ function showTC() {
         if (r==true)
         {
             $(".TCDiv,.bgDiv").removeClass("TCshow");
+            $('.smallvalue').css({"left" : 0}).attr({"data-f":""}).text("");
+            $('.bigvalue+span').text('--%');
             $.ajax({
                 url: "http://localhost:27017/deltempfilterpicture",
                 type: "get",
