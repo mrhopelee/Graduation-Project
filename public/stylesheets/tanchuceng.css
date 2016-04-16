@@ -1,6 +1,6 @@
 .TCDiv{
     z-index: 101;
-    background-color: rgba(0, 0, 0, 0.9);;
+    background-color: rgba(0, 0, 0, 1);;
     margin-top: 0;
     padding: 0;
     position: fixed;
@@ -81,19 +81,37 @@
 }
 .bigvalue{
     max-width: 90%;
-    background-color: rgba(0,255,255,1.0);
+    background-color: rgba(255,255,255,1.0);
     position: relative;
     margin: 0 auto;
 }
-.bigvalue+span{
+.filtername{
+    color: rgba(255,255,255,1.0);
+}
+.filtervalue{
     color: rgba(255,255,255,1.0);
 }
 .smallvalue{
     width: 20px;
-    background-color: rgba(255,0,0,1.0);
+    background-color: rgba(245,222,179,1.0);
     color: white;
     position: absolute;
     top: 0;
     left: 0;
     cursor:e-resize;
+}
+.filter {
+    margin: 10px;
+    width: auto;
+    height: 30px;
+    background-color: rgba(255,255,255,1.0);
+    color: rgba(0,0,0,1.0);
+    /* border-radius: 3px; */
+    border: 0px solid rgba(255,255,255,1.0);
+}
+.filter:hover {
+    background-color: rgba(245,222,179,1.0);
+}
+.thisfilter {
+    background-color: rgba(245,222,179,1.0) !important;
 }

@@ -20,15 +20,15 @@ function draw(resquery){
             //console.log("1");
         }else{
             setimgsize(tcdivh,resquery.width*tcdivh/resquery.height);
-            console.log("2");
+            //console.log("2");
         }
     }else{
         if(resquery.width<=tcdivw){
             setimgsize(resquery.height,resquery.width);
-            console.log("3");
+            //console.log("3");
         }else{
             setimgsize(resquery.height*tcdivw/resquery.width,tcdivw);
-            console.log("4");
+            //console.log("4");
         }
     }
     function setimgsize(h,w){
@@ -44,7 +44,7 @@ function draw(resquery){
         ctx.drawImage(img , 0 , 0 , canvas.width , canvas.height);
         tempImageData = ctx.getImageData(0 , 0 , canvas.width , canvas.height); // 重新获取原始图像数据点信息
         imgData = tempImageData.data;
-        console.log("getInitImageData");
+        //console.log("getInitImageData");
     }
 
     function resetImageData(){
@@ -134,6 +134,8 @@ function draw(resquery){
 
     reset.click(function(e){
         e.preventDefault();
+        allfilter($(this));
+        console.log("reset");
         console.log("reset");
         getInitImageData();
         resetImageData();
@@ -208,6 +210,7 @@ function draw(resquery){
     // 反相：取每个像素点与255的差值
     invert.click(function(e){
         e.preventDefault();
+        allfilter($(this));
        getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.invert(imgData , i);
@@ -218,6 +221,7 @@ function draw(resquery){
     // 灰化：取某个点的rgb的平均值
     grayscale.click(function(e) {
         e.preventDefault();
+        allfilter($(this));
         getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.grayscale(imgData , i);
@@ -228,6 +232,7 @@ function draw(resquery){
     // 怀旧：特定公式
     sepia.click(function(e) {
         e.preventDefault();
+        allfilter($(this));
         getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.sepia(imgData , i);
@@ -238,6 +243,7 @@ function draw(resquery){
     // 浮雕：取下一个点和下一行对应的点值
     relief.click(function(e) {
         e.preventDefault();
+        allfilter($(this));
         getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i++){
             canvasFilter.relief(imgData , i , canvas);
@@ -248,6 +254,7 @@ function draw(resquery){
     // 变亮：rgb点加上某个数值
     brightness.click(function(e) {
         e.preventDefault();
+        allfilter($(this));
         getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.brightness(imgData , i , 80);
@@ -255,14 +262,15 @@ function draw(resquery){
         ctx.putImageData( tempImageData , 0 , 0);
         $('#canvas').attr({'data-f':'brightness'});
         $('.smallvalue').css({"left" : ($('.bigvalue').width() - $('.smallvalue').width())*0.70});
-        $('.bigvalue+span').text('70%');
+        $('.filtername').text('亮度 : ');
+        $('.filtervalue').text('70%');
         $('.smallvalue').attr({"data-f":"brightness"});
-
     });
     // 阈值：将灰度值与设定的阈值比较，如果大于等于阈值，则将该点设置为255，否则设置为0
     //“阈值”命令将灰度或彩色图像转换为高对比度的黑白图像。您可以指定某个色阶作为阈值。所有比阈值亮的像素转换为白色；而所有比阈值暗的像素转换为黑色。“阈值”命令对确定图像的最亮和最暗区域很有用。
     threshold.click(function(e) {
         e.preventDefault();
+        allfilter($(this));
         getInitImageData();//
         for(var i = 0 , len = imgData.length ; i < len ; i+=4){
             canvasFilter.threshold(imgData , i , 153);
@@ -270,18 +278,21 @@ function draw(resquery){
         ctx.putImageData( tempImageData , 0 , 0);
         $('#canvas').attr({'data-f':'threshold'});
         $('.smallvalue').css({"left" : ($('.bigvalue').width() - $('.smallvalue').width())*0.6});
-        $('.bigvalue+span').text('60%');
+        $('.filtername').text('阈值 : ');
+        $('.filtervalue').text('60%');
         $('.smallvalue').attr({"data-f":"threshold"});
     });
     // 模糊
     // stackblur
     blur.click(function(e) {
         e.preventDefault();
+        allfilter($(this));
         getInitImageData();//
         stackBlurCanvasRGBA( "canvas", 0, 0, canvas.width, canvas.height, 10 );
         $('#canvas').attr({'data-f':'blur'});
         $('.smallvalue').css({"left" : ($('.bigvalue').width() - $('.smallvalue').width())*0.1});
-        $('.bigvalue+span').text('10%');
+        $('.filtername').text('模糊 : ');
+        $('.filtervalue').text('10%');
         $('.smallvalue').attr({"data-f":"blur"});
     });
 
@@ -290,14 +301,14 @@ function draw(resquery){
     $('.smallvalue').mousedown(function(){
         //console.log($('.bigvalue').offset().left);
         if($('.smallvalue').attr('data-f')===""){
-            $('.bigvalue+span').text("未选择滤镜");
+            $('.filtervalue').text("未选择滤镜");
         }else{
-            $('.smallvalue').text("拖");
+            //$('.smallvalue').text("拖");
 
             $('body').on('mousemove',function(event){
                 smallmove();
                 $('body').on('mouseup',function(){
-                    $('.smallvalue').text("放");
+                    //$('.smallvalue').text("放");
                     $('body').off('mousemove');
                     $('body').off('mouseup');
                 });
@@ -308,7 +319,7 @@ function draw(resquery){
 
     $('.bigvalue').mousedown(function(event){
         if($('.smallvalue').attr('data-f')===""){
-            $('.bigvalue+span').text("未选择滤镜");
+            $('.filtervalue').text("未选择滤镜");
         }else{
             $('.smallvalue').text("");
             smallmove();
@@ -326,8 +337,8 @@ function draw(resquery){
         smallv.css({
                 "left" : smallLeft
             });
-        $('.bigvalue+span').text(sb + '%');
-        console.log("b",sb);
+        $('.filtervalue').text(sb + '%');
+        //console.log("b",sb);
         if(smallv.attr('data-f')==="brightness"){
             console.log("b",sb);
             getInitImageData();//
@@ -348,6 +359,13 @@ function draw(resquery){
             stackBlurCanvasRGBA( "canvas", 0, 0, canvas.width, canvas.height, sb );
         }
     }
+
+
+    function allfilter(e){
+        //e.preventDefault();
+        $('.thisfilter').removeClass('thisfilter');
+        $(e).addClass('thisfilter');
+    };
 
     // init
     img.onload = function(){

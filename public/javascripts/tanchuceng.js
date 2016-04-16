@@ -23,14 +23,18 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
     var div = $("<div><span class='pfend\'></span><canvas id='canvas' class='TCimg abscenter' data-id data-rn data-f></canvas></div>").addClass('TCDiv TChid');
     var div2 = $("<div>" +
         "<button class='filter'id='reset'>原图</button>" +
+        "<hr>" +
         "<p class='filters'>" +
-        "<button class='filter'id='invert'>反相(负片)</button>" +
         "<button class='filter'id='grayscale'>灰化</button>" +
         "<button class='filter'id='sepia'>复古(怀旧)</button>" +
-        "<button class='filter'id='relief'>浮雕</button>" +
         "</p>" +
         "<p class='filters'>" +
-        "<button class='filter'id='brightness'>变亮</button>" +
+        "<button class='filter'id='relief'>浮雕</button>" +
+        "<button class='filter'id='invert'>反相(负片)</button>" +
+        "</p>" +
+        "<hr>" +
+        "<p class='filters'>" +
+        "<button class='filter'id='brightness'>亮度</button>" +
         "<button class='filter'id='threshold'>阈值</button>" +
         "<button class='filter'id='blur'>模糊</button>" +
         "</p>" +
@@ -38,8 +42,10 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<div class='bigvalue'>" +
         "<div class='smallvalue' data-f></div>" +
         "</div>" +
-        "<span>--%</span>" +
+        "<span class='filtername'></span>" +
+        "<span class='filtervalue'>--%</span>" +
         "</p>" +
+        "<hr>" +
         "<button class='filter'id='save'>save 本地</button>" +
         "<button class='filter savegallery'id='savegallery'>保存到默认相册</button>" +
         //"<button class='filter'id='savetemp'>save 临时</button>" +
@@ -68,7 +74,7 @@ function showTC() {
         {
             $(".TCDiv,.bgDiv").removeClass("TCshow");
             $('.smallvalue').css({"left" : 0}).attr({"data-f":""}).text("");
-            $('.bigvalue+span').text('--%');
+            $('.filtervalue').text('--%');
             $.ajax({
                 url: "http://localhost:27017/deltempfilterpicture",
                 type: "get",
