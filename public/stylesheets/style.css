@@ -30,8 +30,9 @@ button {
   user-select: none;
 }
 .all {
-  max-width: 1200px;
-  margin: 0 auto;
+  /*max-width: 1200px;*/
+  margin: 49px 0 auto;
+
 }
 
 /*左侧：网站标题、图片列表*/
@@ -46,6 +47,10 @@ button {
 .sitetitle {
   text-align: center;
   background-color: rgba(255,255,255,1.0);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 }
 .sitetitle>a {
   display: block;
@@ -97,6 +102,7 @@ button {
   height: 26px;
   margin: 15px 0;
   border: none;
+  text-align: center;
 }
 /*新增分类确定&取消按钮*/
 .creclassbtn, .hidcreclassbtn{
@@ -181,6 +187,8 @@ button {
   float: right;
   padding-bottom: 100%;
   background-color: rgba(255,255,255,1.0);
+  position: relative;
+  z-index: 5;
 }
 .crepicture {
   height: 60px;
@@ -264,21 +272,19 @@ button {
 .delpicture {
 
 }
-/*
-.btndiv {
-  !*display: none;*!
-  position: absolute;
-  left: -60px;
-  top: -30px;
-  margin-left: 100%;
-  z-index: 100;
+
+.classBottom, .classTop {
+  height: 120px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(245,222,179,1.0);
+  position: fixed;
+  left: 0;
+  z-index: 4;
 }
-.editbtn {
-  display: block;
+.classTop{
+  top: 49px;
 }
-.btndiv button {
-  color: rgba(255,255,255,1.0);
-  background-color: rgba(0,0,0,1.0);
-  border: 0 solid rgba(255,255,255,1.0);
-  padding: 5px;
-}*/
+.classBottom{
+  bottom: 0;
+}

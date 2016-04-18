@@ -74,6 +74,8 @@ function showTC() {
         {
             $(".TCDiv,.bgDiv").removeClass("TCshow");
             $('.smallvalue').css({"left" : 0}).attr({"data-f":""}).text("");
+            $('.thisfilter').removeClass('thisfilter');
+            $('.filtername').text('');
             $('.filtervalue').text('--%');
             $.ajax({
                 url: "http://localhost:27017/deltempfilterpicture",

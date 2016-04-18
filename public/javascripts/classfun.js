@@ -9,7 +9,7 @@ function classPage(result) {
     var classText = "";
     for (var i = 0; i < result.length; i++) {
         lasttclass = $(".classlist>li:last-child");
-        classText = "<li data-c=\"" + result[i]._id + "\" data-n=\"" + result[i].name + "\" class=\"classitem\" ondrop=\"picturedrop(event)\" ondragover=\"pictureallowDrop(event)\">" + result[i].name + "</li>";
+        classText = "<li data-c='" + result[i]._id + "' data-n='" + result[i].name + "' class='classitem'  ondrop='picturedrop(event)' ondragenter='pictureonDragEnter(event)' ondragleave='pictureDragLeave(event)' ondragover='pictureallowDrop(event)'>" + result[i].name + "</li>";
         lasttclass.after(classText);
     }
     classClick();//点击分类列表事件
