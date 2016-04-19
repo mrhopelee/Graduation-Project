@@ -4,6 +4,7 @@
 <head><title>管理</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/stylesheets/normalize.v3.0.3.css ">
+    <link rel="stylesheet" type="text/css" href="/iconfont/iconfont.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/tanchuceng.css">
     <script src="/javascripts/jquery-2.2.1.js"></script>
@@ -16,11 +17,11 @@
     <header class="sitetitle"><a href="http://localhost:27017/manager.html"><span>myphoto</span></a></header>
     <div class="left"  >
         <div class="creclass" draggable="false">
-            <button class="newclassbtn abscenter">new class</button>
+            <button class="newclassbtn abscenter"><i class="iconfont">&#xe752;</i>新分类</button>
             <div class="hidnewclass abscenter">
-                <input type="text" required class="creclassname">
-                <button class="creclassbtn">增加</button>
-                <button class="hidcreclassbtn">取消</button>
+                <input type="text" required class="creclassname" maxlength="12">
+                <button class="creclassbtn iconfont">&#xe645;</button>
+                <button class="hidcreclassbtn iconfont">&#xe646;</button>
             </div>
         </div>
         <div class="showclass">
@@ -42,8 +43,8 @@
                 <input type="hidden" value="" name="class_id">
                 <div class="">
                     <div class="">
-                        <label class="control-label ">上传选择</label>
-                        <input type="file" name="image" class="form-control"/>
+                        <label class="control-label " for="xFile">上传文件</label>
+                        <input type="file" id="xFile" class="form-control" name="image" style="position:absolute;clip: rect(6px, 12px, 12px, 0);" accept="image/*"/>
                     </div>
                     <div class="">
                         <button class="" onClick="uploadFile()">上传</button>
