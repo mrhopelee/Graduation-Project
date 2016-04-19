@@ -43,8 +43,9 @@
                 <input type="hidden" value="" name="class_id">
                 <div class="">
                     <div class="">
+                        <input type='text' name='textfield' id='textfield' class='txt' />
                         <label class="control-label " for="xFile">上传文件</label>
-                        <input type="file" id="xFile" class="form-control" name="image" style="position:absolute;clip: rect(6px, 12px, 12px, 0);" accept="image/*"/>
+                        <input type="file" id="xFile" class="form-control" name="image" style="position:absolute;clip: rect(0, 0, 0, 0);" accept="image/*" onchange="document.getElementById('textfield').value=this.value"/>
                     </div>
                     <div class="">
                         <button class="" onClick="uploadFile()">上传</button>
