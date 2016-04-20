@@ -27,7 +27,6 @@ function createshowitem(str) {
     var text = "<div class=\"showitem\" draggable=\"true\" ondragstart=\"picturedrag(event)\">" +
         "<div class=\"showimg\">" +
         "<img draggable=\"false\">" +
-        "</div>" +
         "<div class=\"showother abscenter\">" +
         "<div class=\"shownamediv\">" +
         "<span class=\"showname\"></span>" +
@@ -37,6 +36,8 @@ function createshowitem(str) {
         "<button class=\"delpicture\">del</button>" +
         "</div>" +
         "</div>" +
+        "</div>" +
+
         "</div>";
     $(str).append(text);
 };
@@ -54,6 +55,9 @@ function uploadFile(){
         processData: false,
         success: function(result){
             picturePage(result);//取得数据操作返回的result，在页面重新生成图片
+            $('#xFile').val('');
+            $('#textfield').val('');
+            $('#spanMessage').text("上传成功")
         }/*
          if(200 === data.code) {
          $("#imgShow").attr('src', data.msg.url);

@@ -92,13 +92,13 @@ app.post('/file_upload', uploadimg.array('image'), function (req, res) {
     var read_path = req.files[0].path;//图片上传的临时路径
     var imgname = req.files[0].filename + '-' + req.files[0].originalname;//图片真实名字
     var write_path = "public\\images\\" + imgname;//图片保存的路径
-    var creclassid = "";
+    /*var creclassid = "";
     if (req.body.class_id.toString() == "") {
         creclassid = "56dab2879a78ca71f18afdb6";//默认分类的id
     } else {
         creclassid = req.body.class_id;
-    }
-    var nameQuery = {"creclassid": creclassid, "realname": imgname};
+    }*/
+    var nameQuery = {"creclassid": req.body.class_id, "realname": imgname};
     /*console.log(req.files);
      console.log(req.body);*/
     fs.readFile(read_path, function (err, data) {//读取图片文件

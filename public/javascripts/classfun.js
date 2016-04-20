@@ -9,7 +9,7 @@ function classPage(result) {
     var classText = "";
     for (var i = 0; i < result.length; i++) {
         lasttclass = $(".classlist>li:last-child");
-        classText = "<li data-c='" + result[i]._id + "' data-n='" + result[i].name + "' class='classitem'  ondrop='picturedrop(event)' ondragenter='pictureonDragEnter(event)' ondragleave='pictureDragLeave(event)' ondragover='pictureallowDrop(event)'>" + result[i].name + "</li>";
+        classText = "<li data-c='" + result[i]._id + "' data-n='" + result[i].name + "' class='classitem'  ondrop='picturedrop(event)'  ondragleave='pictureDragLeave(event)' ondragenter='pictureonDragEnter(event)' ondragover='pictureallowDrop(event)'>" + result[i].name + "</li>";
         lasttclass.after(classText);
     }
     classClick();//点击分类列表事件
@@ -73,8 +73,7 @@ function classDel() {
     $('.delclass').click(function (e) {
         e.preventDefault();
         var r = confirm("删除分类后，被删分类的所有图片将归为\"默认\"分类\n确定删除？");
-        if (r==true)
-        {
+        if (r == true) {
             var thisclass = $(this).parent();//获取当前准备删除的分类li
             $.ajax({
                 url: "http://localhost:27017/delclass",
@@ -90,7 +89,7 @@ function classDel() {
 
                 }
             });
-        }else{
+        } else {
         }
     });
 }
@@ -177,7 +176,6 @@ function getClassName() {
 }
 
 
-
 /*分类时间初始化*/
 function ClassInitFun() {
     getClassName();//获取所有分类
@@ -222,38 +220,38 @@ function classClick() {
         var thisc = $(this).attr("data-c");
         $(".crepicture input[type=\"hidden\"]").attr("value", thisc);
         var query;
-        if(thisc == ""){
+        if (thisc == "") {
             query = {};
-        }else{
-            query ={class:thisc};
+        } else {
+            query = {class: thisc};
         }
         //console.log(query);
         getPicture(query);
         /*$.ajax({
-            url: "http://localhost:27017/classimage",
-            async: false,
-            data: {"thisclassid": thisc},
-            success: function (result) {
-                $(".showpicture").empty();//清空图片节点
-                for (var i = 0; i < result.length; i++) {
-                    createshowitem(".showpicture"); //生成图片节点
-                    var j = i + 1;
-                    var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
-                    /!*console.log(nowshowitem);*!/
-                    nowshowitem.attr({"data-id": result[i]._id});
-                    nowshowitem.find(".showimg>img").attr({
-                        "src": "images/" + result[i].realname,
-                        "alt": result[i].name
-                    });
-                    nowshowitem.find(".showname").html(result[i].name);
-                    if (i == result.length - 1) {
-                        //console.log("load clickfun");
-                        delpicturefun();//删除图片click事件
-                        updpicturefun();//修改图片click事件
-                    }
-                }
-            }
-        });*/
+         url: "http://localhost:27017/classimage",
+         async: false,
+         data: {"thisclassid": thisc},
+         success: function (result) {
+         $(".showpicture").empty();//清空图片节点
+         for (var i = 0; i < result.length; i++) {
+         createshowitem(".showpicture"); //生成图片节点
+         var j = i + 1;
+         var nowshowitem = $(".showpicture>.showitem:nth-child(" + j + ")");
+         /!*console.log(nowshowitem);*!/
+         nowshowitem.attr({"data-id": result[i]._id});
+         nowshowitem.find(".showimg>img").attr({
+         "src": "images/" + result[i].realname,
+         "alt": result[i].name
+         });
+         nowshowitem.find(".showname").html(result[i].name);
+         if (i == result.length - 1) {
+         //console.log("load clickfun");
+         delpicturefun();//删除图片click事件
+         updpicturefun();//修改图片click事件
+         }
+         }
+         }
+         });*/
         btninit();//图片按钮事件，不能去掉
         tanchu(1, 1);//弹出层事件，不能去掉
     });

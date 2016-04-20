@@ -14,8 +14,26 @@
 </head>
 <body class="unselectable">
 <div class="all">
-    <header class="sitetitle"><a href="http://localhost:27017/manager.html"><span>myphoto</span></a></header>
-    <div class="left"  >
+    <header class="sitetitle">
+        <a href="http://localhost:27017/manager.html"><span>myphoto</span></a>
+        <div class="crepicture">
+            <form class="uploadform" enctype='multipart/form-data' method='post' action='javascript:;' role="form"
+                  id="frmUploadFile">
+                <input type="hidden" value="" name="class_id">
+
+                <input type='text' name='textfield' id='textfield' class='txt'/>
+                <label class="cpicturebtn " for="xFile"><i class="iconfont">&#xe739;</i></label>
+                <input type="file" id="xFile" class="form-control" name="image"
+                       style="position:absolute;clip: rect(0, 0, 0, 0);" accept="image/*"
+                       onchange="document.getElementById('textfield').value=this.value.replace(/.*\\/g,'')"/>
+                <!--<br><br>-->
+                <button class="uploadbtn" onClick="uploadFile()"><i class="iconfont">&#xe75d;</i></button>
+                <!--<br><br><span class="help-inline" id="spanMessage">选择文件，并上传</span>-->
+            </form>
+        </div>
+    </header>
+
+    <div class="left">
         <div class="creclass" draggable="false">
             <button class="newclassbtn abscenter"><i class="iconfont">&#xe752;</i>新分类</button>
             <div class="hidnewclass abscenter">
@@ -25,35 +43,15 @@
             </div>
         </div>
         <div class="showclass">
-            <ul class="classlist" >
+            <ul class="classlist">
                 <li data-c="" class="classitem this">所有图片</li>
             </ul>
         </div>
+
         <!--<div class='classTop' ondragover='classdragover(event)' ondragenter='classTop(event)' ondragleave='classDragLeave(event)'>↑</div>-->
     </div>
     <div class="right">
-        <div class="crepicture">
-            <!--<form action="/file_upload" method="post" enctype="multipart/form-data" class="uploadform">
-                <input type="hidden" value="" name="classname">
-                <input type="file" name="image" size="50" class="filebtn">
-                <input type="submit" value="upload photo" class="uploadbtn">
-            </form>-->
-            <form class="" enctype='multipart/form-data' method='post' action='javascript:;' role="form"
-                  id="frmUploadFile">
-                <input type="hidden" value="" name="class_id">
-                <div class="">
-                    <div class="">
-                        <input type='text' name='textfield' id='textfield' class='txt' />
-                        <label class="control-label " for="xFile">上传文件</label>
-                        <input type="file" id="xFile" class="form-control" name="image" style="position:absolute;clip: rect(0, 0, 0, 0);" accept="image/*" onchange="document.getElementById('textfield').value=this.value"/>
-                    </div>
-                    <div class="">
-                        <button class="" onClick="uploadFile()">上传</button>
-                        <span class="help-inline" id="spanMessage">选择文件，并上传</span>
-                    </div>
-                </div>
-            </form>
-        </div>
+
         <div class="showpicture">
 
         </div>
@@ -69,10 +67,10 @@
         if (timer) {
             clearTimeout(timer);
         }
-        var topEnd = $(".classlist>li:first-child").offset().top - $(window).height()+300;
-        for(var i=0; i<10000; i++) {
-            var h = $("body").scrollTop()-150*i
-            if(h>topEnd){
+        var topEnd = $(".classlist>li:first-child").offset().top - $(window).height() + 300;
+        for (var i = 0; i < 10000; i++) {
+            var h = $("body").scrollTop() - 150 * i
+            if (h > topEnd) {
                 console.log("top");
                 $("html,body").animate({scrollTop: h}, 500, 'swing');
 
@@ -83,25 +81,25 @@
         if (timer) {
             clearTimeout(timer);
         }
-        var bottomEnd = $(".classlist>li:last-child").offset().top - $(window).height()+300;
-        for(var i=0; i<10000; i++) {
-            var h = $("body").scrollTop()+150*i
-            if(h<bottomEnd){
+        var bottomEnd = $(".classlist>li:last-child").offset().top - $(window).height() + 300;
+        for (var i = 0; i < 10000; i++) {
+            var h = $("body").scrollTop() + 150 * i
+            if (h < bottomEnd) {
                 console.log("bottom");
                 $("html,body").animate({scrollTop: h}, 500, 'swing');
 
             }
         }
     }
-    function classdragover(ev){
+    function classdragover(ev) {
         if (timer) {
             clearTimeout(timer);
         }
     }
-    function classDragLeave(ev){
+    function classDragLeave(ev) {
         $("html,body").stop(true);
         timer = setTimeout(function () {
-            if($(".classTop").length>0&&$(".classBottom").length>0) {
+            if ($(".classTop").length > 0 && $(".classBottom").length > 0) {
                 //scrollHanlder.enableScroll();//恢复滚动
                 $(".classBottom").remove();
                 $(".classTop").remove();
@@ -109,9 +107,9 @@
         }, 1000);
     }
     /*function classmove(){
-        console.log("123");
-        $("html,body").stop(true,true).animate({scrollTop: $("body").scrollTop()+15}, 100, 'swing',classmove);
-    }*/
+     console.log("123");
+     $("html,body").stop(true,true).animate({scrollTop: $("body").scrollTop()+15}, 100, 'swing',classmove);
+     }*/
 
     function pictureallowDrop(ev) {
         ev.preventDefault();
@@ -120,7 +118,7 @@
         }
     }
     function pictureonDragEnter(ev) {
-        if($(".classTop").length==0&&$(".clssBottom").length==0){
+        if ($(".classTop").length == 0 && $(".clssBottom").length == 0) {
             //scrollHanlder.disableScroll();//禁用滚动
             $('.left').append("<div class='classTop' ondragover='classdragover(event)' ondragenter='classTop(event)' ondragleave='classDragLeave(event)'>↑</div>" +
                     "<div class='classBottom' ondragover='classdragover(event)' ondragenter ='classBottom(event)' ondragleave='classDragLeave(event)'>↓</div>");
@@ -128,7 +126,7 @@
     }
     function pictureDragLeave(ev) {
         timer = setTimeout(function () {
-            if($(".classTop").length>0&&$(".classBottom").length>0) {
+            if ($(".classTop").length > 0 && $(".classBottom").length > 0) {
                 //scrollHanlder.enableScroll();//恢复滚动
                 $(".classBottom").remove();
                 $(".classTop").remove();
@@ -144,7 +142,7 @@
 
     function picturedrop(ev) {
         ev.preventDefault();
-        if($(".classTop").length>0&&$(".classBottom").length>0) {
+        if ($(".classTop").length > 0 && $(".classBottom").length > 0) {
             $(".classBottom").remove();
             $(".classTop").remove();
         }

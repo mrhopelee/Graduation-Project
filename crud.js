@@ -97,6 +97,12 @@ exports.findClassName = findClassName;
 function creatPicture(req, res, data, nameQuery) {
     var now = new Date();//创建时间
     var info = imageinfo(data);//获取图片基本数据
+    var creclassid = "";
+    if (nameQuery.creclassid.toString() == "") {
+        creclassid = "56dab2879a78ca71f18afdb6";//默认分类的id
+    } else {
+        creclassid = nameQuery.creclassid;
+    }
     //console.log(info);
     /*插入图片*/
     db.collection('picture').insert({//插入数据库
@@ -106,7 +112,7 @@ function creatPicture(req, res, data, nameQuery) {
         height: info.height,
         width: info.width,
         size: data.length,
-        class: nameQuery.creclassid,
+        class: creclassid,
         tag: []
     }, function (err, result) {
         if (err) throw err;
@@ -177,7 +183,7 @@ exports.updPicture = updPicture;
 function showAllpicture(req, res) {
     var query = req.query.query;
     //console.log(query);
-    db.collection('picture').find(query).toArray(function (err, result) {
+    db.collection('picture').find(query).toArray(function (err, result) {//.sort({_id:-1})
         if (err) throw err;
         //console.log(result);
         //res.render('manager',{pi:result});

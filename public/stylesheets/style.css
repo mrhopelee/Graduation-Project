@@ -32,16 +32,24 @@ button {
 .all {
   /*max-width: 1200px;*/
   margin: 49px 0 auto;
+  height: 4000px;
+  overflow: hidden;
+  position: relative;
+}
 
+.left,.right{
+  margin-bottom:-9999px;
+  padding-bottom:9999px;
 }
 
 /*左侧：网站标题、图片列表*/
 .left {
-  float: left;
-  width:30%;
-  padding-bottom: 100%;
-
+  position: absolute;
+  left: 0;
+  width: 30%;
   background-color: rgba(0,0,0,1.0);
+  z-index: 5;
+  overflow: hidden;
 }
 /*headet 网站标题*/
 .sitetitle {
@@ -51,9 +59,11 @@ button {
   top: 0;
   width: 100%;
   z-index: 10;
+  height: 50px;
+  height: 50px;
 }
 .sitetitle>a {
-  display: block;
+  display: inline-block;;
   width: 30%;
   padding: 5px 0;
   margin: 0;
@@ -195,38 +205,72 @@ button {
 }
 
 .right {
+  margin-top: 50px;
+  padding-left: 30%;
   width: 70%;
-  float: right;
-  padding-bottom: 100%;
-  background-color: rgba(255,255,255,1.0);
-  position: relative;
+  background-color: rgba(255,255,255,0.0);
   z-index: 5;
 }
 .crepicture {
-  height: 60px;
-  margin: 20px 0;
+  width: 70%;
+  height: 49px;
+  float: right;
+  line-height: 49px;
+  border-bottom: 1px solid;
+  /*margin: 20px 0;
+  display: block;*/
+  /*position: absolute;
+  top: 70px;
+  left: 100%;*/
 }
 .uploadform {
-  float: right;
+  width: 250px;
+  overflow: hidden;
+  margin: 0 auto;
+  /*float: right;*/
 }
-.filebtn, .uploadbtn {
-  background-color: rgba(44,48,73,1.0);
-  color: rgba(255,255,255,1.0);
-  border-radius: 3px;
-  border: 1px solid rgb(204, 204, 204);
+#textfield{
+  outline: none;
+  border: 1px solid rgba(0,0,0,1.0);
+}
+.cpicturebtn, .uploadbtn {
+  cursor: pointer;
+  background-color: rgba(255,255,255,0);
+  color: rgba(0,0,0,1.0);
+  border-radius: 0;
+  border: 0 solid rgba(0,0,0,1.0);
+  display: inline-block;
+}
+.cpicturebtn i,.uploadbtn i{
+  font-size: 20px;
 }
 .uploadbtn {
+  margin-left: 10px;
+  border: 0 solid rgba(0,0,0,1.0) !important;
+}
+#spanMessage{
+  font-size: 18px;
+}
+/*.uploadbtn {
   margin-right: 30px;
   height: 27px;
-}
+}*/
 .showpicture{
   position: relative;
+  /*overflow: hidden;*/
+  width: 94%;
+  margin: 0 3%;
+  /*margin-top: 80px;*/
 }
 .showitem {
   margin: 14px 7px 0 7px;
   width: 236px;
   background-color: rgba(255,255,255,1.0);
-  display: inline-block;
+  /*position: absolute;*/
+  /*overflow: hidden;
+  float: left;*/
+}
+.showimg{
   position: relative;
 }
 .showitem img {
@@ -253,16 +297,7 @@ button {
 .showname {
    color: rgba(0,0,0,1.0);
  }
-/*.showbtn {
-  float: right;
-  margin-right: 5px;
-  border:0;
-  background-color: transparent;
-  color: rgb(0,0,0);
-}
-.showbtn:focus {
-  border: 0;
-}*/
+
 .showbtns {
   text-align: center;
 }
@@ -287,10 +322,11 @@ button {
 
 .classBottom, .classTop {
   height: 120px;
-  width: 100%;
+  width: 30%;
   background-color: rgba(255,255,255,0.6);
   border: 1px solid rgba(245,222,179,1.0);
   position: fixed;
+  padding: -1px;
   left: 0;
   z-index: 4;
 }
