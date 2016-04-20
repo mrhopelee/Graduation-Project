@@ -267,8 +267,8 @@ button {
   width: 236px;
   background-color: rgba(255,255,255,1.0);
   /*position: absolute;*/
-  /*overflow: hidden;
-  float: left;*/
+  /*overflow: hidden;*/
+  float: left;
 }
 .showimg{
   position: relative;

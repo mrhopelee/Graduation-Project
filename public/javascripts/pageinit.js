@@ -63,6 +63,6 @@ $(document).ready(function () {
     appendTC();
     tanchu(2, 0);
     getPicture({});
-
     ClassInitFun();
+
 });

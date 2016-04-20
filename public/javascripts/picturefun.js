@@ -19,6 +19,10 @@ function picturePage(result) {
             //console.log("load clickfun");
             delpicturefun();//删除图片click事
             picturefilter();//图片滤镜
+            waterFall.init();
+            timer = setTimeout(function () {
+                waterFall.init();
+            }, 1000);
         }
     }
 }
