@@ -22,6 +22,7 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
     //var btn=$("<button></button>").text("Click me.").addClass('TCBtn');
     var div = $("<div><span class='pfend\'></span><canvas id='canvas' class='TCimg abscenter' data-id data-rn data-f></canvas></div>").addClass('TCDiv TChid');
     var div2 = $("<div>" +
+
         "<button class='filter'id='reset'>原图</button>" +
         "<hr>" +
         "<p class='filters'>" +
@@ -46,6 +47,12 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<span class='filtervalue'>--%</span>" +
         "</p>" +
         "<hr>" +
+        /*"<p class='filters'>" +
+        "<button class='filter'id='ssz'>顺时针</button>" +
+        "<button class='filter'id='nsz'>逆时针</button>" +
+        "<button class='filter'id='sx'>上下</button>" +
+        "</p>" +
+        "<hr>" +*/
         "<button class='filter'id='save'>save 本地</button>" +
         "<button class='filter savegallery'id='savegallery'>保存到默认相册</button>" +
         //"<button class='filter'id='savetemp'>save 临时</button>" +
