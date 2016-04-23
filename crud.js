@@ -97,39 +97,44 @@ exports.findClassName = findClassName;
 function creatPicture(req, res, data, nameQuery) {
     var now = new Date();//创建时间
     var info = imageinfo(data);//获取图片基本数据
-    var creclassid = "";
-    if (nameQuery.creclassid.toString() == "") {
-        creclassid = "56dab2879a78ca71f18afdb6";//默认分类的id
-    } else {
-        creclassid = nameQuery.creclassid;
-    }
-    //console.log(info);
-    /*插入图片*/
-    db.collection('picture').insert({//插入数据库
-        name: req.files[0].originalname,
-        realname: nameQuery.realname,
-        date: [now.getYear(), now.getMonth(), now.getDate()],
-        height: info.height,
-        width: info.width,
-        size: data.length,
-        class: creclassid,
-        tag: []
-    }, function (err, result) {
-        if (err) throw err;
-        if (!err) console.log('Added!');
-        var query = {class:nameQuery.creclassid};//获取当前分类
-        if(nameQuery.creclassid==''){
-            query = {};
+    console.log(info);
+    if(!info){
+        res.send(false);
+    }else{
+        var creclassid = "";
+        if (nameQuery.creclassid.toString() == "") {
+            creclassid = "56dab2879a78ca71f18afdb6";//默认分类的id
+        } else {
+            creclassid = nameQuery.creclassid;
         }
-        //console.log(query);
-        db.collection('picture').find(query).toArray(function (err, result) {//查询当前分类的图片
+        //console.log(info);
+        /*插入图片*/
+        db.collection('picture').insert({//插入数据库
+            name: req.files[0].originalname,
+            realname: nameQuery.realname,
+            date: [now.getYear(), now.getMonth(), now.getDate()],
+            height: info.height,
+            width: info.width,
+            size: data.length,
+            class: creclassid,
+            tag: []
+        }, function (err, result) {
             if (err) throw err;
-            //console.log(result);
-            //res.render('manager',{pi:result});
-            //res.redirect('./hello.html');
-            res.send(result);
-        })
-    });
+            if (!err) console.log('Added!');
+            var query = {class:nameQuery.creclassid};//获取当前分类
+            if(nameQuery.creclassid==''){
+                query = {};
+            }
+            //console.log(query);
+            db.collection('picture').find(query).toArray(function (err, result) {//查询当前分类的图片
+                if (err) throw err;
+                //console.log(result);
+                //res.render('manager',{pi:result});
+                //res.redirect('./hello.html');
+                res.send(result);
+            })
+        });
+    }
 }
 exports.creatPicture = creatPicture;
 /*删除图片*/
@@ -218,13 +223,19 @@ function pictureFilter(req, res) {
                     } else {
                         console.log(result.name + "进入滤镜模式");
                         var info = imageinfo(data);
-                        var resquery = {
-                            "resresult":result,
-                            "width":info.width,
-                            "height":info.height
-                        };
-                       //console.log(info);
-                        res.send(resquery);
+                        //console.log(info);
+                        if(info.mimeType=='image/png'||info.mimeType=='image/jpeg'){
+                            var resquery = {
+                                "resresult":result,
+                                "width":info.width,
+                                "height":info.height
+                            };
+                            //console.log(info);
+                            res.send(resquery);
+                        }else {
+                            res.send("mimeTypeErr");
+                        }
+
                     }
                 });
 
@@ -282,7 +293,8 @@ function savegallery(req, res) {
     //过滤data:URL
     var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = new Buffer(base64Data, 'base64');
-    var info = imageinfo(dataBuffer);
+    //var info = imageinfo(dataBuffer);
+    //console.log(info);
     console.log(imageName);
     fs.writeFile("public\\images\\" +imagRrealName, dataBuffer, function(err) {
         if(err){

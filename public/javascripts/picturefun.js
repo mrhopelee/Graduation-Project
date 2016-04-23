@@ -58,10 +58,18 @@ function uploadFile(){
         contentType: false,
         processData: false,
         success: function(result){
-            picturePage(result);//取得数据操作返回的result，在页面重新生成图片
-            $('#xFile').val('');
-            $('#textfield').val('');
-            $('#spanMessage').text("上传成功")
+            if(result){
+                picturePage(result);//取得数据操作返回的result，在页面重新生成图片
+                $('#xFile').val('');
+                $('#textfield').val('');
+                //$('#spanMessage').text("上传成功");
+                alert("上传成功");
+            }else{
+                $('#xFile').val('');
+                $('#textfield').val('');
+                alert("文件错误：为识别的文件类型。请重新上传正确的图片文件");
+            }
+
         }/*
          if(200 === data.code) {
          $("#imgShow").attr('src', data.msg.url);
@@ -129,7 +137,9 @@ function getfilterpicture() {
         success: function (result) {
             if(result===false){
                 alert("进入滤镜模式失败，请重试");
-            }else {
+            }else if(result=='mimeTypeErr'){
+                alert("很抱歉，目前滤镜模式只支持png格式或者jpeg格式的图片");
+            }else{
                 showTC();
                 //$('.TCimg').attr({"src":"filterimages\\" + result.realname});
                 console.log(result.resresult.realname);
