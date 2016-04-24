@@ -53,8 +53,8 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<button class='filter'id='sx'>上下</button>" +
         "</p>" +
         "<hr>" +*/
-        "<button class='filter'id='save'>save 本地</button>" +
-        "<button class='filter savegallery'id='savegallery'>保存到默认相册</button>" +
+        "<button class='filter'id='save'>保存图片到本地</button>" +
+        "<button class='filter savegallery'id='savegallery'>保存图片到默认分类</button>" +
         //"<button class='filter'id='savetemp'>save 临时</button>" +
         //"<div class='temppic'id='temppic'>" +
         //"<span>临时图片</span>" +

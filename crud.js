@@ -293,7 +293,7 @@ function savegallery(req, res) {
     //过滤data:URL
     var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = new Buffer(base64Data, 'base64');
-    //var info = imageinfo(dataBuffer);
+    var info = imageinfo(dataBuffer);
     //console.log(info);
     console.log(imageName);
     fs.writeFile("public\\images\\" +imagRrealName, dataBuffer, function(err) {

@@ -88,22 +88,29 @@ function uploadFile(){
 function delpicturefun(){
     $('.delpicture').click(function(e){
         e.preventDefault();
-        var thisbtn = $(this);
-        var thispicture = thisbtn.parents('.showitem');//被点击的图片item
-        var thisclass = $('.this');//当前分类
-        //console.log(thispicture.attr('data-id'));
-        $.ajax({
-            url: "http://localhost:27017/delpicture",
-            type: "POST",
-            async: false,
-            data: {
-                "thisclass":  thisclass.attr('data-c'),
-                "del_pictureid": thispicture.attr('data-id')
-            },
-            success: function (result) {
-                picturePage(result);//取得数据操作返回的result，在页面重新生成图片
-            }
-        });
+        var r = confirm("确定删除此图片？");
+        if(r){
+            var thisbtn = $(this);
+            var thispicture = thisbtn.parents('.showitem');//被点击的图片item
+            var thisclass = $('.this');//当前分类
+            //console.log(thispicture.attr('data-id'));
+
+            $.ajax({
+                url: "http://localhost:27017/delpicture",
+                type: "POST",
+                async: false,
+                data: {
+                    "thisclass":  thisclass.attr('data-c'),
+                    "del_pictureid": thispicture.attr('data-id')
+                },
+                success: function (result) {
+                    picturePage(result);//取得数据操作返回的result，在页面重新生成图片
+                }
+            });
+        }else {
+
+        }
+
     });
 }
 /*图片滤镜click事件*/
