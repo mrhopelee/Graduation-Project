@@ -176,7 +176,7 @@ function getClassName() {
 }
 
 
-/*分类时间初始化*/
+/*分类事件初始化*/
 function ClassInitFun() {
     getClassName();//获取所有分类
     newClassClick();//新增分类的页面交互事件
