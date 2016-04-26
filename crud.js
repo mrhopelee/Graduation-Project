@@ -151,10 +151,13 @@ function delPicture(req, res) {
                         if (err) {
                             return console.error(err);
                         }
-                        var query = {class:req.body.thisclass};
-                        if(req.body.thisclass==''){
+                        var query;
+                        if(req.body.thisclass){
+                            query = {class:req.body.thisclass};
+                        }else{
                             query = {};
                         }
+                        console.log(query);
                         db.collection('picture').find(query).toArray(function (err, result) {//查询当前分类的图片
                             if (err) throw err;
                             //console.log(result);

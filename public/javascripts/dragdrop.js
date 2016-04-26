@@ -60,8 +60,8 @@ function pictureallowDrop(ev) {
 function pictureonDragEnter(ev) {
     if ($(".classTop").length == 0 && $(".clssBottom").length == 0) {
         //scrollHanlder.disableScroll();//禁用滚动
-        $('.left').append("<div class='classTop' ondragover='classdragover(event)' ondragenter='classTop(event)' ondragleave='classDragLeave(event)'>↑</div>" +
-            "<div class='classBottom' ondragover='classdragover(event)' ondragenter ='classBottom(event)' ondragleave='classDragLeave(event)'>↓</div>");
+        $('.left').append("<div class='classTop' ondragover='classdragover(event)' ondragenter='classTop(event)' ondragleave='classDragLeave(event)'></div>" +
+            "<div class='classBottom' ondragover='classdragover(event)' ondragenter ='classBottom(event)' ondragleave='classDragLeave(event)'></div>");
     }
 }
 function pictureDragLeave(ev) {
@@ -74,10 +74,7 @@ function pictureDragLeave(ev) {
     }, 1000);
 }
 
-function picturedrag(ev) {
-    var thispic = $('.showitem:hover');
-    ev.dataTransfer.setData("pictureid", thispic.attr("data-id"));
-}
+
 
 
 function picturedrop(ev) {
@@ -121,4 +118,42 @@ function picturedrop(ev) {
          }*/
         //ev.target.appendChild(document.getElementById(data));
     }
+}
+
+
+
+
+function picturedrag(ev) {
+    var thispic = $('.showitem:hover');
+    ev.dataTransfer.setData("pictureid", thispic.attr("data-id"));
+    creatclassTC();
+}
+function picturedragend(ev) {
+   $(".classtc").css({
+       "display":"none"
+   });
+    $(".classlist").append($(".classitem[data-c]"));
+    $(".classitem>button").css({
+        "display":"block"
+    });
+}
+
+function creatclassTC() {
+    if($(".classtc").length==0){
+        var classtc = $("<div><span>分类如下：</span><p><ul class='classtclist'></ul></p></div>").addClass('classtc');
+        var classlist = $(".classitem[data-c]");
+        console.log(classlist);
+        $("body").append(classtc);
+        $(".classtclist").append(classlist);
+        //$(".classtclist li").removeClass("classitem this");
+    }else{
+        $(".classtc").css({
+            "display":"block"
+        });
+        $(".classtclist").append($(".classitem[data-c]"));
+    }
+    $(".classitem>button").css({
+        "display":"none"
+    });
+
 }

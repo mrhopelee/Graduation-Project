@@ -28,7 +28,7 @@ function picturePage(result) {
 }
 /*生成图片节点*/
 function createshowitem(str) {
-    var text = "<div class=\"showitem\" draggable=\"true\" ondragstart=\"picturedrag(event)\">" +
+    var text = "<div class='showitem' draggable='true' ondragstart='picturedrag(event)' ondragend='picturedragend(event)'>" +
         "<div class=\"showimg\">" +
         "<img draggable=\"false\">" +
         "<div class=\"showother abscenter\">" +

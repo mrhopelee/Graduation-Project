@@ -1,3 +1,32 @@
+.classtc{
+    z-index: 102;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100%;	width: 30%;
+    background:rgba(0, 0, 0, 1);
+    color:rgba(255,255,255,1);
+
+}
+.classtc span{
+    height: 50px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,1);
+    text-align: center;
+    line-height: 50px;
+}
+.classtclist{
+    list-style: none;
+}
+.classtclist li{
+    float: left;
+    margin: 5px;
+}
+.classtclist li:hover{
+    background-color: rgba(255,255,255,1);
+    color: rgba(0, 0, 0, 1);
+}
 .TCDiv{
     z-index: 101;
     background-color: rgba(0, 0, 0, 1);;
