@@ -155,5 +155,4 @@ function creatclassTC() {
     $(".classitem>button").css({
         "display":"none"
     });
-
 }
