@@ -155,7 +155,9 @@ function draw(resquery) {
         matrix = ["matrix(1, 0, 0, 1, 0, 0)",
             "matrix(6.12323e-17, 1, -1, 6.12323e-17, 0, 0)",
             "matrix(-1, -1.22465e-16, 1.22465e-16, -1, 0, 0)",
-            "matrix(6.12323e-17, -1, 1, 6.12323e-17, 0, 0)"];
+            "matrix(6.12323e-17, -1, 1, 6.12323e-17, 0, 0)",
+            "matrix(1, 0, 0, -1, 0, 0)",
+            "matrix(-1, 0, 0, 1, 0, 0)"];
 
 
 
@@ -307,6 +309,18 @@ function draw(resquery) {
         console.log(matrixtemp);
         if(matrixtemp==0){matrixtemp=4;}
         $('#canvas').css({"transform":matrix[matrixtemp-1]});
+    });
+    sx.click(function (e) {
+        e.preventDefault();
+        var matrixtemp = matrix.indexOf($('#canvas').css("transform"))==4?0:4;
+        console.log(matrixtemp);
+        $('#canvas').css({"transform":matrix[matrixtemp]});
+    });
+    zy.click(function (e) {
+        e.preventDefault();
+        var matrixtemp = matrix.indexOf($('#canvas').css("transform"))==5?0:5;
+        console.log(matrixtemp);
+        $('#canvas').css({"transform":matrix[matrixtemp]});
     });
     /*ssz.click(function (e) {
         e.preventDefault();
