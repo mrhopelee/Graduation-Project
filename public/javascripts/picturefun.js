@@ -47,42 +47,47 @@ function createshowitem(str) {
 };
 /*增加图片*/
 function uploadFile(){
-    var formData = new FormData($("#frmUploadFile")[0]);//获取图片上传form的formData
-    /*console.log(formData);*/
-    $.ajax({
-        url: 'http://localhost:27017/file_upload',
-        type: 'POST',
-        data: formData,
-        async: false,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(result){
-            if(result){
-                picturePage(result);//取得数据操作返回的result，在页面重新生成图片
-                $('#xFile').val('');
-                $('#textfield').val('');
-                //$('#spanMessage').text("上传成功");
-                alert("上传成功");
-            }else{
-                $('#xFile').val('');
-                $('#textfield').val('');
-                alert("文件错误：为识别的文件类型。请重新上传正确的图片文件");
-            }
+    if($('#textfield').val()==''){
+        alert("图片路径为空，请浏览本地目录选择图片");
+    }else{
+        var formData = new FormData($("#frmUploadFile")[0]);//获取图片上传form的formData
+        /*console.log(formData);*/
+        $.ajax({
+            url: 'http://localhost:27017/file_upload',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(result){
+                if(result){
+                    picturePage(result);//取得数据操作返回的result，在页面重新生成图片
+                    $('#xFile').val('');
+                    $('#textfield').val('');
+                    //$('#spanMessage').text("上传成功");
+                    alert("上传成功");
+                }else{
+                    $('#xFile').val('');
+                    $('#textfield').val('');
+                    alert("文件错误：为识别的文件类型。请重新上传正确的图片文件");
+                }
 
-        }/*
-         if(200 === data.code) {
-         $("#imgShow").attr('src', data.msg.url);
-         $("#spanMessage").html("上传成功");
-         } else {
-         $("#spanMessage").html("上传失败");
-         }
-         console.log('imgUploader upload success, data:', data);
-         },
-         error: function(){
-         $("#spanMessage").html("与服务器通信发生错误");
-         }*/
-    });
+            }/*
+             if(200 === data.code) {
+             $("#imgShow").attr('src', data.msg.url);
+             $("#spanMessage").html("上传成功");
+             } else {
+             $("#spanMessage").html("上传失败");
+             }
+             console.log('imgUploader upload success, data:', data);
+             },
+             error: function(){
+             $("#spanMessage").html("与服务器通信发生错误");
+             }*/
+        });
+    }
+
 }
 /*删除图片click事件*/
 function delpicturefun(){

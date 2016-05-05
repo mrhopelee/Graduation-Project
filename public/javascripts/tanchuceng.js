@@ -51,7 +51,7 @@ function appendTC() {	// 以 jQuery 创建按钮、元素
         "<button class='filter'id='ssz'>顺时针</button>" +
         "<button class='filter'id='nsz'>逆时针</button>" +
          "<button class='filter'id='sx'>上下翻转</button>" +
-         "<button class='filter'id='sx'>左右翻转</button>" +
+         "<button class='filter'id='zy'>左右翻转</button>" +
         "</p>" +
         "<hr>" +
         "<button class='filter'id='save'>保存图片到本地</button>" +

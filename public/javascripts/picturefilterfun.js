@@ -148,7 +148,14 @@ function draw(resquery) {
         save = $("#save"),
     //savetemp = $('#savetemp'),
         savegallery = $('#savegallery'),
-        ssz = $('#ssz');
+        ssz = $('#ssz'),
+        nsz = $('#nsz'),
+        sx = $('#sx'),
+        zy = $('#zy'),
+        matrix = ["matrix(1, 0, 0, 1, 0, 0)",
+            "matrix(6.12323e-17, 1, -1, 6.12323e-17, 0, 0)",
+            "matrix(-1, -1.22465e-16, 1.22465e-16, -1, 0, 0)",
+            "matrix(6.12323e-17, -1, 1, 6.12323e-17, 0, 0)"];
 
 
 
@@ -162,53 +169,17 @@ function draw(resquery) {
         e.preventDefault();
         allfilter($(this));
         console.log("reset");
-        console.log("reset");
         getInitImageData();
         resetImageData();
         $('#canvas').attr({'data-f': ''});
+        $('#canvas').css({"transform":"rotate(0deg)"});
     });
     save.click(function (e) {
         e.preventDefault();
         console.log("save");
         Canvas2Image.saveAsPNG(canvas);  // 这将会提示用户保存PNG图片
     });
-    /*/!*保存图片到临时文件*!/
-     savetemp.click(function(e){
-     e.preventDefault();
-     //console.log(canvas.toDataURL("image/png"));
-     $.ajax({
-     url: "http://localhost:27017/savetemp",
-     type: "POST",
-     async: false,
-     data: {
-     "imgData": canvas.toDataURL("image/png"),
-     "imageName_body":  $('#canvas').attr('data-rn'),
-     "imageName_head":  $('#canvas').attr('data-f')
-     },
-     success: function (result) {
-     if(result.exists){
 
-     }else {
-     var li = "<li><img src='" + result.url + "'></li>";
-     $('#temppiclist').append(li);
-     if(result.imageinfo.height >= result.imageinfo.width){
-     $('.temppiclist img').css({
-     "width":"80px",
-     "height":"auto"
-     });
-     }else{
-     $('.temppiclist img').css({
-     "width":"auto",
-     "height":"80px"
-     });
-     }
-     console.log(result);
-     //picturePage(result);//取得数据操作返回的result，在页面重新生成图片
-     }
-
-     }
-     });
-     });*/
     /*保存图片到相册*/
     savegallery.click(function (e) {
         e.preventDefault();
@@ -325,6 +296,20 @@ function draw(resquery) {
     //顺时针ssz
     ssz.click(function (e) {
         e.preventDefault();
+        var matrixtemp = matrix.indexOf($('#canvas').css("transform"));
+        console.log(matrixtemp);
+        if(matrixtemp==3){matrixtemp=-1;}
+        $('#canvas').css({"transform":matrix[matrixtemp+1]});
+    });
+    nsz.click(function (e) {
+        e.preventDefault();
+        var matrixtemp = matrix.indexOf($('#canvas').css("transform"));
+        console.log(matrixtemp);
+        if(matrixtemp==0){matrixtemp=4;}
+        $('#canvas').css({"transform":matrix[matrixtemp-1]});
+    });
+    /*ssz.click(function (e) {
+        e.preventDefault();
 
         imgh=imgh+imgw;
         imgw=imgh-imgw;
@@ -355,7 +340,7 @@ function draw(resquery) {
         ctx.restore();
 
         //ctx.putImageData(tempImageData, 0, 0);
-    })
+    })*/
 
 
 
